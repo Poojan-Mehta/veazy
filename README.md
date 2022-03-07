@@ -1,0 +1,2 @@
+# veazy
+veazy angularjs project
