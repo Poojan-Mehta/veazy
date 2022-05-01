@@ -1,0 +1,45 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="addmplaceCtrl"
+     data-ng-if="is_main_user == 1 || market_place_permission.add ==1 || market_place_permission.update ==1">
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{page_name}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                          name="catform" novalidate>
+                        <div class="control-group">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Market Place Name</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="vMPName" data-ng-model="vMPName"
+                                           placeholder="Market place name.." required>
+                                    <span data-ng-show="submitted && catform.vMPName.$invalid">
+                                    <span class="text-danger" data-ng-show="catform.vMPName.$error.required">Market Place name is required
+</span>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-addon btn-info"
+                                            ng-click="add_cat_form(catform.$valid)">{{save_btn}}
+                                    </button>
+                                    <button type="submit" class="btn btn-danger" ui-sref="app.mplace">{{general.btncancel}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

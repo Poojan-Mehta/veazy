@@ -1,0 +1,44 @@
+.loading-spiner-holder {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba( 0, 0, 0, .2 ) url('/images/ajax-modal-loading.gif') 50% 50% no-repeat;
+}
+#profile_picll {
+    border-radius: 50%;
+    border: 2px solid #fff;
+    display: block;
+    height: 40px;
+    margin-top: 0px;
+    width: 40px;
+    visibility: important;
+    background: #E0E0E0;
+}
+.progress{
+    height: 5px !important;
+}
+.index_header .header_top_panel{
+    z-index: 500 !important;
+}
+.carousel-inner { height: 460px;}
+.carousel-inner .item{ height: 100%;}
+.carousel-indicators{left:93%;}
+.carousel-caption{right: 1%;left: 60%;bottom: 160px;background-color: rgba(0,0,0,0.3);}
+.recently_add_ppty{    height:auto!important;}
+.carousel-control{display: none;}
+.recently_add_slider .carousel-control{display:block!important;}
+#slides_control {
+    position:absolute;
+    width: 100;
+    left:50%;
+    top:20px;
+    margin-left:-200px;
+}
+.header .header_top_panel { padding:9px; top:-1px; width:100%; min-height:60px;background: red; /* For browsers that do not support gradients */background: -webkit-linear-gradient(rgba(93,93,93,1),rgba(255,0,0,0)); /*Safari 5.1-6*/background: -o-linear-gradient(rgba(93,93,93,1),rgba(255,0,0,0)); /*Opera 11.1-12*/background: -moz-linear-gradient(rgba(93,93,93,1),rgba(255,0,0,0)); /*Fx 3.6-15*/background: linear-gradient(rgba(93,93,93,1),rgba(255,0,0,0)); /*Standard*/}
+#pac-input {  background-color: #fff;  font-family: Roboto;  font-size: 15px;  font-weight: 300;  margin-left: 0px;  padding: 0 11px 0 13px;  text-overflow: ellipsis;  margin-bottom: 7px;  }
+#pac-input:focus {  border-color: #4d90fe;  }
+.my_ppty_thumb{overflow:hidden;}

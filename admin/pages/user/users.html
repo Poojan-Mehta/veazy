@@ -1,0 +1,209 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="usersCtrl"
+     data-ng-if="is_main_user !=0 || frontusers_dis_permission.main_menu_id =='2.2' ">
+    <style>
+        .call_text{
+            border-radius: 5px;
+            border: 0.5px solid #39b7e5;
+        }
+        
+                
+        input:focus{
+          outline: none;
+        }
+        
+        .edit{
+          position: absolute;
+          background: #fff;
+          padding: 3px;
+          border-radius: .3em;
+          z-index: 100;
+          border: 1px solid #eee;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .table-editable tbody tr td{
+          position: relative;
+        }
+        .edit_txt{
+          height: 105%;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+           animation: bounceInCenter 0.2s;
+        }
+        
+        @keyframes bounceInCenter {
+          0% { transform: translate(-50%, -50%) scale(0);}
+          60% { transform: translate(-50%, -50%) scale(1); }
+          85% { transform: translate(-50%, -50%) scale(0.9); }
+          100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        @keyframes bounceInCenterX {
+          0% { transform: translateX(-50%) scale(0);}
+          60% { transform: translateX(-50%) scale(1); }
+          85% { transform: translateX(-50%) scale(0.9); }
+          100% { transform: translateX(-50%) scale(1); }
+        }
+        .edit input{
+          width: 100%;
+          height: 100%;
+          padding-left: 15px;
+          border-radius: 3px;
+          border: 1px solid #ccc;
+          border: none;
+          box-sizing: border-box;
+          font-size: 16px;
+        }
+        .edit select{
+          height: 100%;
+          padding-left: 15px;
+          border-radius: 3px;
+          border: 1px solid #ccc;
+          border: none;
+          box-sizing: border-box;
+          font-size: 16px;
+        }
+    </style>
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{users.pagetitle}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default table-responsive">
+                <div class="col-md-12" style="margin-top: 20px;">
+                    <button data-ng-show="is_main_user == 1 || frontusers_dis_permission.add == 1" ui-sref="app.adduser"
+                            class="btn btn-addon m-b-xs btn-info"><i
+                            class="fa fa-plus"></i> Add New
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || frontusers_dis_permission.delete == 1"
+                            class="btn btn-addon m-b-xs btn-danger" data-ng-click="removeAll();"><i
+                            class="fa fa-trash-o"></i> Delete All
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || frontusers_dis_permission.active == 1"
+                            class="btn btn-addon m-b-xs btn-primary" data-ng-click="activeAll();"><i
+                            class="fa fa-check"></i>  Active All
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || frontusers_dis_permission.inactive == 1"
+                            class="btn btn-addon m-b-xs btn-yellow" data-ng-click="deactiveAll();"><i
+                            class="icon-close"></i> Inactive All
+                    </button>
+                    &nbsp;
+                    <button class="btn btn-addon m-b-xs btn-success " ng-csv="getcsv()"
+                            csv-header="['First Name','Last Name','User Name','Email','Mobile Number','Gender','Status','Created Date']"
+                            filename="userlist.csv"><i class="glyphicon glyphicon-save"></i> {{general.export}}
+                    </button>
+
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-right top_search"
+                         st-table="displayedCollection" st-safe-src="rowCollection">
+                        <input class="form-control ng-isolate-scope" st-search=""
+                               placeholder="Enter character to search..." type="text" data-ng-model="searchText"
+                               style="width:90% !important;display: inline;"/>
+                    </div>
+                </div>
+
+                <table st-table="displayedCollection" st-safe-src="rowCollection"
+                       class="table table-striped table-editable" st-filtered-collection="rowCollection">
+                    <thead>
+                    <tr>
+                        <th class="text-center">
+                            <div class="checkbox"><label class="i-checks"><input type="checkbox" id="checkAll"/> <i></i></label></div>
+                        </th>
+                        <th class="text-center text-nowrap text-uppercase" st-sort="vFirstName">{{users.fname}}</th>
+                        <th class="text-center text-nowrap text-uppercase" st-sort="vEmail">{{users.email}}</th>
+                        <th class="text-center text-nowrap text-uppercase" st-sort="vMobile">{{users.mo}}</th>
+                        <!--<th class="text-center text-nowrap text-uppercase" st-sort="vPackageName">Package Name</th>-->
+                        <th class="text-center text-nowrap text-uppercase" st-sort="Unique_Plan_ID">Plan Name</th>
+                        <th class="text-center text-nowrap text-uppercase">Expire Date</th>
+                        <th class="text-uppercase" data-ng-show="is_main_user == 1 || (frontusers_dis_permission.active == 1 && frontusers_dis_permission.inactive == 1)  ">
+                            {{general.status}}
+                        </th>
+                        <th class="text-center text-nowrap text-uppercase" st-sort="classis_call">Coaching Calls</th>
+                        <th class="text-center text-nowrap text-uppercase" st-sort="dtCreatedDate">Created Date</th>
+                        <th class="text-center text-nowrap text-uppercase" data-ng-show="is_main_user == 1 || (frontusers_dis_permission.delete == 1)">
+                            {{general.action}}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in displayedCollection">
+                        <td class="text-center">
+                            <div class="checkbox"><label class="i-checks">
+                                <input type='checkbox'
+                                       class="userstatus"
+                                       id="user{{row.iPkUserId}}"
+                                       name='checklist[]'
+                                       data-ng-model="checklist"><i></i></label>
+                            </div>
+                        </td>
+                        <td class="text-center text-nowrap">{{row.vFirstName}} {{row.vLastName}}</td>
+                        <td class="text-center text-nowrap">{{row.vEmail}}</td>
+                        <td class="text-center text-nowrap">{{row.vMobile}}</td>
+                        <!--<td class="text-center text-nowrap">{{row.vPackageName}}</td>-->
+                        <td class="text-center text-nowrap" ng-dblclick="logObj($event, row.iPkUserId, $index, 'plan', row.iPkPackageId, row.iPkPlanId)">{{row.Unique_Plan_ID}}</td>
+                        <td class="text-center text-nowrap">
+                            <span style="cursor: pointer" class="pull-left bold font-purple icon-calendar" data-ng-click="assignDueDate(row.iPkUserId,row.dtExpireDate)"></span>
+                            &nbsp;&nbsp;<span ng-bind-html="row.formatted_expiredate"></span>
+                        </td>
+                        <td data-ng-show="is_main_user == 1 || (frontusers_dis_permission.active == 1 && frontusers_dis_permission.inactive == 1)  ">
+                            <label class="i-switch m-t-xs m-r" ng-init="stay=row.eUserStatus=='active' ? true : false">
+                                <input type="checkbox" checked="true" ng-model="stay"
+                                       ng-click="changestatus(row.iPkUserId,row.eUserStatus)">
+                                <i></i>
+                            </label>
+                        </td>
+                        <td class="text-center text-nowrap" ng-dblclick="logObj($event, row.iPkUserId, $index, 'classis_call','','')">{{row.classis_call}}</td>
+                        <td class="text-center text-nowrap">{{formatDate(row.dtUserCreatedOn)}}</td>
+                        <td class="text-center text-nowrap">
+                            <button data-ng-show="is_main_user == 1 || frontusers_dis_permission.update == 1"
+                                    class="btn btn-addon m-b-xs btn-sm btn-info info"
+                                    ui-sref="app.edituser({userid:row.iPkUserId})"><i class="fa fa-edit"></i>
+                                {{general.edit}}
+                            </button>
+                            <button data-ng-show="is_main_user == 1 || frontusers_dis_permission.delete == 1"
+                                    class="btn btn-addon m-b-xs btn-sm btn-info btn-danger"
+                                    ng-click="removeItem(row.iPkUserId,row.vUsername)"><i class="fa fa-trash-o"></i>
+                                {{general.delete}}
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-if="displayedCollection.length == 0">
+                        <td colspan="8">
+                            <div class="row"><span class="col-md-4 col-md-offset-5">{{general.norecord}}</span></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10" class="text-right">
+                            <div st-pagination="" st-items-by-page="10" st-displayed-pages="7" class="no-margin"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- / right col -->
+</div>
+<!--START ASSIGN DUEDATE POPUP -->
+    <script type="text/ng-template" id="assignDueDate.html">
+        <div class="modal-content">
+            <div class="modal-body">
+                <datepicker data-ng-change="chooseDate()" data-ng-model="dateparam.duedate" datepicker-options="dateOptions"  min-date="minDate" ></datepicker>
+            </div>
+            <div class="modal-footer">
+                <button data-ng-disabled="!dueDate" data-ng-click="updateDueDate()" class="btn btn-success">Save</button>
+                <button data-ng-click="closeassignDueDate()" class="btn btn-danger" aria-hidden="true">Close</button>
+            </div>
+        </div>
+    </script>
+    <!--END ASSIGN DUEDATE POPUP -->
+

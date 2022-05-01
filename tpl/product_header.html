@@ -1,0 +1,65 @@
+<!-- BEGIN HEADER -->
+<div class="page-header navbar navbar-fixed-top">
+    <!-- BEGIN HEADER INNER -->
+    <div class="page-header-inner ">
+        <!-- BEGIN LOGO -->
+        <div class="page-logo">
+            <a ui-sref="app.dashboard">
+                <img src="{{settings.layoutPath}}/img/veazy_logo.png" alt="logo" class="logo-default" width="100%"/>
+            </a>
+        </div>
+        <!-- END LOGO -->
+
+        <!-- BEGIN PAGE TOP -->
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
+        <div class="page-top">
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    <li class="dropdown dropdown-user dropdown-dark">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <span class="username username-hide-on-mobile"></span>
+                            <img alt="" width="50" class="img-circle" src="{{settings.avatarPath}}/{{vProfileImage}}" />
+                            <span class="fa fa-angle-down"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            <li>
+                                <a data-ui-sref="app.profile"><i class="icon-user"></i> {{ lang_trans.menu.myprofile }} </a>
+                            </li>
+                            <li>
+                                <a href=""><i class="icon-calendar"></i> My Calendar </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="icon-envelope-open"></i> My Inbox
+                                    <span class="badge badge-danger"> 3 </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="icon-rocket"></i> My Tasks
+                                    <span class="badge badge-success"> 7 </span>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href=""><i class="icon-lock"></i> Lock Screen </a>
+                            </li>
+                            <li>
+                                <a href="#" data-ng-click="logout()"><i class="icon-key"></i> {{ lang_trans.menu.logout }} </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+        <!-- END PAGE TOP -->
+    </div>
+    <!-- END HEADER INNER -->
+</div>
+<!-- END HEADER -->
+<!-- BEGIN HEADER & CONTENT DIVIDER -->
+<div class="clearfix"></div>
+<!-- END HEADER & CONTENT DIVIDER -->

@@ -1,0 +1,22 @@
+<!-- BEGIN HEADER -->
+<div data-ng-include="'tpl/header.html'" data-ng-controller="HeaderController" class="page-header navbar navbar-fixed-top"> </div>
+<!-- END HEADER -->
+
+<div class="clearfix"></div>
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <!-- BEGIN SIDEBAR -->
+    <div data-ng-include="'tpl/aside.html'" data-ng-controller="SidebarController"> </div>
+    <!-- END SIDEBAR -->
+
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN ACTUAL CONTENT -->
+            <div class="loading-spiner-holder" data-loading></div>
+            <div ui-view class="fade-in-up"></div>
+            <!-- END ACTUAL CONTENT -->
+        </div>
+    </div>
+</div>
+<!-- END CONTAINER -->

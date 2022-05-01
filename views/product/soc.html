@@ -1,0 +1,75 @@
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="socController">
+    <div class="master_dashbaord" data-ng-if="is_soc">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-light marketplace_desc soc_desc bg-white"><i
+                        class="fa fa-exclamation-circle color_theme bg-white "></i>
+                    <p>Work through the summary of criteria(SOC) below to help you understand the key legal
+                        requirements of your <b>{{product.product_name}}</b> application.
+                        Complete each SOC and see your progress show on you Application Dashboard.
+                    </p>
+                    <br>
+                    <p>Also, <b>click </b> on the
+                        <j class="fa fa-warning color_theme fa-2x"></j>
+                        icon to display, additional <b>important information</b> relevant to that particular SOC.
+                    </p>
+                </div>
+
+                <div class="col-md-10 col-sm-10 col-xs-10 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                    <!-- BEGIN TAB PORTLET-->
+                    <div class="portlet light shadow soc_portlet" data-ng-class="soc.satisfied == '1'?'satisfy_lesson':''" data-ng-repeat="(title,soc) in soclist  track by $index">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <span class="caption-subject">{{title}}</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="table-responsive">
+                                <table class="table soc_table">
+                                    <thead>
+                                    <tr>
+                                        <th style="min-width: 300px;"></th>
+                                        <th style="width: 100px;" class="text-center text-nowrap">Important</th>
+                                        <th style="width: 100px;" class="text-center text-nowrap">Do You Satisfy?</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr data-ng-repeat="criteria in soc.elements track by $index">
+                                        <td>{{criteria.vSummaryTitle}}</td>
+                                        <td class="text-center">
+                                            <a data-ng-click="viewDesc(criteria.vSummaryDescription);" data-ng-if="criteria.vSummaryDescription != '' && criteria.vSummaryDescription != null">
+                                                <j class="fa fa-warning color_theme fa-2x"></j>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <button data-ng-if="criteria.is_watched == '1'"
+                                                    data-ng-click="updateSummaryStatus(criteria.iPkSummaryId,criteria.iFkFolderId)"
+                                                    class="btn btn-outline green-jungle bold">Undo
+                                            </button>
+                                            <button data-ng-if="criteria.is_watched == '0'"
+                                                    data-ng-click="updateSummaryStatus(criteria.iPkSummaryId,criteria.iFkFolderId)"
+                                                    class="btn bg-purple-theme font-white bold">Yes
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="viewdescription.html">
+        <div class="modal-header veazy_header text-center">
+            <j class="fa fa-warning color_theme fa-5x"></j>
+            <h4 class="modal-title">Important</h4>
+        </div>
+        <div class="modal-body">
+            <div ta-bind ng-model="desc"></div>
+        </div>
+    </script>
+</div>
+<!-- END MAIN CONTENT -->

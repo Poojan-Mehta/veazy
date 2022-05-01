@@ -1,0 +1,214 @@
+
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="TasksController">
+    <div data-ng-if="isproduct">
+        <!--BEGIN MASTER TASK -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light shadow">
+                    <div class="portlet-title">
+                        <div class="caption full_width">
+                            <span class="caption-subject">Tasks</span> &nbsp;
+                            <a class="pull-right font-purple" data-ng-click="filtertask()"><i class="fa fa-eye"></i></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-responsive">
+                            <table class="table master_task_table">
+                                <thead>
+                                <tr>
+                                    <th style="min-width: 300px;">
+                                        <a data-ng-click="createTask()" class="btn btn-md green-jungle btn-outline bold">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Add Task
+                                        </a>
+                                    </th>
+                                    <th style="min-width: 200px;"> Tags</th>
+                                    <th style="min-width: 300px;"><i class="fa fa-calendar"></i>&nbsp; Due Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-if="is_create_task">
+                                    <td>
+                                        <span class="badge badge-default badge_check"><i class="fa fa-check"></i></span>
+                                        <input type="text" data-ng-blur="saveTask()" limit-to="255"
+                                               name="task_title"
+                                               data-ng-model="taskparam.task_title" placeholder="Enter Text..."
+                                               class="enter_text_input">
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="btn btn-circle btn-icon-only btn-outline pull-left bg-green-jungle font-white"><i class="fa fa-plus"></i></a>
+                                    </td>
+                                    <td class=""><span class="pull-left bold font-purple icon-calendar"></span></td>
+                                </tr>
+                                <tr data-ng-repeat="mtask in master_task_listing">
+                                    <!--<td data-ng-class="mtask.is_expired == true?'text-danger':''" style="cursor: pointer">-->
+                                        <!--<span data-ng-if="mtask.eIsCompleted == '1'" class="badge badge_check bg-green-jungle"><i class="fa fa-check"></i></span>-->
+                                        <!--<span data-ng-if="mtask.eIsCompleted == '0'" id="task_{{mtask.iPkTaskId}}" class="badge badge_check" data-ng-click="markTaskCompleted(mtask.iPkTaskId)"><i class="fa fa-check"></i></span>-->
+
+                                        <!--<span style="width: 100%;display: block" data-ng-if="mtask.iPkTaskId != editTaskId" data-ng-click="editTask(mtask.iPkTaskId,mtask.vTask)">{{mtask.vTask}}</span>-->
+                                        <!--<input data-ng-if="mtask.iPkTaskId == editTaskId" type="text" data-ng-blur="saveTask()" my-enter="saveTask()" limit-to="255"-->
+                                               <!--name="updated_task_title" focus-me="true" data-ng-model="taskparam.updated_task_title" placeholder="Enter Text..." class="enter_text_input">-->
+                                    <!--</td>-->
+                                    <td data-ng-if="mtask.iPkTaskId != editTaskId" data-ng-click="editTask(mtask.iPkTaskId,mtask.vTask)"  data-ng-class="mtask.is_expired == true?'text-danger':''" style="cursor: pointer">
+                                        <span data-ng-if="mtask.eIsCompleted == '1'" id="task_{{mtask.iPkTaskId}}" class="badge badge_check bg-green-jungle" data-ng-click="markTaskCompleted(mtask.iPkTaskId,mtask.eIsCompleted)"><i class="fa fa-check"></i></span>
+                                        <span data-ng-if="mtask.eIsCompleted == '0'" id="task_{{mtask.iPkTaskId}}" class="badge badge_check" data-ng-click="markTaskCompleted(mtask.iPkTaskId,mtask.eIsCompleted)"><i class="fa fa-check"></i></span>
+                                        <span style="width: 100%;display: block">{{mtask.vTask}}</span>
+                                    </td>
+                                    <td data-ng-if="mtask.iPkTaskId == editTaskId" data-ng-class="mtask.is_expired == true?'text-danger':''" style="cursor: pointer">
+                                        <span data-ng-if="mtask.eIsCompleted == '1'" id="task_{{mtask.iPkTaskId}}" class="badge badge_check bg-green-jungle"><i class="fa fa-check" data-ng-click="markTaskCompleted(mtask.iPkTaskId,mtask.eIsCompleted)"></i></span>
+                                        <span data-ng-if="mtask.eIsCompleted == '0'" id="task_{{mtask.iPkTaskId}}" class="badge badge_check" data-ng-click="markTaskCompleted(mtask.iPkTaskId,mtask.eIsCompleted)"><i class="fa fa-check"></i></span>
+                                        <input type="text" data-ng-blur="saveTask()" my-enter="saveTask()" limit-to="255"
+                                               name="updated_task_title" focus-me="true"
+                                               data-ng-model="taskparam.updated_task_title" placeholder="Enter Text..." class="enter_text_input">
+                                    </td>
+                                    <td style="min-width: 200px;">
+                                        <a class="btn btn-circle btn-icon-only btn-outline pull-left bg-green-jungle font-white" data-ng-click="assignTag(mtask.iPkTaskId)">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                        <span data-ng-repeat="t in mtask.tags" style="line-height: 30px">
+                                            <span class="label bg-font-grey-gallery label_radius" data-ng-style="{'background-color':t.vtagColor}">{{t.vTagName}} &nbsp;
+                                                <i class="fa fa-close" style="cursor: pointer;" data-ng-click="unassignTag(t)"></i></span>&nbsp;&nbsp;
+                                        </span>
+                                    </td>
+                                    <td data-ng-class="mtask.is_expired == true?'text-danger':''" style="min-width: 300px;">
+                                        <span style="cursor: pointer" class="pull-left bold font-purple icon-calendar" data-ng-click="assignDueDate(mtask.iPkTaskId,mtask.dtDueDate)"></span>
+                                        &nbsp;&nbsp;<span ng-bind-html="mtask.duedate"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END MASTER TASK -->
+
+        <!--START FILTER TASK POPUP -->
+        <script type="text/ng-template" id="filtertask.html">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>View<i class="fa fa-times-circle pull-right fa-2x color_theme" data-ng-click="closefiltertask()" style="cursor: pointer;font-size: 26px;"></i></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-radio-list">
+                        <label class="mt-radio bold">
+                            <input type="radio" name="optionsRadios" id="taskincomplete" value="incomplete" data-ng-model="task_filterBy" data-ng-click="changeFilter(task_filterBy)"> Incomplete Tasks
+                            <span></span>
+                        </label>
+                        <label class="mt-radio bold">
+                            <input type="radio" name="optionsRadios" id="taskcomplete" value="complete" data-ng-model="task_filterBy" data-ng-click="changeFilter(task_filterBy)"> Complete Tasks
+                            <span></span>
+                        </label>
+                        <label class="mt-radio bold ">
+                            <input type="radio" name="optionsRadios" id="taskall" value="all" data-ng-model="task_filterBy" data-ng-click="changeFilter(task_filterBy)"> All Tasks
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <!--END FILTER TASK POPUP -->
+
+        <!--START ASSIGN TAG POPUP -->
+        <script type="text/ng-template" id="assignTag.html">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4>
+                        <span data-ng-if="tag_listing.length == 0">Create a New Tag</span>
+                        <span data-ng-if="tag_listing.length > 0">Choose an Existing Tag</span>
+                        <i class="fa fa-times-circle pull-right fa-2x color_theme" style="cursor: pointer; font-size: 26px;" data-ng-click="closeAssignTag()"></i>
+                    </h4>
+                </div>
+                <div data-ng-if="tag_listing.length > 0" class="modal-body" style="line-height: 30px">
+                <span style="display: inline-block" data-ng-repeat="t in tag_listing">
+                    <span class="label bg-font-grey-gallery label_radius" data-ng-style="{'background-color':t.vtagColor}">
+                        <span style="cursor: pointer" data-ng-click="mapingTag(t.iPkTaskTagId)">{{t.vTagName}}</span>
+                        &nbsp;<i class="fa fa-close" style="cursor: pointer;" data-ng-click="deleteTagConfirm(t)"></i>
+                    </span>&nbsp;&nbsp;
+                </span>
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="col-xs-12 form-group" style="text-align: center;">
+                        <h4 data-ng-if="tag_listing.length > 0" class="font-bold bold">Create a New Tag</h4>
+                        <div class="form-group">
+                            <input type="text" limit-to="15" data-ng-model="tagparam.tag_name" data-ng-style="{'border-color':tagparam.color}" placeholder="Enter tag title..." class="form-control">
+                        </div>
+                        <div class="color-container form-group">
+                            <select class="form-control" data-ng-model="tagparam.color" id="color-select" style="display: none">
+                                <optgroup>
+                                    <option value="#e7505a">RED</option>
+                                    <option value="#6f46e1">PURPLE</option>
+                                    <option value="#3498DB">PETER RIVER</option>
+                                </optgroup>
+                                <optgroup>
+                                    <option value="#D35400">PUMPKIN</option>
+                                    <option value="#16A085">GREEN SEA</option>
+                                    <option value="#977BD5">LAVANDER</option>
+                                </optgroup>
+                                <optgroup>
+                                    <option value="#2be688">GREEN JUNGLE</option>
+                                    <option value="#D870A9">PINK ROSE</option>
+                                    <option value="#8BC163">GRASS</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline green-jungle bold" data-ng-click="saveTag();" data-ng-disabled="!tagparam.tag_name || !tagparam.color"> Save</button>
+                </div>
+            </div>
+        </script>
+        <!--START ASSIGN TAG POPUP -->
+
+        <!--START DELETE TAG CONFIRM POPUP -->
+        <script type="text/ng-template" id="deleteTagConfirm.html">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Are you sure want to delete this tag?</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <span class="label bg-font-grey-gallery label_radius" data-ng-style="{'background-color':deleteTag.vtagColor}">{{deleteTag.vTagName}} &nbsp;</span>
+                </div>
+                <div class="modal-footer text-center" style="text-align: center;">
+                    <button class="btn bg-purple-theme font-white btn-md bold" data-ng-click="markTagDeleted(deleteTag.iPkTaskTagId);">Yes</button>
+                    <button class="btn btn-outline purple" aria-hidden="true" data-ng-click="closeDeleteTagConfirm()">No</button>
+                </div>
+            </div>
+        </script>
+        <!--END DELETE TAG CONFIRM POPUP -->
+
+        <!--START UNASSIGN TAG CONFIRM POPUP -->
+        <script type="text/ng-template" id="unassignTag.html">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Are you sure want to remove this tag?</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <span class="label bg-font-grey-gallery label_radius" data-ng-style="{'background-color':deleteTag.vtagColor}">{{deleteTag.vTagName}} &nbsp;</span>
+                </div>
+                <div class="modal-footer text-center" style="text-align: center;">
+                    <button class="btn bg-purple-theme font-white btn-md bold" data-ng-click="markTagUnassigned(deleteTag.map_id);">Yes</button>
+                    <button class="btn btn-outline purple" aria-hidden="true" data-ng-click="closeUnassignTag()">No</button>
+                </div>
+            </div>
+        </script>
+        <!--END UNASSIGN TAG CONFIRM POPUP -->
+
+        <!--START ASSIGN DUEDATE POPUP -->
+        <script type="text/ng-template" id="assignDueDate.html">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <uib-datepicker data-ng-change="chooseDate()" data-ng-model="dateparam.duedate" datepicker-options="dateOptions"></uib-datepicker>
+                </div>
+                <div class="modal-footer">
+                    <button data-ng-disabled="!dueDate" data-ng-click="updateDueDate()" class="btn btn-outline green-jungle bold">Save</button>
+                    <button data-ng-click="closeassignDueDate()" class="btn btn-outline purple bold" aria-hidden="true">Close</button>
+                </div>
+            </div>
+        </script>
+        <!--END ASSIGN DUEDATE POPUP -->
+    </div>
+
+</div>
+<!-- END MAIN CONTENT -->
+

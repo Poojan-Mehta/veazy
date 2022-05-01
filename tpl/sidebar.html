@@ -1,0 +1,52 @@
+<!-- BEGIN SIDEBAR -->
+<div class="page-sidebar-wrapper">
+    <div class="page-sidebar navbar-collapse collapse my_sidebar index1_sidebar bordered shadow" style="height: 100% !important;">
+        <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="false" data-slide-speed="200">
+            <!-- PROFILE PIC -->
+            <li>
+                <div class="mt-comments">
+                    <div class="mt-comment profile_mt_comment">
+                        <div class="mt-comment-img">
+                            <img src="{{settings.avatarPath}}/{{vProfileImage}}" width="60" height="60"></div>
+                        <div class="mt-comment-body">
+                            <div class="mt-comment-info">
+                                <span class="mt-comment-author">{{fname}} {{lname}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!--END PROFILE PIC -->
+            <!-- MENU -->
+            <li class="nav-item start" data-ng-class="{'active': $state.includes('app.dashboard')}">
+                <a data-ui-sref="app.dashboard" class="nav-link nav-toggle">
+                    <i class="icon-home"></i>
+                    <span class="title">{{lang_trans.menu.home}}</span>
+                </a>
+            </li>
+            <li class="nav-item start" data-ng-class="{'active': $state.includes('app.myproducts')}">
+                <a data-ui-sref="app.myproducts" class="nav-link nav-toggle">
+                    <i class="icon-grid"></i>
+                    <span class="title">{{lang_trans.menu.my_application}}</span>
+                </a>
+            </li>
+            <hr>
+            <li class="nav-item nav_step" data-ng-if="Pro_Features == 'yes' && is_plan_exists == 'yes'"> <!--added by poojan && is_plan_exists == 'yes' -->
+                <span>{{lang_trans.menu.master_dashboard_profeatures}}</span>
+            </li>
+            <li class="nav-item start" data-ng-if="Pro_Features == 'yes' && is_plan_exists == 'yes'" data-ng-class="{'active': $state.includes('app.alltasks')}">
+                <a data-ui-sref="app.alltasks" class="nav-link nav-toggle">
+                    <i class="icon-check"></i>
+                    <span class="title">{{lang_trans.menu.all_tasks}}</span>
+                </a>
+            </li>
+            <li class="nav-item start" data-ng-if="Pro_Features == 'yes' && is_plan_exists == 'yes'" data-ng-class="{'active': $state.includes('app.quick_link')}">
+                <a data-ui-sref="app.quick_link" class="nav-link nav-toggle">
+                    <i class=" icon-link"></i>
+                    <span class="title">{{lang_trans.menu.quick_links}}</span>
+                </a>
+            </li>
+            <!-- END MENU -->
+        </ul>
+    </div>
+</div>

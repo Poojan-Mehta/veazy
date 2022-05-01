@@ -1,0 +1,44 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="addDocFolderCtrl"
+     data-ng-if="is_main_user == 1 || document_folder_permission.add ==1 || document_folder_permission.update ==1">
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{page_name}}</h1>
+                </div>
+            </div>
+        </div>
+        <!-- main header end -->
+        <!-- Content -->
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                          name="addFolderForm" novalidate>
+                        <div class="control-group">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Folder Name</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="vFolderName" data-ng-model="vFolderName" placeholder='Folder Name' required>
+                                    <span data-ng-show="submitted && addFolderForm.vFolderName.$invalid">
+                                        <span class="text-danger" data-ng-show="addFolderForm.vFolderName.$error.required">Folder name is required</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-sm btn-info" data-ng-click="add_cat_form(addFolderForm.$valid)">{{save_btn}}</button>
+                                    <button type="submit" class="btn btn-sm btn-danger" ui-sref="app.docfolder">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Content end -->
+    </div>
+</div>
+

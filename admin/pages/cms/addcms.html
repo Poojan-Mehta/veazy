@@ -1,0 +1,94 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="addcmsCtrl" data-ng-if="is_main_user == 1 || cms_page_dis_permission.main_menu_id == '5.2'">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{pagename}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                          name="cmsform" novalidate>
+                        <div class="control-group">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{cms.selectmenu}}<span class="required">*</span></label>
+                                <div class="col-sm-5">
+                                    <select class="form-control" name="PageMenu" data-ng-model="PageMenu" id="PageMenu"  data-ng-options="option.iPkMenuId as option.vMenuName for option in displayedoption" required>
+                                        <option value="">{{cms.selectmenu}}</option>
+                                    </select>
+                                    <span data-ng-show="submitted && cmsform.PageMenu.$invalid">
+                                            <span class="text-danger" data-ng-show="cmsform.PageMenu.$error.required">{{general.required}}</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{cms.title}}<span class="required">*</span></label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="PageTitle" data-ng-model="PageTitle" placeholder={{cms.pagetitle}} required>
+                                    <span data-ng-show="submitted && cmsform.PageTitle.$invalid">
+                                            <span class="text-danger" data-ng-show="cmsform.PageTitle.$error.required">{{general.required}}</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{cms.description}}<span class="required">*</span></label>
+                                <div class="col-sm-8">
+                                    <div text-angular ng-model="PageDes" class="btn-groups"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{cms.metatitle}}</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="PageMtitle" data-ng-model="PageMTitle" placeholder={{cms.metatitle1}}>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{cms.metaword}}</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="PageMKey" data-ng-model="PageMKey" placeholder={{cms.metaword1}}>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{cms.metadesc}}</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="PageMDes" data-ng-model="PageMDes" placeholder={{cms.metadesc1}}>
+                                </div>
+                            </div>
+
+                            <div class="form-group" >
+                                <label class="col-sm-2 control-label">{{general.status}}<span class="required">*</span></label>
+                                <div class="col-sm-5">
+                                    <select class="form-control" name="PageStatus" data-ng-model="PageStatus" id="PageStatus" required>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                    <span data-ng-show="submitted && cmsform.PageStatus.$invalid">
+                                        <span class="text-danger" data-ng-show="cmsform.PageStatus.$error.required">{{general.required}}</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-sm btn-info" ng-click="add_cms_form(cmsform.$valid)">{{general.btnsave}}</button>
+                                    <button type="submit" class="btn btn-sm btn-danger" ui-sref="app.cms">{{general.btncancel}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

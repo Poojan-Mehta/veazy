@@ -1,0 +1,196 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="plansCtrl"
+     data-ng-if="is_main_user == 1 || plans_list_permission.main_menu_id == '10.2'">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{plans.title}}</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default table-responsive">
+                <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12" style="margin-top: 20px;">
+                    <button data-ng-show="is_main_user == 1 || plans_list_permission.add == 1"
+                            ui-sref="app.addplan" class="btn btn-addon m-b-xs btn-info"><i
+                            class="fa fa-plus"></i> Add New
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || plans_list_permission.delete == 1"
+                            class="btn btn-addon m-b-xs btn-danger" data-ng-click="removeAll();"><i
+                            class="fa fa-trash-o"></i> Delete All
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || plans_list_permission.active == 1"
+                            class="btn btn-addon m-b-xs btn-primary" data-ng-click="activeAll();"><i
+                            class="fa fa-check"></i> Active All
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || plans_list_permission.inactive == 1"
+                            class="btn btn-addon m-b-xs btn-yellow" data-ng-click="deactiveAll();"><i
+                            class="icon-close"></i> Inactive All
+                    </button>
+                    &nbsp;
+                    <button class="btn btn-addon m-b-xs  btn-success " ng-csv="getcsv()"
+                            csv-header="['Title','Created Date', 'Status']"
+                            filename="plans_List.csv"><i class="glyphicon glyphicon-save"></i> {{general.export}}
+                    </button>                    
+                </div>               
+                
+                <div class="col-sm-6 col-lg-4 col-md-4 col-xs-12 pull-right top_search" st-table="displayedCollection" st-safe-src="rowCollection">
+                    <input class="form-control ng-isolate-scope" st-search="" placeholder="Enter character to search..." type="text" data-ng-model="searchText"/>
+                </div>
+
+
+                <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped" st-filtered-collection="rowCollection">
+                    <thead>
+                    <tr>
+                        <th class="text-center">
+                            <div class="checkbox"><label class="i-checks"><input type="checkbox" id="checkAll"/><i></i></label></div>
+                        </th>
+                        <!--<th class="text-nowrap text-uppercase">Package Name</th>-->
+                        <th class="text-nowrap text-uppercase">{{plans.name}}</th>
+                        <th class="text-nowrap text-uppercase">{{plans.duration}}</th>
+                        <th class="text-nowrap text-uppercase">Duration</th>
+                        <th class="text-nowrap text-uppercase">{{plans.noa}}</th>                        
+                        <th class="text-center text-nowrap text-uppercase">{{general.cdate}}</th>
+                        <th class="text-nowrap text-uppercase"
+                            data-ng-show="is_main_user == 1 || (plans.active==1 && plans.inactive==1)">
+                            is_Visible
+                        </th>
+                        <th class="text-uppercase" data-ng-show="is_main_user == 1 || (plans_list_permission.active==1 && plans_list_permission.inactive==1)">
+                            {{general.status}}
+                        </th>
+                        <th class="text-center text-nowrap text-uppercase">view</th>
+                        <th class="text-center text-nowrap text-uppercase" class="text-center text-nowrap text-uppercase" data-ng-show="is_main_user == 1 || (plans_list_permission.update==1 || plans_list_permission.delete==1)"
+                            st-sort="">{{general.action}}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="row in displayedCollection">
+                        <td class="text-center">
+                            <div class="checkbox"><label class="i-checks">
+                                <input type='checkbox'
+                                       class="sliderstatus"
+                                       id="slider{{row.iPkPlanId}}"
+                                       name='checklist[]'
+                                       data-ng-model="checklist" ng-disabled="row.assign == 'yes'"
+                                       value=""><i></i></label>
+                            </div>
+                        </td>
+                        <!--<td class="text-nowrap">{{row.vPackageName}}</td>-->
+                        <td class="text-nowrap">{{row.Plan_names}}</td>
+                        <td class="text-nowrap text-capitalize">{{row.Plan_Duration}}</td>
+                        <td class="text-nowrap text-capitalize"><span ng-if="row.Plan_Duration == 'monthly' && row.Duration_Number != null">{{row.Duration_Number}} Months</span><span ng-if="row.Plan_Duration == 'yearly' && row.Duration_Number != null">{{row.Duration_Number}} Years</span><span ng-if="row.Plan_Duration == 'lifetime'">Lifetime</span><span ng-if="row.Plan_Duration != 'lifetime' && row.Duration_Number == null">N/A</span></td>
+                        <td class="">{{row.no_application}}</td>
+                        <td class="text-center text-nowrap">{{row.dtCreatedOn}}</td>
+                        <td data-ng-show="is_main_user == 1 || (plans_list_permission.active == 1 && plans_list_permission.inactive == 1)  ">
+                            <label class="i-switch m-t-xs m-r"
+                                   ng-init="is_Visible=row.is_Visible=='active' ? true : false">
+                                <input type="checkbox" checked="true" ng-model="is_Visible"
+                                       ng-click="changevisiblity(row.iPkPlanId,row.is_Visible)">
+                                <i></i>
+                            </label>
+                        </td>
+                        <td data-ng-show="is_main_user == 1 || (plans_list_permission.active == 1 && plans_list_permission.inactive == 1)  ">
+                            <label class="i-switch m-t-xs m-r"
+                                   ng-init="stay=row.ePlanStatus=='active' ? true : false">
+                                <input type="checkbox" checked="true" ng-model="stay" ng-disabled="row.assign == 'yes'"
+                                       ng-click="changestatus(row.iPkPlanId,row.ePlanStatus)">
+                                <i></i>
+                            </label>
+                        </td>
+                        <td class="text-center text-nowrap">
+                            <button data-ng-show="is_main_user == 1"
+                                    ng-click="view(row.iPkPlanId)" class="btn m-b-xs btn-sm btn-yellow"> <i class="fa fa-eye"></i>
+                            </button>
+                        </td>
+                        <td class="text-center text-nowrap">
+                            <button data-ng-show="is_main_user == 1 || plans_list_permission.update==1" ui-sref="app.editplan({pid:row.iPkPlanId})"
+                                    class="btn m-b-xs btn-sm btn-info info" ng-disabled="row.assign == 'yes'"
+                                    ><i class="fa fa-edit"></i> Edit
+                            </button>
+
+                            <button data-ng-show="is_main_user == 1 || plans_list_permission.delete==1"
+                                    class="btn m-b-xs btn-sm btn-info btn-danger" ng-disabled="row.assign == 'yes'"
+                                    ng-click="removeItem(row.iPkPlanId,row.Plan_names)"><i class="fa fa-trash-o"></i>
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-if="displayedCollection.length == 0">
+                        <td colspan="10">
+                            <div class="row"><span class="col-md-4 col-md-offset-5">{{general.norecord}}</span></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10" class="text-right">
+                            <div st-pagination="" st-items-by-page="10" st-displayed-pages="7" class="no-margin"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <!-- / right col -->
+</div>
+<!-- ADD TAG -->
+<script type="text/ng-template" id="viewModal.html">
+    <div class="modal-header" style="background-color: #5a5d88;  color: white;" >
+        <button type="button" class="close" style="color: white !important;font-size: 30px;" ng-click="cancelViewModal()" data-dismiss="modal">&times;</button>
+        <div>
+            <h3>ID: <b>{{viewplan.iPkPlanId}}</b></h3>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <div>
+                <h4><label>Plan Id: <b class="text-nowrap text-capitalize">{{viewplan.Unique_Plan_ID}}</b></label></h4>
+            </div>
+            <div>
+                <h4><label>Plan Name: <b class="text-nowrap text-capitalize">{{viewplan.Plan_names}}</b></label></h4>
+            </div>
+            <div>
+                <h4><label>Plan Duration: <b class="text-nowrap text-capitalize" >{{viewplan.Plan_Duration}}</b></label></h4>
+            </div>
+            <div>
+                <h4><label>Plan Prices: <b class="text-nowrap text-capitalize" >{{viewplan.Plan_prices}}</b></label></h4>
+            </div>
+            <div>
+                <h4><label>No Of Application: <b >{{viewplan.no_application}}</b></label></h4>
+            </div>
+            <div>
+                <h4><label>Allow Lessons: <b class="text-capitalize">{{viewplan.AllowLessons}}</b></label></h4>
+            </div>
+            <div>
+                <h4><label>Allow Upload Documents: <b class="text-capitalize">{{viewplan.AllowDC}}</b></label></h4>
+            </div>
+            <div>
+                <h4><label>Allow Document Templates: <b class="text-capitalize">{{viewplan.AllowTemplates}}</b></label></h4>
+            </div>
+            <div>
+                <h4><label>Allow Pro Features: <b class="text-capitalize">{{viewplan.Pro_Features}}</b></label></h4>
+            </div>
+            <div>
+                <h4><label>Created Date: <b>{{viewplan.dtCreatedOn}}</b></label></h4>
+            </div>
+            <div ng-if="viewplan.ePlanStatus == 'active'" >
+                <h4><label>Status: <b style="color: green" class="text-nowrap text-capitalize">{{viewplan.ePlanStatus}}</b></label></h4>
+            </div>
+            <div ng-if="viewplan.ePlanStatus == 'inactive'" >
+                <h4><label>Status: <b style="color: red" class="text-nowrap text-capitalize">{{viewplan.ePlanStatus}}</b></label></h4>
+            </div>
+        </div>
+    </div>
+
+</script>
+<!-- ADD TAG END -->

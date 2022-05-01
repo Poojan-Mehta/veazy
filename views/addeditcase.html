@@ -1,0 +1,246 @@
+<!-- BEGIN PAGE CONTENT-->
+<div data-ng-controller="AddEditCaseController">
+    <style>
+        .form-group{  margin-bottom:3px !important;  }
+        .profile-userpic img{  width:120px !important;height:120px !important;display: block;  }
+    </style>
+    <div class="master_dashbaord">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- BEGIN TAB PORTLET-->
+                <div class="portlet light bordered bg-white shadow">
+                    <div class="portlet-title d-flex">
+                        <div class="caption full_width">
+                            <!--<span class="caption-subject">{{ lang_trans.profile.header }}</span>-->
+                            <span class="caption-subject">Case</span>
+                            <div class="pull-right">
+                                <a data-ui-sref="app.timeline" class="btn btn-md green-jungle btn-outline bold">
+                                    Go to Timeline
+                                </a>
+                            </div>
+                            <div class="pull-right" style="margin-right:10px;">
+                                <a data-ui-sref="app.maindashboard" class="btn btn-md green-jungle btn-outline bold">
+                                    Main Dashboard
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="tabbable tabbable-tabdrop">
+                            <div class="tab-content">
+                                <!-- TIMELINE -->
+                                <form role="form" name="caseform" novalidate>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <h5 class="font-bold bold ng-scope">Nationality</h5>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <select class="form-control input-lg" placeholder="Nationality" name="Nationality" ng-model="paramtimeline.Nationality" ng-options="country.iPkCountryId as country.vCountryName for country in countries" required>
+                                                        <option value="">-- Select Nationality --</option>
+                                                    </select>
+                                                    <span data-ng-show="submittedcase && caseform.Nationality.$invalid">
+                                                        <span class="text-danger" data-ng-show="submittedcase && caseform.Nationality.$invalid">Nationality is required.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top:20px;">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <h5 class="font-bold bold ng-scope">Application Subclass</h5>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <select class="form-control input-lg" ng-model="paramtimeline.ApplicationSubclass" name="ApplicationSubclass" ng-options="subclass.iPkVisaProductId as subclass.vVisaProductTitle for subclass in applicationsubclass" required>
+                                                        <option value="">-- Select Subclass --</option>
+                                                    </select>
+                                                    <span data-ng-show="submittedcase && caseform.ApplicationSubclass.$invalid">
+                                                        <span class="text-danger" data-ng-show="submittedcase && caseform.ApplicationSubclass.$invalid">Subclass is required.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top:20px;">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <h5 class="font-bold bold ng-scope">Location at lodgement</h5>
+                                                 </div>
+                                                <div class="col-md-10">                                             <select class="form-control input-lg" placeholder="VisaOffice" ng-model="paramtimeline.VisaOffice" name="VisaOffice" ng-options="country.iPkCountryId as country.vCountryName for country in countries_loc_lodg | filter:locationShow" required>
+                                                        <option value="">-- Select Location --</option>
+                                                    </select>
+                                                    <span data-ng-show="submittedcase && caseform.VisaOffice.$invalid">
+                                                        <span class="text-danger" data-ng-show="submittedcase && caseform.VisaOffice.$invalid">Location at lodgement is required.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top:20px;">
+                                            <div class="col-md-12">
+                                                 <div class="col-md-2">
+                                                    <h5 class="font-bold bold ng-scope">Onshore/Offshore</h5>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <select class="form-control input-lg" name="OnOffShore" ng-model="paramtimeline.OnOffShore" required>
+                                                        <option value="">-- Onshore/Offshore --</option>
+                                                        <option value="Offshore"  ng-if="paramtimeline.ApplicationSubclass != '1'">Offshore</option>
+                                                        <option value="Onshore" ng-if="paramtimeline.ApplicationSubclass == '1'">Onshore</option>
+                                                    </select>
+                                                    <span data-ng-show="submittedcase && caseform.OnOffShore.$invalid">
+                                                        <span class="text-danger" data-ng-show="submittedcase && caseform.OnOffShore.$invalid">This is required.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top:20px;">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <h5 class="font-bold bold ng-scope">Date of Lodgement</h5>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <p class="input-group">
+                                                        <input type="text" class="form-control input-lg"
+                                                               placeholder="Date of lodgement" readonly
+                                                               uib-datepicker-popup="dd-MMMM-yyyy" name="DateOfLodgement" ng-model="paramtimeline.DateOfLodgement"
+                                                               is-open="popup1.opened"
+                                                               datepicker-options="dateOptions" close-text="Close"
+                                                               alt-input-formats="altInputFormats" required/>
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default btn-lg" ng-click="open1()">
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                        </button>
+                                                    </span>
+                                                    </p>
+                                                    <span data-ng-show="submittedcase && caseform.DateOfLodgement.$invalid">
+                                                        <span class="text-danger" data-ng-show="submittedcase && caseform.DateOfLodgement.$invalid">Lodgement date is required.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <h5 class="font-bold bold ng-scope">Document Request Date</h5>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <p class="input-group">
+                                                        <input type="text" class="form-control input-lg"
+                                                               placeholder="Document Request Date" readonly
+                                                               uib-datepicker-popup="dd-MMMM-yyyy" name="DocumentReqDate" ng-model="paramtimeline.DocumentReqDate"
+                                                               is-open="popup2.opened"
+                                                               datepicker-options="dateOptions" close-text="Close"
+                                                               alt-input-formats="altInputFormats" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default btn-lg" ng-click="open2()">
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                        </button>
+                                                    </span>
+                                                    </p>
+                                                    <span data-ng-show="submittedcase && caseform.DocumentReqDate.$invalid">
+                                                        <span class="text-danger" data-ng-show="submittedcase && caseform.DocumentReqDate.$invalid">Document Request date is required.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <h5 class="font-bold bold ng-scope">Medical Completion Date</h5>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <p class="input-group">
+                                                        <input type="text" class="form-control input-lg"
+                                                               placeholder="Medical Date" readonly
+                                                               uib-datepicker-popup="dd-MMMM-yyyy" name="MedicalCompDate" ng-model="paramtimeline.MedicalCompDate"
+                                                               is-open="popup4.opened"
+                                                               datepicker-options="dateOptions" close-text="Close"
+                                                               alt-input-formats="altInputFormats"/>
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default btn-lg" ng-click="open4()">
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                        </button>
+                                                    </span>
+                                                    </p>
+                                                    <span data-ng-show="submittedcase && caseform.MedicalCompDate.$invalid">
+                                                        <span class="text-danger" data-ng-show="submittedcase && caseform.MedicalCompDate.$invalid">Medical date is required.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <h5 class="font-bold bold ng-scope">Grant Date</h5>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <p class="input-group">
+                                                        <input type="text" class="form-control input-lg"
+                                                               placeholder="Granted Date" readonly
+                                                               uib-datepicker-popup="dd-MMMM-yyyy" name="dtGrantedOn" ng-model="paramtimeline.dtGrantedOn"
+                                                               is-open="popup3.opened"
+                                                               datepicker-options="dateOptions" close-text="Close"
+                                                               alt-input-formats="altInputFormats"/>
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default btn-lg" ng-click="open3()">
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                        </button>
+                                                    </span>
+                                                    </p>
+                                                    <span data-ng-show="submittedcase && caseform.dtGrantedOn.$invalid">
+                                                        <span class="text-danger" data-ng-show="submittedcase && caseform.dtGrantedOn.$invalid">Grant date is required.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <h5 class="font-bold bold ng-scope">Current Status</h5>
+                                                 </div>
+                                                <div class="col-md-10">
+                                                    <select class="form-control input-lg" name="CurrentStatus" ng-model="paramtimeline.CurrentStatus" required>
+                                                        <option value="">-- Select Application Status --</option>
+                                                        <option value="Lodged">Lodged</option>
+                                                        <option value="Granted">Granted</option>
+                                                        <option value="Refused">Refused</option>
+                                                    </select>
+                                                    <span data-ng-show="submittedcase && caseform.CurrentStatus.$invalid">
+                                                        <span class="text-danger" data-ng-show="submittedcase && caseform.CurrentStatus.$invalid">CurrentStatus is required.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top:10px;">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    
+                                                 </div>
+                                                <div class="col-md-10">
+                                                    <div class="col-md-1" style="margin-top: 8px;margin-left: -15px;margin-right: -56px;">
+                                                        <input type="checkbox" ng-model="paramtimeline.IsAnonymous" ng-checked="IsAnonymous" ng-click="IsAnonymousUpdate(IsAnonymous)">
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <h4 class="font-bold ng-scope">keep your name anonymous.</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row pull-right" style="margin-top:10px;">
+                                            <div class="col-md-12">
+                                                <div class="col-md-10">
+                                                    <button type="button" class="btn green-jungle pull-right btn-circle btn-lg" data-ng-disabled="disabledcase" data-ng-click="saveCase(caseform.$valid)">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- END PERSONAL INFO TAB -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->

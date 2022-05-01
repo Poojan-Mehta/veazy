@@ -1,0 +1,973 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- BEGIN MAIN CONTENT -->
+<div  class="master_dashbaord" ng-controller="documentController">
+    <style type="text/css">
+        body[ng-controller] .dashboard_soc {  z-index: 100100 !important;  }
+        /*.table.table-light > thead > tr > th {  font-weight: inherit !important;  }*/
+        #family-member {  width: 500px;  }
+        /* Extra small devices (phones, 600px and down) */
+        @media only screen and (max-width: 600px) {
+            #family-member {  width: 100%;  }
+            #family-member label {  height: 85px !important;  width: 85px !important;  min-height: 85px !important;  min-width: 90px !important;  }
+            #family-member img {  height: 85px !important;  width: 85px !important;  min-height: 85px !important;  min-width: 90px !important;  }
+            #family-member .show_main_app{  margin-top: 10px;  }
+            #family-member .btn{  margin-top: 5px !important;  }
+        }
+
+        /* Small devices (portrait tablets and large phones, 600px and up) */
+        @media only screen and (min-width: 600px) {
+            #family-member {  width: 100px;  }
+            #family-member label {  height: 85px !important;  width: 85px !important;  min-height: 85px !important;  min-width: 90px !important;  }
+            #family-member img {  height: 85px !important;  width: 85px !important;  min-height: 85px !important;  min-width: 90px !important;  }
+            #family-member .show_main_app{  margin-top: 10px;  }
+            #family-member .btn{  margin-top: 5px !important;  }
+        }
+
+        /* Medium devices (landscape tablets, 768px and up) */
+        @media only screen and (min-width: 768px) {
+            #family-member {  width: 100px;  }
+            #family-member label { margin-top: 10px;height: 85px !important;  width: 85px !important;  min-height: 85px !important;  min-width: 90px !important;  }
+            #family-member img {  height: 85px !important;  width: 85px !important;  min-height: 85px !important;  min-width: 90px !important;  }
+            #family-member .show_main_app{  margin-top: 10px;  }
+            #family-member .btn{  margin-top: 5px !important;  }
+        }
+
+        /* Large devices (laptops/desktops, 992px and up) */
+        @media only screen and (min-width: 992px) {
+            #family-member {  width: 200px;  }
+        }
+
+        /* Extra large devices (large laptops and desktops, 1200px and up) */
+        @media only screen and (min-width: 1200px) {
+            #family-member {  width: 500px;  }
+        }
+    </style>
+    <div class="row" data-ng-if="isdc">
+        <div class="col-md-12 col-xs-12">
+            <div class="text-light marketplace_desc soc_desc bg-white"><i
+                    class="fa fa-exclamation-circle color_theme bg-white "></i>
+                <p>Use the Document Checklist to help keep track of what you have collected for your
+                    application. It has been designed to help you understand how each document relates to the
+                    legal criteria of the application.
+                </p>
+                <br>
+                <p><b>Other Tips</b></p>
+                <ul class="disc_veazy">
+                    <li>Any document with a
+                        <j class="fa fa-star color_theme fa-2x"></j>
+                        is a <b>Core Document.</b> Each Core Document you collect will reflect in your
+                        Application Dashboard.
+                    </li>
+                    <li><b>Veazy Suggestions </b>are added guidance and direction which will help you to
+                        identify important things you should be aware of.
+                    </li>
+                    <li><b>Renaming Guides </b>are suggestions on how to <b>name your documents </b> prior to
+                        uploading them to the eIMMI portal.
+                    </li>
+                    <!--<li>Certain documents will have a Template available which is included in the <b>Template
+                        Pack. </b></li>
+                    <li>Your plan may allow you to <b>Upload</b> your documents to safely and securely store them in one convenient
+                        location as well as access them at any time.
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10 col-xs-12 ">
+            <div class="col-md-12 text-center rcnt_app_head"><h3>Select Checklist</h3></div>
+        </div>
+        <div class="col-md-10 col-xs-12 select_checklist">
+            <div class="row row_flex">
+                <!-- BUSINESS APPLICANT START -->
+                <div class="col-md-3 col-xs-12 col_flex" data-ng-if="eAllowBusinessDetails == 'yes'">
+                    <div class="portlet light shadow" style="height: 90%;">
+                        <div class="portlet-title text-center">
+                            <div class="caption full_width"><span>Business Applicant</span></div>
+                        </div>
+                        <div class="portlet-body veazy_form text-center" data-ng-if="business_main_details == ''">
+                            <label data-ng-click="addBusinessApplicant()">+Add Business Applicant</label>
+                        </div>
+                        <div class="portlet-body veazy_form text-center" data-ng-if="business_main_details != ''">
+                            <div class="show_main_app"  ng-style="business_main_details.vProfilePicture != '' && {'border':'none'}">
+                                <i class="icon-note color_theme bold" style="cursor: pointer;"
+                                   data-ng-click="editBusinessApplicant()"></i>
+                                <img class="" ng-src="{{business_main_details.profilepic}}"
+                                     data-ng-if="business_main_details.vProfilePicture != ''"
+                                     style="border-radius: 10px!important;border: none !important;" width="125" height="125">
+                                <img class="img-responsive" src="images/fut_business.png"
+                                     data-ng-if="business_main_details.vProfilePicture == ''"
+                                     style="border-radius: 10px!important;" width="125" height="125">
+                            </div>
+                            <p style="margin-bottom:0">
+                                <button data-ng-class="selected_Relation_ID == business_main_details.iPkUserRelationId?'bg-green-jungle':'bg-purple-theme'"
+                                        class="btn font-white bold btn-block"
+                                        data-ng-click="getDocuments(business_main_details.iPkUserRelationId)">
+                                    {{business_main_details.vName}}
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- BUSINESS APPLICANT END -->
+
+                <!-- BUSINESS SPONSE START -->
+                <div class="col-md-3 col-xs-12 col_flex" data-ng-if="eAllowSponser == 'yes'">
+                    <div class="portlet light shadow" style="height: 90%;">
+                        <div class="portlet-title text-center">
+                            <div class="caption full_width"><span>Sponsored Worker</span></div>
+                        </div>
+                        <div class="portlet-body veazy_form text-center" data-ng-if="business_sponse_details == ''">
+                            <label data-ng-click="addBusinessSponse()">+Add Sponsored Worker</label>
+                        </div>
+                        <div class="portlet-body veazy_form text-center" data-ng-if="business_sponse_details != ''">
+                            <div class="show_main_app" ng-style="business_sponse_details.vProfilePicture != '' && {'border':'none'}">
+                                <i class="icon-note color_theme bold" style="cursor: pointer;"
+                                   data-ng-click="editBusinessSponse()"></i>
+                                <img class="" ng-src="{{business_sponse_details.profilepic}}"
+                                     data-ng-if="business_sponse_details.vProfilePicture != ''"
+                                     style="border-radius: 10px!important;" width="125" height="125">
+                                <img class="img-responsive" src="images/fut_default.png"
+                                     data-ng-if="business_sponse_details.vProfilePicture == ''"
+                                     style="border-radius: 10px!important;" width="125" height="125">
+                            </div>
+                            <p style="margin-bottom:0">
+                                <button data-ng-class="selected_Relation_ID == business_sponse_details.iPkUserRelationId?'bg-green-jungle':'bg-purple-theme'"
+                                        class="btn font-white bold btn-block"
+                                        data-ng-click="getDocuments(business_sponse_details.iPkUserRelationId)">
+                                    {{business_sponse_details.vName}}
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- BUSINESS SPONSE END -->
+
+                <!-- MAIN APPLICANT START -->
+                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12 col_flex" data-ng-if="eAllowApplicantDetails == 'yes'">
+                    <div class="portlet light shadow" style="height: 90%;">
+                        <div class="portlet-title text-center">
+                            <div class="caption full_width"><span>Main Applicant</span></div>
+                        </div>
+                        <div class="portlet-body veazy_form text-center" data-ng-if="fut_main_details == ''">
+                            <label data-ng-click="addMainApplicant()">+Add Main Applicant</label>
+                        </div>
+                        <div class="portlet-body veazy_form text-center" data-ng-if="fut_main_details != ''">
+                            <div class="show_main_app"  ng-style="fut_main_details.vProfilePicture != '' && {'border':'none'}">
+                                <i class="icon-note color_theme bold" style="cursor: pointer;"
+                                   data-ng-click="editMainApplicant()"></i>
+                                <img class="" ng-src="{{fut_main_details.profilepic}}"
+                                     data-ng-if="fut_main_details.vProfilePicture != ''"
+                                     style="border-radius: 10px!important;" width="125" height="125">
+                                <img class="img-responsive" src="images/fut_default.png"
+                                     data-ng-if="fut_main_details.vProfilePicture == ''"
+                                     style="border-radius: 10px!important;" width="125" height="125">
+                            </div>
+                            <p style="margin-bottom:0">
+                                <button data-ng-class="selected_Relation_ID == fut_main_details.iPkUserRelationId?'bg-green-jungle':'bg-purple-theme'"
+                                        class="btn font-white bold btn-block"
+                                        data-ng-click="getDocuments(fut_main_details.iPkUserRelationId)">
+                                    {{fut_main_details.vName}}
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- MAIN APPLICANT END -->
+
+                <!-- FAMILY MEMBER START -->
+                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12 col_flex" style="flex: 2" data-ng-if="eAllowFUT == 'yes'">
+                    <div class="portlet light shadow" style="height: 90%;">
+                        <div class="portlet-title text-center">
+                            <div class="caption full_width"><span>Migrating Family Members</span></div>
+                        </div>
+                        <div class="portlet-body veazy_form text-center" data-ng-if="fut_main_family_details == ''">
+                            <label data-ng-click="addFamily()">+Add Family Member</label>
+                        </div>
+                        <div class="portlet-body veazy_form text-center" data-ng-if="fut_main_family_details != ''">
+                            <div id="family-member"  class="row row_flex asdaut">
+                                <div class="col-md-4 text-center col_flex" style="white-space: normal">
+                                    <label data-ng-click="addFamily()">+Add Family Member</label>
+                                </div>
+                                <div class="col-md-4 text-center col_flex"
+                                     data-ng-repeat="family in fut_main_family_details">
+                                    <div class="show_main_app"  ng-style="family.vProfilePicture != '' && {'border':'none'}">
+                                        <i class="icon-note color_theme bold" style="cursor: pointer;"
+                                           data-ng-click="editFamily(family)"></i>
+                                        <img class="" ng-src="{{family.profilepic}}"
+                                             data-ng-if="family.vProfilePicture != ''"
+                                             style="border-radius: 10px!important;" width="125" height="125">
+                                        <img class="" src="images/fut_default.png"
+                                             data-ng-if="family.vProfilePicture == ''"
+                                             style="border-radius: 10px!important;" width="125" height="125">
+                                    </div>
+                                    <p style="margin-bottom:0">
+                                        <button data-ng-class="selected_Relation_ID == family.iPkUserRelationId?'bg-green-jungle':'bg-purple-theme'"
+                                                class="btn font-white bold btn-block"
+                                                data-ng-click="getDocuments(family.iPkUserRelationId)">{{family.vName}}
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FAMILY MEMBER START -->
+
+                <!-- SPONSER START -->
+                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12 col_flex" data-ng-if="eAllowFUT == 'yes'">
+                    <div class="portlet light shadow" style="height: 90%;">
+                        <div class="portlet-title text-center">
+                            <div class="caption full_width"><span>Family Sponsor</span></div>
+                        </div>
+                        <div class="portlet-body veazy_form text-center" data-ng-if="fut_main_sponse_details == ''">
+                            <label data-ng-click="addSponser()">+Add Family Sponsor</label>
+                        </div>
+                        <div class="portlet-body veazy_form text-center" data-ng-if="fut_main_sponse_details != ''">
+                            <div class="show_main_app" ng-style="fut_main_sponse_details.vProfilePicture != '' && {'border':'none'}">
+                                <i class="icon-note color_theme bold" style="cursor: pointer;"
+                                   data-ng-click="editSponser()"></i>
+                                <img class="" ng-src="{{fut_main_sponse_details.profilepic}}"
+                                     data-ng-if="fut_main_sponse_details.vProfilePicture != ''"
+                                     style="border-radius: 10px!important;" width="125" height="125">
+                                <img class="img-responsive" src="images/fut_default.png"
+                                     data-ng-if="fut_main_sponse_details.vProfilePicture == ''"
+                                     style="border-radius: 10px!important;" width="125" height="125">
+                            </div>
+                            <p style="margin-bottom:0">
+                                <button data-ng-class="selected_Relation_ID == fut_main_sponse_details.iPkUserRelationId?'bg-green-jungle':'bg-purple-theme'"
+                                        class="btn font-white bold btn-block"
+                                        data-ng-click="getDocuments(fut_main_sponse_details.iPkUserRelationId)">
+                                    {{fut_main_sponse_details.vName}}
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- SPONSER END -->
+            </div>
+        </div>
+        <div id="doc-listing" class="col-md-12 col-xs-12">
+            <br><br>
+        </div>
+    </div>
+    <div class="row" data-ng-repeat="(title,documents) in document_listing track by $index">
+        <div class="col-md-12">
+            <div class="portlet light shadow soc_portlet dc_portlet">
+                <div class="portlet-title">
+                    <div class="caption full_width">
+                        <span class="caption-subject">&nbsp;&nbsp;&nbsp;{{title}}&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                </div>
+                <div class="portlet-body" style="padding-top: 20px !important;">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-light soc_table">
+                            <thead>
+                            <tr>
+                                <th class="nunito text-center text-nowrap"></th>
+                                <th class="nunito text-center text-nowrap">Status</th>
+                                <th class="nunito text-nowrap">Veazy Suggestion</th>
+                                <th class="nunito text-nowrap">Renaming Guide</th>
+                                <!-- <th class="nunito text-nowrap">Comments</th> -->
+                                <!--<th class="nunito text-center text-nowrap">Template</th>-->
+                                <!-- <th class="nunito text-center text-nowrap" ng-show="AllowDC == 'yes'">Uploaded</th> -->
+                                <!-- <th class="nunito text-center text-nowrap" ng-show="AllowDC == 'yes'">Manage</th> -->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="doc in documents.elements">
+                                <td style="width:400px;" ng-if="doc.eUserDocType == 'system'">
+                                    <j data-ng-if="doc.eUserDocType == 'system'" class="fa fa-star color_theme dc_star1"></j>
+                                    <b><span ng-bind-html="doc.vDocName | nl2br"></span></b></b></td>
+                                <td style="width:400px;" ng-if="doc.eUserDocType == 'custom'">
+                                    <j data-ng-if="doc.eUserDocType == 'system'" class="fa fa-star color_theme"></j>
+                                    <b> &nbsp;<input style="width: auto;display: block"  type="text" limit-to="255"
+                                                     name="vDocName" focus-me="true" data-ng-model="vDocName" value="{{doc.vDocName}}"
+                                                     class="enter_text_input" ng-blur="onBlur(doc.iPkUserDocId,doc.iPkDocId,doc.iFkDocCatId,doc.eUserDocStatus,doc.eUserDocType,vDocName,'vDocName')"></b></td>
+                                <td style="width:auto;" class="text-center">
+                                    <div data-ng-if="doc.eUserDocType == 'system'" data-ng-click="changeStatus(doc.iPkDocId,doc.iFkDocCatId,doc.eUserDocStatus,doc.eUserDocType)">
+                                        <button data-ng-if="doc.eUserDocStatus == 'collected'" class="btn dc_status btn-outline bg-green-jungle font-white bold ">
+                                            Collected
+                                        </button>
+                                        <button data-ng-if="doc.eUserDocStatus == 'notcollected'" class="btn dc_status btn-outline border-red-thunderbird font-red-thunderbird bold dotted bg_trans">
+                                            Not Collected
+                                        </button>
+                                        <button data-ng-if="doc.eUserDocStatus == 'reviewing'" class="btn dc_status  btn-outline border-blue font-blue bold dotted bg_trans">
+                                            Reviewing
+                                        </button>
+                                        <button data-ng-if="doc.eUserDocStatus == 'pending'" class="btn btn-outline dc_status  border-yellow-crusta font-yellow-crusta bold dotted bg_trans">
+                                            Pending
+                                        </button>
+                                        <button data-ng-if="doc.eUserDocStatus == 'notapplicable'" class="btn btn-outline dc_status  border-green-crusta font-green-crusta bold dotted bg_trans">
+                                            Not Applicable
+                                        </button>
+                                    </div>
+                                    <div data-ng-if="doc.eUserDocType == 'custom'" data-ng-click="changeStatus(doc.iPkUserDocId,doc.iFkDocCatId,doc.eUserDocStatus,doc.eUserDocType)">
+                                        <button data-ng-if="doc.eUserDocStatus == 'collected'" class="btn dc_status btn-outline bg-green-jungle font-white bold ">
+                                            Collected
+                                        </button>
+                                        <button data-ng-if="doc.eUserDocStatus == 'notcollected'" class="btn dc_status btn-outline border-red-thunderbird font-red-thunderbird bold dotted bg_trans">
+                                            Not Collected
+                                        </button>
+                                        <button data-ng-if="doc.eUserDocStatus == 'reviewing'" class="btn dc_status  btn-outline border-blue font-blue bold dotted bg_trans">
+                                            Reviewing
+                                        </button>
+                                        <button data-ng-if="doc.eUserDocStatus == 'pending'" class="btn btn-outline dc_status  border-yellow-crusta font-yellow-crusta bold dotted bg_trans">
+                                            Pending
+                                        </button>
+                                        <button data-ng-if="doc.eUserDocStatus == 'notapplicable'" class="btn btn-outline dc_status  border-green-crusta font-green-crusta bold dotted bg_trans">
+                                            Not Applicable
+                                        </button>
+                                    </div>
+                                </td>
+                                <td style="width:400px" class="" data-ng-if="doc.vDocSuggestion == null"> </td>
+                                <td style="width:400px" class="" data-ng-if="doc.vDocSuggestion != null"> <span ng-bind-html="doc.vDocSuggestion | nl2br"></span></td>
+                                <td style="width:400px;" class="" ng-if="doc.eUserDocType == 'system'"> <span ng-bind-html="doc.vDocGuide | nl2br"></span></td>
+                                <td style="width:400px;" class="" ng-if="doc.eUserDocType == 'custom'"> <input style="width: auto;display: block"  type="text" limit-to="255"
+                                name="vDocGuide" focus-me="true" data-ng-model="vDocGuide" value="{{doc.vDocGuide}}" class="enter_text_input" ng-blur="onBlur(doc.iPkUserDocId,doc.iPkDocId,doc.iFkDocCatId,doc.eUserDocStatus,doc.eUserDocType,vDocGuide,'vDocGuide')"
+                                >
+                                <!-- <td style="width:auto;" class="" ng-if="doc.eUserDocType == 'system'"><input style="width: 100%;display: block"  type="text" limit-to="255"> -->
+                                <!-- <td style="width:auto;" class="" ng-if="doc.eUserDocType == 'custom'"><input style="width: 100%;display: block"  type="text" limit-to="255"> -->
+                                <!--<td style="width:75px" class="text-center template_btn">
+                                    <button data-ng-if="doc.is_template_avail == '1'" ng-click="scrolldown()" class="btn btn-outline border-green-jungle bold bg_trans">Available</button>
+                                </td>-->
+                                <td style="width:80px" class="text-center dc_portlet_icon" ng-show="AllowDC == 'yes'">
+                                    <div data-ng-if="doc.vFileName == '' || doc.vFileName == null">
+                                        <input type="file" onchange="angular.element(this).scope().uploadDocument(this.files)" style="display: none;" id="id_pic_upload">
+                                        <label data-ng-if="doc.eUserDocType == 'system'" data-ng-disabled="AllowTemplates == 'yes'" disabled for="id_pic_upload" data-ng-click="checkDocument(doc.iPkDocId,doc.iFkDocCatId,doc.eUserDocType)" style="cursor: pointer;">
+                                            <i class=" manage_dc icon-cloud-upload fa-2x"></i>
+                                        </label>
+                                        <label data-ng-if="doc.eUserDocType == 'custom'" for="id_pic_upload" data-ng-click="checkDocument(doc.iPkUserDocId,doc.iFkDocCatId,doc.eUserDocType)" style="cursor: pointer;">
+                                            <i class=" manage_dc icon-cloud-upload fa-2x"></i>
+                                        </label>
+                                    </div>
+                                    <div data-ng-if="doc.vFileName != '' && doc.vFileName != null">
+                                        <i class="fa icon-check color_theme fa-2x" aria-hidden="true"></i>
+                                    </div>
+                                </td>
+                                <td style="width:80px" class="text-center dc_portlet_icon text-nowrap" ng-show="AllowDC == 'yes'">
+                                    <div data-ng-if="doc.vFileName != '' && doc.vFileName != null">
+                                        <a target="_self" download ng-href="{{doc.docfile}}"><i class="manage_dc icon-cloud-download fa-2x"></i></a> &nbsp;
+                                        <a data-ng-click="deleteDocument(doc.iPkUserDocId,doc.eUserDocType)"><i class="manage_dc fa icon-close fa-2x"></i></a>
+                                    </div>
+                                </td>
+                                <td style="width:400px;" class="" ng-if="doc.eUserDocType == 'custom'"> 
+                                 <a data-ng-click="deleteDocument(doc.iPkUserDocId,doc.eUserDocType)"><i class="manage_dc fa icon-close fa-2x"></i></a>
+                                </td>
+                            </tr>
+                            <tr data-ng-if="documents.cat_id == add_item_cat_id" >
+                                <td>
+                                    <input style="width: 100%;display: block"  type="text" limit-to="255"
+                                           name="doc_title" focus-me="true" data-ng-model="docparam.doc_title"
+                                           placeholder="Enter Document Title..." class="enter_text_input">
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn dc_status btn-outline border-red-thunderbird font-red-thunderbird bold dotted bg_trans">Not Collected</button>
+                                </td>
+                                <td class=""></td>
+                                <td class="">
+                                    <input style="width: 100%;display: block" type="text" limit-to="255"
+                                           name="doc_guide" data-ng-model="docparam.doc_guide"
+                                           placeholder="Enter Renaming Guide" class="enter_text_input">
+                                </td>
+                                <!--<td class="">-->
+                                <!--    <input style="width: 100%;display: block" type="text" limit-to="255"-->
+                                <!--           name="doc_comment" data-ng-model="docparam.doc_comment"-->
+                                <!--           placeholder="Enter Comment" class="enter_text_input">-->
+                                <!--</td>-->
+                                <td class="text-center template_btn"></td>
+                                <td class="text-center dc_portlet_icon"></td>
+                                <td class="text-center dc_portlet_icon">
+                                    <i style="cursor: pointer" data-ng-click="createDoc()" class="manage_dc fa fa-save fa-2x"></i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="btn_bottom">
+                        <a class="btn btn-md green-jungle btn-outline bold" data-ng-click="addItem(documents.cat_id)">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Add Item
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="col-md-12" data-ng-if="templates > 0">
+            <div class="col-md-2 template_buy " ng-if="documentprice" ng-class="{'template_buy2':AllowDC == 'yes' ?'template_buy':''}">
+                <div class="text-center">
+                    <button data-ng-if="t_price > 0" class="btn btn-outline purple btn-block">${{t_price}}</button>
+                    <button data-ng-if="t_price > 0" data-ng-click="buyTemplate()" class="btn bg-purple-theme btn-block font-white">Buy Templates</button>
+                    <button data-ng-if="t_price == 0" class="btn btn-outline purple btn-block">Free</button>
+                    <button data-ng-if="t_price == 0" data-ng-click="downloadTemplate()" class="btn bg-purple-theme btn-block font-white">Download Templates</button>
+                    <p class="text-light marketplace_desc bg-white" data-ng-if="t_price == 0">
+                        <i class="fa fa-exclamation-circle color_theme bg-white"></i>
+                        Click above to download our free Template Pack. Prepared by immigration lawyers, this Template Pack provides you with examples of any item listed above as AVAILABLE
+                    </p>
+                    <p class="text-light marketplace_desc bg-white" data-ng-if="t_price > 0">
+                        <i class="fa fa-exclamation-circle color_theme bg-white"></i>
+                        Click above to purchase our Template Pack. Prepared by immigration lawyers, this Template Pack provides you with examples of any item listed above as AVAILABLE
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <div class="stripe_div" style="display:none"></div>
+    <!--START ADD MAIN APPLICANT -->
+    <script type="text/ng-template" id="add_main_app.html">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a type="button" class="close" aria-hidden="true" data-ng-click="closeMainApplicant()"> <i
+                        class="fa fa-close font-purple "></i></a>
+                <h4 class="text-center">Main Applicant</h4>
+            </div>
+            <div class="modal-body">
+                <div class="mt-comments add_main_app_profile">
+                    <span class="profile_caption">Profile Photo</span>
+                    <div class="mt-comment ">
+                        <div class="mt-comment-img" ng-style="fut_main_reviewImage != '' && {'border':'none'}">
+                            <label for="add_main_app_pic"><i class="icon-note color_theme bold"></i></label>
+                            <input type="file" name="" id="add_main_app_pic"
+                                   onchange="angular.element(this).scope().uploadProfilePicture(this.files,'fut_main')"
+                                   accept="image/*">
+                            <img src="images/fut_default.png" data-ng-if="fut_main_reviewImage == ''"
+                                 class="img-responsive" style="border-radius: 10px!important;">
+                            <img ng-src="{{fut_main_reviewImage}}" data-ng-if="fut_main_reviewImage != ''"
+                                 height="85px" width="85px" class="" style="border-radius: 10px!important;">
+                        </div>
+                        <div class="mt-comment-body">
+                            <div class="form-group">
+                                <input type="text" name="name" limit-to="100"
+                                       data-ng-model="fut_main.name" class="form-control"
+                                       placeholder="Enter given name...">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="family_name" limit-to="100"
+                                       data-ng-model="fut_main.family_name"
+                                       class="form-control" placeholder="Enter family names...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                            <span class="input-group-addon"><i
+                                    class="fa fa-envelope-o fa-2x font-purple fa-fw"></i></span>
+                        <input type="text" name="email" limit-to="100"
+                               data-ng-model="fut_main.email" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-phone fa-2x font-purple fa-fw"></i></span>
+                        <input type="text" name="phone" limit-to="100"
+                               data-ng-model="fut_main.phone" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class=" icon-home fa-2x font-purple fa-fw"></i></span>
+                        <textarea class="form-control" limit-to="100"
+                                  name="address" data-ng-model="fut_main.address" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button data-ng-click="saveMainApplicant()" class="btn btn-outline green-jungle btn-md bold">Save
+                </button>
+            </div>
+        </div>
+    </script>
+    <!--END ADD MAIN APPLICANT -->
+
+    <!--START ADD SPONSER -->
+    <script type="text/ng-template" id="add_sponser.html">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a type="button" class="close" aria-hidden="true" data-ng-click="closeSponser()"> <i
+                        class="fa fa-close font-purple "></i></a>
+                <h4 class="text-center">Family Sponsor</h4>
+            </div>
+            <div class="modal-body">
+                <div class="mt-comments add_main_app_profile">
+                    <span class="profile_caption">Profile Photo</span>
+                    <div class="mt-comment ">
+                        <div class="mt-comment-img" ng-style="fut_main_sponse_reviewImage != '' && {'border':'none'}">
+                            <label for="add_main_app_pic"><i class="icon-note color_theme bold"></i></label>
+                            <input type="file" name="" id="add_main_app_pic"
+                                   onchange="angular.element(this).scope().uploadProfilePicture(this.files,'fut_main_sponse')"
+                                   accept="image/*">
+                            <img src="images/fut_default.png" data-ng-if="fut_main_sponse_reviewImage == ''"
+                                 class="img-responsive" style="border-radius: 10px!important;">
+                            <img ng-src="{{fut_main_sponse_reviewImage}}"
+                                 data-ng-if="fut_main_sponse_reviewImage != ''" height="85px" width="85px" class=""
+                                 style="border-radius: 10px!important;">
+                        </div>
+                        <div class="mt-comment-body">
+                            <div class="form-group">
+                                <input type="text" name="name" limit-to="100"
+                                       data-ng-model="fut_main_sponse.name" class="form-control"
+                                       placeholder="Enter given name...">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="family_name" limit-to="100"
+                                       data-ng-model="fut_main_sponse.family_name" class="form-control"
+                                       placeholder="Enter family names...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h5>Relation to Main Applicant *</h5>
+                <p>* To ensure that the system generates the appropriate Document Checklist, you must select the
+                    relation to the Main Applicant.</p>
+                <div class="form-group">
+                    <div class="select_main_app">
+                        <div class="select_input">
+                            <div class="select_text">{{selected_tag_name}}</div>
+                            <span class="select_icon" data-ng-click="changeTag('sponsor')"><i
+                                    class="fa fa-pencil"></i></span></div>
+                        <div class="select_dropdown slimScrollDiv" data-ng-if="display_tags">
+                            <table class="table">
+                                <tbody>
+                                <tr data-ng-if="tags.iPKTagId != selected_tag_ID" data-ng-repeat="tags in taglists">
+                                    <td>{{tags.vTagName}}</td>
+                                    <td class="text-right" data-ng-if="confirm_tag_ID == tags.iPKTagId">
+                                        <a data-ng-click="confirm_tag(tags.vTagName)"
+                                           class="btn btn-md green-jungle btn-outline bold">Confirm</a>
+                                    </td>
+                                    <td class="text-right" data-ng-if="confirm_tag_ID != tags.iPKTagId">
+                                        <a data-ng-click="link_tag(tags.iPKTagId)"
+                                           class="btn bold bg-purple-theme font-white">Select</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                            <span class="input-group-addon"><i
+                                    class="fa fa-envelope-o fa-2x font-purple fa-fw"></i></span>
+                        <input type="text" name="email" limit-to="100"
+                               data-ng-model="fut_main_sponse.email" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-phone fa-2x font-purple fa-fw"></i></span>
+                        <input type="text" name="phone" limit-to="100"
+                               data-ng-model="fut_main_sponse.phone" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class=" icon-home fa-2x font-purple fa-fw"></i></span>
+                        <textarea class="form-control" limit-to="100"
+                                  name="address" data-ng-model="fut_main_sponse.address" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button data-ng-click="saveSponser()" class="btn btn-outline green-jungle btn-md bold">Save</button>
+            </div>
+        </div>
+    </script>
+    <!--END ADD SPONSER -->
+
+    <!--START ADD FAMILY MEMBER -->
+    <script type="text/ng-template" id="add_family.html">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a type="button" class="close" aria-hidden="true" data-ng-click="closeFamily()"> <i
+                        class="fa fa-close font-purple "></i></a>
+                <h4 class="text-center">Migrating Family Member</h4>
+            </div>
+            <div class="modal-body">
+                <div class="mt-comments add_main_app_profile">
+                    <span class="profile_caption">Profile Photo</span>
+                    <div class="mt-comment ">
+                        <div class="mt-comment-img" ng-style="fut_main_family_reviewImage != '' && {'border':'none'}">
+                            <label for="add_main_app_pic"><i class="icon-note color_theme bold"></i></label>
+                            <input type="file" name="" id="add_main_app_pic"
+                                   onchange="angular.element(this).scope().uploadProfilePicture(this.files,'fut_main_family')"
+                                   accept="image/*">
+                            <img src="images/fut_default.png" data-ng-if="fut_main_family_reviewImage == ''"
+                                 class="img-responsive" style="border-radius: 10px!important;">
+                            <img ng-src="{{fut_main_family_reviewImage}}"
+                                 data-ng-if="fut_main_family_reviewImage != ''" height="85px" width="85px" class=""
+                                 style="border-radius: 10px!important;">
+                        </div>
+                        <div class="mt-comment-body">
+                            <div class="form-group">
+                                <input type="text" name="name" limit-to="100"
+                                       data-ng-model="fut_main_family.name" class="form-control"
+                                       placeholder="Enter given name...">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="family_name" limit-to="100"
+                                       data-ng-model="fut_main_family.family_name" class="form-control"
+                                       placeholder="Enter family names...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h5>Relation to Main Applicant *</h5>
+                <p>* To ensure that the system generates the appropriate Document Checklist, you must select the
+                    relation to the Main Applicant.</p>
+                <div class="form-group">
+                    <div class="select_main_app">
+                        <div class="select_input">
+                            <div class="select_text">{{selected_tag_name}}</div>
+                            <span class="select_icon" data-ng-click="changeTag('family')"><i
+                                    class="fa fa-pencil"></i></span></div>
+                        <div class="select_dropdown slimScrollDiv" data-ng-if="display_tags">
+                            <table class="table">
+                                <tbody>
+                                <tr data-ng-if="tags.iPKTagId != selected_tag_ID" data-ng-repeat="tags in taglists">
+                                    <td>{{tags.vTagName}}</td>
+                                    <td class="text-right" data-ng-if="confirm_tag_ID == tags.iPKTagId">
+                                        <a data-ng-click="confirm_tag(tags.vTagName)"
+                                           class="btn btn-md green-jungle btn-outline bold">Confirm</a>
+                                    </td>
+                                    <td class="text-right" data-ng-if="confirm_tag_ID != tags.iPKTagId">
+                                        <a data-ng-click="link_tag(tags.iPKTagId)"
+                                           class="btn bold bg-purple-theme font-white">Select</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                            <span class="input-group-addon"><i
+                                    class="fa fa-envelope-o fa-2x font-purple fa-fw"></i></span>
+                        <input type="text" name="email" limit-to="100"
+                               data-ng-model="fut_main_family.email" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-phone fa-2x font-purple fa-fw"></i></span>
+                        <input type="text" name="phone" limit-to="100"
+                               data-ng-model="fut_main_family.phone" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class=" icon-home fa-2x font-purple fa-fw"></i></span>
+                        <textarea class="form-control" limit-to="100"
+                                  name="address" data-ng-model="fut_main_family.address" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button data-ng-click="saveFamily()" class="btn btn-outline green-jungle btn-md bold">Save</button>
+            </div>
+        </div>
+    </script>
+    <!--END ADD FAMILY MEMBER -->
+
+    <!--START ADD BUSINESS APPLICANT -->
+    <script type="text/ng-template" id="add_business_app.html">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a type="button" class="close" aria-hidden="true" data-ng-click="closeBusinessApplicant()"> <i
+                        class="fa fa-close font-purple "></i></a>
+                <h4 class="text-center">Business Applicant</h4>
+            </div>
+            <div class="modal-body">
+                <div class="mt-comments add_main_app_profile">
+                    <span class="profile_caption">Profile Photo</span>
+                    <div class="mt-comment ">
+                        <div class="mt-comment-img" ng-style="business_main_reviewImage != '' && {'border':'none'}">
+                            <label for="add_main_app_pic"><i class="icon-note color_theme bold"></i></label>
+                            <input type="file" name="" id="add_main_app_pic"
+                                   onchange="angular.element(this).scope().uploadProfilePicture(this.files,'business_main')"
+                                   accept="image/*">
+                            <img src="images/fut_business.png" data-ng-if="business_main_reviewImage == ''" class="img-responsive"
+                                 style="border-radius: 10px!important;">
+                            <img ng-src="{{business_main_reviewImage}}" data-ng-if="business_main_reviewImage != ''"
+                                 height="85px" width="85px" class="" style="border-radius: 10px!important;">
+                        </div>
+                        <div class="mt-comment-body">
+                            <div class="form-group">
+                                <input type="text" name="name" limit-to="100"
+                                       data-ng-model="business_main.name" class="form-control"
+                                       placeholder="Enter Business Name...">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="family_name" limit-to="100"
+                                       data-ng-model="business_main.family_name"
+                                       class="form-control" placeholder="Enter Contact Person Name...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                            <span class="input-group-addon"><i
+                                    class="fa fa-envelope-o fa-2x font-purple fa-fw"></i></span>
+                        <input type="text" name="email" limit-to="100"
+                               data-ng-model="business_main.email" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-phone fa-2x font-purple fa-fw"></i></span>
+                        <input type="text" name="phone" limit-to="100"
+                               data-ng-model="business_main.phone" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class=" icon-home fa-2x font-purple fa-fw"></i></span>
+                        <textarea class="form-control" limit-to="100"
+                                  name="address" data-ng-model="business_main.address" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button data-ng-click="saveBusinessApplicant()" class="btn btn-outline green-jungle btn-md bold">
+                    Save
+                </button>
+            </div>
+        </div>
+    </script>
+    <!--END ADD BUSINESS APPLICANT -->
+
+    <!--START ADD BUSINESS SPONSE -->
+    <script type="text/ng-template" id="add_business_sponse.html">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a type="button" class="close" aria-hidden="true" data-ng-click="closeBusinessSponse()"> <i
+                        class="fa fa-close font-purple "></i></a>
+                <h4 class="text-center">Sponsored Worker</h4>
+            </div>
+            <div class="modal-body">
+                <div class="mt-comments add_main_app_profile">
+                    <span class="profile_caption">Profile Photo</span>
+                    <div class="mt-comment ">
+                        <div class="mt-comment-img" ng-style="business_sponse_reviewImage != '' && {'border':'none'}">
+                            <label for="add_main_app_pic"><i class="icon-note color_theme bold"></i></label>
+                            <input type="file" name="" id="add_main_app_pic"
+                                   onchange="angular.element(this).scope().uploadProfilePicture(this.files,'business_sponse')"
+                                   accept="image/*">
+                            <img src="images/fut_default.png" data-ng-if="business_sponse_reviewImage == ''"
+                                 class="img-responsive" style="border-radius: 10px!important;">
+                            <img ng-src="{{business_sponse_reviewImage}}"
+                                 data-ng-if="business_sponse_reviewImage != ''" height="85px" width="85px" class=""
+                                 style="border-radius: 10px!important;">
+                        </div>
+                        <div class="mt-comment-body">
+                            <div class="form-group">
+                                <input type="text" name="name" limit-to="100"
+                                       data-ng-model="business_sponse.name" class="form-control"
+                                       placeholder="Enter given name...">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="family_name" limit-to="100"
+                                       data-ng-model="business_sponse.family_name" class="form-control"
+                                       placeholder="Enter family names...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h5>Type of Employee *</h5>
+                <p>* To ensure that the system generates the appropriate Document Checklist, you must select the
+                    Type of Employee classification.</p>
+                <div class="select_main_app">
+                    <div class="select_input">
+                        <div class="select_text">{{selected_tag_name}}</div>
+                        <span class="select_icon" data-ng-click="changeTag('worker')"><i class="fa fa-pencil"></i></span>
+                    </div>
+                    <div class="select_dropdown slimScrollDiv" data-ng-if="display_tags">
+                        <table class="table">
+                            <tbody>
+                            <tr data-ng-if="tags.iPKTagId != selected_tag_ID" data-ng-repeat="tags in taglists">
+                                <td>{{tags.vTagName}}</td>
+                                <td class="text-right" data-ng-if="confirm_tag_ID == tags.iPKTagId">
+                                    <a data-ng-click="confirm_tag(tags.vTagName)"
+                                       class="btn btn-md green-jungle btn-outline bold">Confirm</a>
+                                </td>
+                                <td class="text-right" data-ng-if="confirm_tag_ID != tags.iPKTagId">
+                                    <a data-ng-click="link_tag(tags.iPKTagId)"
+                                       class="btn bold bg-purple-theme font-white">Select</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                            <span class="input-group-addon"><i
+                                    class="fa fa-envelope-o fa-2x font-purple fa-fw"></i></span>
+                        <input type="text" name="email" limit-to="100"
+                               data-ng-model="business_sponse.email" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-phone fa-2x font-purple fa-fw"></i></span>
+                        <input type="text" name="phone" limit-to="100"
+                               data-ng-model="business_sponse.phone" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class=" icon-home fa-2x font-purple fa-fw"></i></span>
+                        <textarea class="form-control" limit-to="100"
+                                  name="address" data-ng-model="business_sponse.address" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button data-ng-click="saveBusinessSponse()" class="btn btn-outline green-jungle btn-md bold">Save
+                </button>
+            </div>
+        </div>
+    </script>
+    <!--END ADD BUSINESS SPONSE -->
+
+    <!-- DELETE DOCUMENT POPUP -->
+    <script type="text/ng-template" id="delete_document.html">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Are you sure you want to delete this document?</p>
+            </div>
+            <div class="modal-footer text-center">
+                <button class="btn b bg-purple-theme font-white btn-md bold" data-ng-click="deleteDocConfirm()">
+                    Yes
+                </button>
+                <button class="btn btn-outline purple" aria-hidden="true" data-ng-click="deleteDocNo()">No</button>
+            </div>
+        </div>
+    </script>
+    <!-- DELETE DOCUMENT POPUP END -->
+
+    <!-- CHANGE STATUS POPUP -->
+    <script type="text/ng-template" id="change_status.html">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="mt-radio-list status_radio">
+                    <label class="mt-radio mt-radio-outline">
+                        <div class="btn dc_status btn-outline border-red-thunderbird font-red-thunderbird bold dotted bg_trans">
+                            Not Collected
+                        </div>
+                        <input value="notcollected" data-ng-change="updateStatus()"
+                               data-ng-model="status.selectedStatus" name="selectedStatus" type="radio">
+                        <span></span>
+                    </label>
+                    <label class="mt-radio mt-radio-outline">
+                        <div class="btn dc_status btn-outline bg-green-jungle font-white  bold ">Collected</div>
+                        <input value="collected" data-ng-change="updateStatus()"
+                               data-ng-model="status.selectedStatus" name="selectedStatus" type="radio">
+                        <span></span>
+                    </label>
+                    <label class="mt-radio mt-radio-outline">
+                        <div class="btn dc_status btn-outline border-blue font-blue bold dotted bg_trans">
+                            Reviewing
+                        </div>
+                        <input value="reviewing" data-ng-change="updateStatus()"
+                               data-ng-model="status.selectedStatus" name="selectedStatus" type="radio">
+                        <span></span>
+                    </label>
+                    <label class="mt-radio mt-radio-outline">
+                        <div class="btn btn-outline dc_status border-yellow-crusta font-yellow-crusta bold dotted bg_trans">
+                            Pending
+                        </div>
+                        <input value="pending" data-ng-change="updateStatus()" data-ng-model="status.selectedStatus"
+                               name="selectedStatus" type="radio">
+                        <span></span>
+                    </label>
+                    <label class="mt-radio mt-radio-outline">
+                        <div class="btn btn-outline dc_status border-green-crusta font-green-crusta bold dotted bg_trans">
+                            Not Applicable
+                        </div>
+                        <input value="notapplicable" data-ng-change="updateStatus()" data-ng-model="status.selectedStatus"
+                               name="selectedStatus" type="radio">
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!-- CHANGE STATUS POPUP END -->
+
+    <!--WARNING POPUP -->
+    <script type="text/ng-template" id="warning.html">
+        <div class="modal-content">
+            <div class="modal-header veazy_header text-center">
+                <j class="fa fa-warning color_theme fa-5x"></j>
+                <h4 class="modal-title">Important</h4>
+            </div>
+            <div class="modal-body text-center">
+                <p class="text-left">Please note ! By changing your selection, the Document Checklist for this person will reset. This means that any progress you have saved in the Document Checklist will  be un-done.</p>
+                <p>Are you sure you want to change your selection?</p>
+                <button data-dismiss="modal" class="btn b bg-purple-theme font-white btn-md bold" data-ng-click="tagYes()">Yes</button>
+                <button class="btn btn-outline purple" data-dismiss="modal" aria-hidden="true" data-ng-click="tagNo()">No</button>
+            </div>
+        </div>
+    </script>
+    <!--END WARNING POPUP -->
+    
+</div>
+<!-- END MAIN CONTENT -->
+

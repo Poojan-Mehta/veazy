@@ -1,0 +1,103 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="mplaceCtrl"
+     data-ng-if="is_main_user == 1 || market_place_permission.main_menu_id =='6.1'">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">Market Place</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default table-responsive">
+                <div  class="col-sm-12 col-lg-8 col-md-8 col-xs-12" style="margin-top: 20px;">
+                    <button data-ng-show="is_main_user == 1 || market_place_permission.add == 1" ui-sref="app.addmplace"
+                            class="btn btn-addon m-b-xs btn-info"><i
+                            class="fa fa-plus"></i> Add New
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || market_place_permission.delete == 1"
+                            class="btn btn-addon m-b-xs btn-danger" data-ng-click="removeAll();"><i
+                            class="fa fa-trash-o"></i> Delete All
+                    </button>
+                </div>
+                <div class="col-sm-12 col-lg-4 col-md-4 col-xs-12 pull-right top_search" st-table="displayedCollection" st-safe-src="rowCollection" style="margin-top: 20px;">
+                    <input class="form-control ng-isolate-scope" st-search="" placeholder="Enter character to search..." type="text" data-ng-model="searchText"/>
+                </div>
+                <table st-table="displayedCollection" st-safe-src="rowCollection"
+                       class="table table-striped" st-filtered-collection="rowCollection">
+                    <thead>
+                    <tr>
+                        <th class="text-center">
+                            <div class="checkbox"><label class="i-checks">
+                                <input type="checkbox" id="checkAll" ng-disabled="row.assign == 'yes'"/>
+                                <i></i></label>
+                            </div>
+                        </th>
+                        <th class="text-nowrap text-uppercase">Market Place Name</th>
+                        <th class="text-nowrap text-uppercase"
+                            data-ng-show="is_main_user == 1 || (market_place_permission.active==1 && market_place_permission.inactive==1)">
+                            is_Visible
+                        </th>
+                        <th class="text-center text-nowrap text-uppercase"
+                            data-ng-show="is_main_user == 1 || (market_place_permission.update == 1 || market_place_permission.delete == 1)"
+                            st-sort="">{{general.action}}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in displayedCollection">
+                        <td class="text-center">
+                            <div class="checkbox"><label class="i-checks">
+                                <input type='checkbox'
+                                       class="catstatus"
+                                       id="cat{{row.iPKMPId}}"
+                                       name='checklist[]'
+                                       data-ng-model="checklist" ng-disabled="row.assign == 'yes'"><i></i></label>
+                            </div>
+                        </td>
+                        <td class="text-nowrap">{{row.vMPName}}</td>
+                        <td data-ng-show="is_main_user == 1 || (market_place_permission.active == 1 && market_place_permission.inactive == 1)  ">
+                            <label class="i-switch m-t-xs m-r"
+                                   ng-init="stay=row.is_Visible=='active' ? true : false">
+                                <input type="checkbox" checked="true" ng-model="stay"
+                                       ng-click="changestatus(row.iPKMPId,row.is_Visible)">
+                                <i></i>
+                            </label>
+                        </td>
+                        <td class="text-center text-nowrap">
+                            <button data-ng-show="is_main_user == 1 || market_place_permission.update == 1"
+                                    class="btn btn-addon m-b-xs btn-sm btn-info info"
+                                    ui-sref="app.editmplace({mpid:row.iPKMPId})"><i class="fa fa-edit"></i>
+                                {{general.edit}}
+                            </button>
+                            <button data-ng-show="is_main_user == 1 || market_place_permission.delete == 1"
+                                    class="btn btn-addon m-b-xs btn-sm btn-info btn-danger"
+                                    ng-click="removeItem(row.iPKMPId,row.vMPName)" ng-disabled="row.assign == 'yes'"><i
+                                    class="fa fa-trash-o"></i>{{general.delete}}
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-if="displayedCollection.length == 0">
+                        <td colspan="4">
+                            <div class="row"><span class="col-md-4 col-md-offset-5">{{general.norecord}}</span></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10" class="text-right">
+                            <div st-pagination="" st-items-by-page="10" st-displayed-pages="7" class="no-margin"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- / right col -->
+</div>
+

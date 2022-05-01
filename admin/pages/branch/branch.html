@@ -1,0 +1,142 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="branchCtrl">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{branch.blist}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+
+            <div class="panel panel-default table-responsive">
+                <div class="col-md-12" style="margin-top: 20px;">
+                    <button data-ng-show="is_main_user!=0 || business_dis_permission.delete==1" class="btn m-b-xs w-xs btn-danger" data-ng-click="removeAll();"><i
+                            class="fa fa-trash-o"></i> {{general.delete}}
+                    </button>
+                    <button data-ng-show="is_main_user!=0 || business_dis_permission.active==1"  class="btn m-b-xs w-xs btn-primary" data-ng-click="activeAll();"><i
+                            class="fa fa-check"></i> {{general.active}}
+                    </button>
+
+                    <button data-ng-show="is_main_user!=0 || business_dis_permission.inactive==1"  class="btn m-b-xs w-xs btn-dark" data-ng-click="deactiveAll();"><i
+                            class="icon-close"></i> {{general.inactive}}
+                    </button>
+                </div>
+
+                <div class="col-md-12" style="margin-top: 20px;">
+
+
+
+
+                    <div class="col-md-8 col-sm-8">
+
+                        <label class="col-sm-3 control-label ng-binding"><b>{{branch.selecrbusiness}}</b></label>
+                        <div class="col-sm-5" ng-init="mapping.iBusinessId=0">
+                            <select class="form-control" name="account" ng-change="bybusiness()" data-ng-model="mapping.iBusinessId">
+                                <option value="0">All</option>
+                                <option ng-repeat="c in bdata" value="{{c.iBusinessId}}">{{c.vBusinessName}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <button  data-ng-show="is_main_user!=0 || business_dis_permission.add==1"  ui-sref="app.addbranch({buid:mapping.iBusinessId})"  ng-if="mapping.iBusinessId!=0" class="btn m-b-xs btn-md btn-primary btn-addon  "><i class="fa fa-plus"></i>{{branch.cbranch}}</button>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-right top_search"
+                         st-table="displayedCollection" st-safe-src="rowCollection">
+                        <input class="form-control ng-isolate-scope" st-search=""
+                               placeholder="{{general.search}}" type="text" data-ng-model="searchText"
+                               style="width:90% !important;display: inline;"/>
+
+                    </div>
+                </div>
+
+                <table st-table="displayedCollection" st-safe-src="rowCollection"
+                       class="table table-striped" st-filtered-collection="rowCollection">
+                    <thead>
+
+                    <tr>
+                        <th >
+                            <div class="checkbox"><label class="i-checks"><input type="checkbox" id="checkAll"/> <i></i></label>
+                            </div>
+                        </th>
+
+                        <th st-sort="vBusinessName">{{installation.businessname}}</th>
+                        <th st-sort="vBranchName">{{branch.brname}}</th>
+                        <th st-sort="vBranchEmail">{{branch.bemail}}</th>
+                        <th st-sort="iBranchPhone">{{branch.bphone}}</th>
+                        
+                        <th st-sort="vBranchAddress">{{branch.baddress}}</th>
+
+                       
+                        <th st-sort="eIsMain">{{branch.mainbranch}}</th>
+                        <th  data-ng-show="is_main_user!=0 || (business_dis_permission.active==1 && business_dis_permission.inactive==1)  ">{{general.status}}</th>
+                        <th  data-ng-show="is_main_user!=0 || (business_dis_permission.update==1 || business_dis_permission.delete==1)  "st-sort="">{{general.action}}</th>
+                    </tr>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in displayedCollection">
+
+                        <td>
+                            <div class="checkbox"><label class="i-checks"><input type='checkbox' class="branchstatus"
+                                                                                 id="cmp{{row.iBranchId}}"
+                                                                                 name='checklist[]' data-ng-model="checklist"
+                                                                                 value="<?php echo $row['iBranchId']; ?>" data-ng-if="row.eIsMain!='yes'"><i></i></label>
+                            </div>
+                        </td>
+                        <td>{{row.vBusinessName}}</td>
+                        <td>{{row.vBranchName}}</td>
+                        <td>{{row.vBranchEmail}}</td>
+                        <td>{{row.iBranchPhone}}</td>
+                       
+                        <td>{{row.vBranchAddress}}</td>
+                        
+                        <td>
+                            <!--<button class="btn m-b-xs w-xs btn-info" ng-if="row.eIsMain == 'yes'">Main Branch(Yes)</button>
+                            <button  ng-if="row.eIsMain == 'no'">No</button>
+-->
+                            <span class="label bg-danger" ng-if="row.eIsMain == 'yes'">Yes</span>
+                            <span class="label bg-light dk"  ng-if="row.eIsMain == 'no'">No </span>
+
+
+                        </td>
+                        <td  data-ng-show="is_main_user!=0 || (business_dis_permission.active==1 && business_dis_permission.inactive==1)  ">
+                            <label class="i-switch m-t-xs m-r" ng-init="stay=row.eStatus=='active' ? true : false">
+                                <input type="checkbox" checked="true" data-ng-model="stay"  ng-click="chanagestatus(row.iBranchId,row.eStatus)" data-ng-disabled="row.eIsMain=='yes'">
+                                <i></i>
+                            </label>
+                        </td>
+                        <td>
+
+                            <button data-ng-show="is_main_user!=0 || business_dis_permission.update==1" class="btn m-b-xs btn-sm btn-info info" ui-sref="app.editbranch({bid:row.iBranchId})"><i class="fa fa-edit"></i> {{general.edit}}</button>
+                            <button data-ng-show="is_main_user!=0 || business_dis_permission.delete==1"  class="btn m-b-xs btn-sm btn-info btn-danger" data-ng-show="row.eAssigned!='yes'" ng-click="removeItem(row.iBranchId)" data-ng-disabled="row.eIsMain=='yes'"><i class="fa fa-trash-o"></i> {{general.delete}}</button>
+
+
+
+                        </td>
+                    </tr>
+                    <tr ng-if="displayedCollection.length == 0">
+                        <td colspan="12">
+                            <div class="row"><span class="col-md-2 col-md-offset-5">{{general.norecord}}</span></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="12" class="text-right">
+                            <div st-pagination="" st-items-by-page="10"
+                                 st-displayed-pages="7" class="no-margin"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

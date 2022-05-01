@@ -1,0 +1,72 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="addtodoCtrl"
+     data-ng-if="is_main_user == 1 || todo_list_permission.add == 1 || todo_list_permission.update == 1">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{pagename}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                          name="sliderform"  novalidate>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Select Folder<span class="text-danger">*</span></label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="iPkFolderId" ng-change="getchange(iPkFolderId)" data-ng-model="iPkFolderId" id="iPkFolderId" required
+                                        data-ng-options="option.iPkFolderId as option.vFolderName for option in getFolder">
+                                    <option value="">Select Folder</option>
+                                </select>
+                                    <span data-ng-show="submitted && sliderform.iPkFolderId.$invalid">
+                                        <span class="text-danger" data-ng-show="sliderform.iPkFolderId.$error.required">Select Folder</span>
+                                    </span>
+                            </div>
+                        </div>
+
+
+                        <!--category start-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Select Category<span class="text-danger">*</span></label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="iDocumentCategoryId" data-ng-model="iDocumentCategoryId" id="iDocumentCategoryId" required
+                                        data-ng-options="option.iPkDocCatId as option.vDocCat for option in getDocumentCategory">
+                                    <option value="">Select Category</option>
+                                </select>
+
+                                <span data-ng-show="submitted && sliderform.iDocumentCategoryId.$invalid">
+                                    <span class="text-danger" data-ng-show="sliderform.iDocumentCategoryId.$error.required">Select Category</span>
+                                </span>
+                            </div>
+                        </div>
+                        <!--category end-->
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{summary.title}}</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="vtodo" data-ng-model="vtodo"
+                                       placeholder={{summary.title}} required>
+                                <span data-ng-show="submitted && sliderform.vtodo.$invalid">
+                                    <span class="text-danger" data-ng-show="sliderform.vtodo.$error.required">{{general.required}}</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="line line-dashed b-b line-lg"></div>
+                        <div class="form-group">
+                            <div class="col-sm-9 col-sm-offset-2">
+                                <button type="submit" class="btn btn-sm btn-info" data-ng-click="add_todolist_form(sliderform.$valid)">{{general.btnsave}}</button>
+                                <button type="submit" class="btn btn-sm btn-danger" data-ui-sref="app.todolist">{{general.btncancel}}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

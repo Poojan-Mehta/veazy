@@ -1,0 +1,80 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="addcatCtrl"
+     data-ng-if="is_main_user == 1 || product_categories.main_menu_id =='6.2'">
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{pagename}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                          name="catform" novalidate>
+                        <div class="control-group">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">{{category.name}}</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="catName" data-ng-model="catName"
+                                           placeholder={{category.name}} required>
+                                    <span data-ng-show="submitted && catform.catName.$invalid">
+                                        <span class="text-danger" data-ng-show="catform.catName.$error.required">{{general.required}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-md-2 control-label">Select Parent Category</label>-->
+                                <!--<div class="col-md-5" data-ng-if="show=='no'">-->
+                                    <!--<p></p>-->
+                                    <!--<select class="form-control" name="catId" data-ng-model="catId" id="catId">-->
+                                        <!--<option value="">{{vVisaCat}}</option>-->
+                                    <!--</select>-->
+                                    <!--<b><u><a href="#" data-ng-click="editParent()"-->
+                                             <!--style="color: rgb(180, 44, 22);">Edit</a></u></b>-->
+                                <!--</div>-->
+                                <!--<div class="col-sm-5" data-ng-if="show=='yes' && vVisaCat!='undefined' ">-->
+                                    <!--<tree-dropdown class="tree-dropdown" data="treeData" ng-init="fk_parent_cat_id"-->
+                                                   <!--data-ng-model="fk_parent_cat_id"-->
+                                                   <!--data-ng-click="selectId(selected.id)" selected="selected">-->
+                                    <!--</tree-dropdown>-->
+                                    <!--<b><u> <a href="#" data-ng-if="showcancel=='yes'" data-ng-click="cancelEdit();"-->
+                                              <!--style="color: rgb(180, 44, 22);">Cancel</a></u></b>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Description</label>
+                                <div class="col-md-5">
+                                    <textarea class="form-control" name="catDesc" data-ng-model="catDesc"
+                                              placeholder="Description" required></textarea>
+                                    <span data-ng-show="submitted && catform.catDesc.$invalid">
+                                        <span class="text-danger" data-ng-show="catform.catDesc.$error.required">{{general.required}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-addon btn-info"
+                                            ng-click="add_cat_form(catform.$valid)"><i class="fa fa-save"></i>
+                                        {{general.btnsave}}
+                                    </button>
+                                    <button type="submit" class="btn btn-danger" ui-sref="app.category">
+                                        {{general.btncancel}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    label {
+        margin-left: 10px;
+    }
+</style>

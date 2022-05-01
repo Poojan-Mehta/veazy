@@ -1,0 +1,80 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="adddoctemplateCtrl"
+     data-ng-if="is_main_user == 1 || document_templates_permission.add ==1 || document_templates_permission.update ==1">
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{pagename}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                          name="catform" novalidate>
+                        <div class="control-group">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{documenttemplate.name}}</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="catName" data-ng-model="catName"
+                                           placeholder={{documenttemplate.name}}>
+                                    <span data-ng-show="submitted && catform.catName.$invalid">
+                                        <span class="text-danger" data-ng-show="catform.catName.$error.required">{{general.required}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{category.description}}</label>
+                                <div class="col-sm-5">
+                                    <textarea class="form-control" name="catDesc" data-ng-model="catDesc"
+                                              placeholder={{category.description}} required></textarea>
+                                    <span data-ng-show="submitted && catform.catDesc.$invalid">
+                                        <span class="text-danger" data-ng-show="catform.catDesc.$error.required">{{general.required}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{documenttemplate.price}}</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="price" data-ng-model="price" placeholder={{documenttemplate.price}} required valid-number>
+                                    <span data-ng-show="submitted && catform.price.$invalid">
+                                        <span class="text-danger" data-ng-show="catform.price.$error.required">{{general.required}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{documenttemplate.uploadfile}}<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-sm-5">
+                                    <input ui-jq="filestyle" type="file"
+                                           data-icon="false"
+                                           onchange="angular.element(this).scope().uploadResources(this.files,'ResourcesFiles')"
+                                           data-classButton="btn btn-default"
+                                           data-ng-model="ResourcesFiles"
+                                           data-classInput="form-control inline v-middle input-s">
+                                    <span style="color: green">accept only *.png,*.jpg,*.pdf,*.doc,*.docx</span><br><br>
+                                    <span data-ng-if="vDocTemplateFile"><i>Uploaded File: </i>&nbsp;&nbsp;<a href="../api/webroot/doctemplates/{{vDocTemplateFile}}" download="{{vDocTemplateFile}}" target="_self"><i class="fa fa-file-pdf-o"></i>Download</a></span>
+                                </div>
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-addon btn-info"
+                                            ng-click="add_cat_form(catform.$valid)"><i class="fa fa-save"></i>
+                                        {{general.btnsave}}
+                                    </button>
+                                    <button type="submit" class="btn btn-danger" ui-sref="app.doctemplate">
+                                        {{general.btncancel}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

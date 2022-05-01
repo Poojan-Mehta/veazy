@@ -1,0 +1,223 @@
+<!-- BEGIN MAIN CONTENT -->
+<div class="master_dashbaord" ng-controller="LessonsController">
+    <style>
+        .modal {
+            background: rgba(0, 0, 0, 0.8) !important;
+            -webkit-transition: opacity 400ms ease-in;
+            -moz-transition: opacity 400ms ease-in;
+            transition: opacity 400ms ease-in;
+        }
+        .video_modal .modal-body{  background: none !important;  }
+        .video_modal .modal-content{ border: none !important; }
+        .veazy_video{ border-radius: 7px !important;-moz-box-shadow: 0 0 8px 0 rgba(255, 255, 255,0.8)!important;-webkit-box-shadow: 0 0 8px 0 rgba(255, 255, 255,0.8)!important;box-shadow: 0 0 8px 0 rgba(255, 255, 255,0.8)!important; }
+    </style>
+    <div class="row" data-ng-if="islesson && !is_purchase">
+        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+            <div class="text-light lesson_pack bg-white col-lg-6 col-xs-12 col-sm-12 col-md-12 col-lg-offset-3 text-center shadow">
+                <i class="fa fa-exclamation-circle color_theme bg-white "></i>
+                <h4 class="text-center bold">Lesson Pack</h4>
+                <p class="text-center lesson_play">
+                    <j class="fa fa-play-circle font-green-jungle fa-5x" aria-hidden="true"></j>
+                </p>
+                <p class="lesson_pack_desc">Looking for a little more help? Purchase our Lessons below and gain access to video teachings and usable resources designed specifically to help you with your application.</p>
+                <div class="lesson_pack_footer col-lg-6 col-xs-12 col-sm-12 col-md-12 col-lg-offset-3">
+                    <p class="product_btn_price"><span class="purple border text-light border-grey-silver"> ${{product.dLessionsPrice}} </span></p>
+                    <a data-ng-click="createPayment();" class="btn purple bg-purple-theme font-white bold">Buy Lessons</a>
+                </div>
+            </div>
+        </div>        
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" data-ng-repeat="lesson in lessionlist">                
+            <div class="portlet light shadow">
+                <div class="portlet-body">
+                    <div class="row product_row">
+                        <div class=" col-md-6 col-sm-6 col-xs-12 col-lg-4 brdr-right">
+                            <div class="portlet light inner_portlet lesson_portlet" style="height: 92%;">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <span class="caption-subject">{{ lesson.vLessonTitle }} {{lesson.vLessonVideoLink}}</span>
+                                    </div>
+                                </div>                                
+                                <div class="portlet-body veazy_form">
+                                    <div class="vdo_thumbnail_box">
+                                        <img class=" img-responsive vdo_thumbnail" src="assets/global/img/video_icon.png" width="50" height="50">
+                                        <img id="veazy_video" class="veazy_video img-responsive" src="{{lesson.vLessonVideoLink}}" style="border-radius: 10px!important;"  >
+                                    </div>                                    
+                                    <div class="row">
+                                        <br>
+                                        <div class="col-lg-8 col-sm-8 col-md-8 col-xs-8 color_theme bold text-right lesson_com">
+                                            Have you Completed this lesson?
+                                        </div>
+                                        <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
+                                            <button type="button" class="btn btn-block bg-purple-theme font-white btn-md bold">Yes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" col-md-6 col-sm-6 col-xs-12 col-lg-4 brdr-right">
+                            <div class="portlet light inner_portlet lesson_portlet" style="height: 92%;">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <span class="caption-subject">Lesson Description</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body lock_div">
+                                    <p class="border lesson_desc" dd-text-collapse dd-text-collapse-max-length="230" dd-text-collapse-text="{{ lesson.vLessonDescription }}"></p>
+                                    <i class="fa fa-lock lock_icon" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" col-md-12 col-sm-12 col-xs-12 col-lg-4">
+                            <div class="portlet light inner_portlet lesson_portlet" style="height: 92%;">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <span class="caption-subject">Resources</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body veazy_form">
+                                    <ul class="feeds">
+                                        <li data-ng-repeat="resource in lesson.resources">
+                                            <div class="col1">
+                                                <div class="cont">
+                                                    <div class="cont-col1">
+                                                        <div class="label label-sm">
+                                                            <i class="fa fa-file-pdf-o font-red-thunderbird" aria-hidden="true" data-ng-if="resource.eLessonResourceType=='PDF'"></i>
+                                                            <i class="fa fa-file-text font-green" aria-hidden="true" data-ng-if="resource.eLessonResourceType=='DOC'"></i>
+                                                            <i class="fa fa-file-text font-green" aria-hidden="true" data-ng-if="resource.eLessonResourceType=='DOCX'"></i>
+                                                            <i class="fa fa-file-excel-o font-yellow-crusta" aria-hidden="true" data-ng-if="resource.eLessonResourceType=='XLSX'"></i>
+                                                            <i class="fa fa-file-image-o font-yellow-crusta" aria-hidden="true" data-ng-if="resource.eLessonResourceType=='IMAGE'"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont-col2">
+                                                        <div class="desc"> {{resource.vResourceName}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col2">
+                                                <div class="date"><i class="glyphicon glyphicon-save"></i></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+        </div>
+    </div>
+    <div class="row" data-ng-if="islesson && is_purchase">
+        <div class="col-md-12">
+            <p class="text-light marketplace_desc bg-white"><i class="fa fa-exclamation-circle color_theme bg-white"></i>Complete the lessons below and learn everything you need to know about your application. Each lesson you complete will show in your Progress on your Application Dashboard.</p>
+        </div>
+        <div class="col-md-11 col-sm-11 col-xs-12 col-lg-11" data-ng-repeat="lesson in lessionlist">
+            <div class="portlet light shadow" data-ng-class="lesson.is_watched?'satisfy_lesson':''">
+                <div class="portlet-body">
+                    <div class="row product_row">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-4 brdr-right">
+                            <div class="portlet light inner_portlet lesson_portlet" style="height: 92%;">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <span class="caption-subject">{{ lesson.vLessonTitle }}</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body veazy_form">
+                                    <div class="vdo_thumbnail_box" data-ng-click="viewVideo(lesson.videoId,lesson.iPkLessonId)">
+                                        <img class="img-responsive vdo_thumbnail" src="assets/global/img/video_icon.png" width="50" height="50">
+                                        <img id="veazy_video" class="veazy_video img-responsive" width="100%" src="{{lesson.video_thumb}}" style="border-radius: 10px!important;"  >
+                                    </div>
+
+                                    <div class="row" data-ng-if="!lesson.is_watched">
+                                        <br>
+                                        <div class="col-lg-8 col-sm-8 col-md-8 col-xs-8 color_theme bold text-right lesson_com">
+                                            Have you Completed this lesson?
+                                        </div>
+                                        <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
+                                            <button type="button" class="btn btn-block  bg-purple-theme font-white btn-md bold" data-ng-click="updateLessonStatus(lesson.iPkLessonId,lesson.iFkFolderId)">Yes</button>
+                                        </div>
+                                    </div>
+                                    <div class="row" data-ng-if="lesson.is_watched">
+                                        <br>
+                                        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-8">
+                                            <button type="button" class="btn btn-block green-jungle btn-md bold ">Lesson Completed</button>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-4 col-md-4 col-xs-4">
+                                            <button type="button" class="btn btn-outline green-jungle btn-md bold" data-ng-click="updateLessonStatus(lesson.iPkLessonId,lesson.iFkFolderId)">Undo</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-4 brdr-right ">
+                            <div class="portlet light inner_portlet lesson_portlet" style="height: 92%;">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <span class="caption-subject">Lesson Description</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body lock_div">
+                                    <p class="border lesson_desc" dd-text-collapse dd-text-collapse-max-length="230" dd-text-collapse-text="{{ lesson.vLessonDescription }}"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-4 ">
+                            <div class="portlet light inner_portlet lesson_portlet" style="height: 92%;">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <span class="caption-subject">Resources</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body veazy_form">
+                                    <ul class="feeds">
+                                        <li data-ng-repeat="resource in lesson.resources">
+                                            <div class="col1">
+                                                <div class="cont">
+                                                    <div class="cont-col1">
+                                                        <div class="label label-sm">
+                                                            <i class="fa fa-file-pdf-o font-red-thunderbird" aria-hidden="true" data-ng-if="resource.eLessonResourceType=='PDF'"></i>
+                                                            <i class="fa fa-file-text font-green" aria-hidden="true" data-ng-if="resource.eLessonResourceType=='DOC'"></i>
+                                                            <i class="fa fa-file-text font-green" aria-hidden="true" data-ng-if="resource.eLessonResourceType=='DOCX'"></i>
+                                                            <i class="fa fa-file-excel-o font-yellow-crusta" aria-hidden="true" data-ng-if="resource.eLessonResourceType=='XLSX'"></i>
+                                                            <i class="fa fa-file-image-o font-yellow-crusta" aria-hidden="true" data-ng-if="resource.eLessonResourceType=='IMAGE'"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont-col2">
+                                                        <div class="desc"> {{resource.vResourceName}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col2" ng-if="AllowLessons == 'no'">
+                                                <div class="date"><i style="cursor: pointer" class="glyphicon glyphicon-save" data-ng-click="downloadFile(resource.vLessonResource,AllowLessons)"></i></div>
+                                            </div>
+                                            <div class="col2" ng-if="AllowLessons == 'yes'">
+                                                <div class="date"><i style="cursor: pointer" class="glyphicon glyphicon-save" data-ng-click="downloadFile(resource.vLessonResource,AllowLessons)"></i></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{selected_video}}
+    <script type="text/ng-template" id="videoModal.html">
+        <div class="modal-header veazy_header" style="padding-right:0;">
+            <i class="icon-close font-white pull-right fa-2x" style="cursor: pointer;" data-ng-click="closeVideo()"></i>
+        </div>
+        {{selected_video}}
+        <div class="modal-body">
+            <!-- <video id="modal-video" width="100%" height="" controls class="veazy_video"><source src='{{selected_video}}'></video> -->
+            <!-- ng-src="https://player.vimeo.com/video/355517091" -->
+            <iframe ng-src="{{trustSrc(selected_video)}}" width="100%" controls class="veazy_video" height="564" id="modal-video" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        </div>
+    </script>
+    <div class="stripe_div" style="display:none"></div>
+</div>
+<!-- END MAIN CONTENT -->
+

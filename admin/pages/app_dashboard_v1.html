@@ -1,0 +1,17 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-init="app.settings.asideFolded = false; app.settings.asideDock = false;">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">Dashboard</h1>
+                    <small class="text-muted">WELCOME TO VEAZY ADMIN DASHBOARD</small>
+                </div>
+            </div>
+        </div>
+        <!-- / main header -->
+        <div class="wrapper-md" ng-controller="dashboardCtrl" data-ng-if="is_main_user !=0 || dash_dis_permission.main_menu_id =='1'">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- BEGIN HEAD -->
+<!-- <head>
+    <meta charset="utf-8"/>
+    <title>Veazy</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="veazy" name="description"/>
+    <meta content="Martin" name="author"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/custom.css"/>
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <style>
+        input:focus,textarea:focus{  outline: none !important;  }
+        input.error, textarea.error{  outline:red groove thin;  }
+    </style>
+</head> -->
+<!-- END HEAD -->
+<head>
+    <meta charset="UTF-8">
+    <title>Plan</title>    
+    <link rel="stylesheet" type="text/css" href="css/custom.css"/>
+</head>
+
+<body>
+<div class="vz_plns" data-ng-controller="PlanController">
+<div class="wedido4 re">
+    <div class="wedido4_p1">
+        <h2>Choose from our lists of plans!</h2>
+        <p>Whether you intend to prepare one, or many, applications, our pricing plans have you covered!</p>
+        <p class="rep">No set up fees. No lock in contract. Cancel anytime.</p>
+    </div>
+    <div class="wedido4_p2"><!-- style="margin-top: 102px;" -->
+        <div class="wedido4_p2_box">
+            <div class="vz_plns_p2">
+                <label class="vz_plns_p2_lab1 mbpbold" ng-class="switchs=='monthly' ? 'mbpbold' : ''"
+>Monthly</label>
+                <div class="vz_togbtn">
+                    <div class="switch-container">
+                        <input type="checkbox" id="switch" ng-model="switch" ng-change="switchvalue()">
+                        <label for="switch" class="switch-label">
+                            <div class="switch-rail">
+                                <div class="switch-slider"></div>
+                            </div>    
+                        </label>
+                    </div>
+                </div>
+                <label  class="vz_plns_p2_lab2" ng-class="switchs=='yearly' ? 'mbpbold' : ''">Yearly</label>
+                <div class="vz_plns_p2_s1 play_vdo_btn1">
+                    <img src="images/25of.png">
+                </div>
+                <div class="vz_plns_p2_s1 play_vdo_btn1 re">
+                    <img src="images/25of2.png">
+                </div>
+            </div>
+        </div>
+        <div class="wedido4_p2_s1">
+            <ul>
+                <li></li>
+                <li><img src="images/priti.png">No. of Simultaneous Applications</li>
+                <li><img src="images/priti.png">Interactive Document Checklist</li>
+                <li><img src="images/priti.png">Legal Criteria Summaries</li>
+                <li><img src="images/priti.png">Final to Do’s Before Submitting</li>
+                <li><img src="images/priti.png">FAQs & Answers</li>
+                <li><img src="images/priti.png">HD Video Lessons </li>
+                <li><img src="images/priti.png">Document Templates </li>
+                <li><img src="images/priti.png">Ability to link applications</li>
+                <li><img src="images/priti.png">Task Setting & Management</li>
+                <li><img src="images/priti.png">Ability to Leave Notes</li>
+            </ul>
+        </div>
+
+        <div class="wedido4_p2_s2" ng-if="switchs == 'monthly'">
+            <div class="wedido4_p2_s1_sub" ng-repeat="plans in planmonthly | limitTo:3 track by $index" ng-if="plans.ePlanFee == 'recurring' && plans.Plan_Duration == 'monthly'">
+            <!-- <h1>monthly {{$index}}</h1> {{plans.Plan_names}} {{plans.Plan_Duration}} -->
+                <ul ng-if="plans.ePlanFee == 'recurring' && plans.Plan_Duration == 'monthly'">
+                    <li class="fc" style="text-transform: uppercase;"><h3>{{plans.Plan_names}}</h3></li>
+                    <li><p>{{plans.no_application}}</p></li>
+                    <li ng-if="plans.AllowDC=='yes'"><img src="images/priti.png"></li>
+                    <li ng-if="plans.AllowDC==''"><p>Purchase separately</p></li>
+                    <li><img src="images/priti.png"></li>
+                    <li><img src="images/priti.png"></li>
+                    <li><img src="images/priti.png"></li>
+                    <li ng-if="plans.AllowLessons=='yes'"><img src="images/priti.png"></li>
+                    <li ng-if="plans.AllowLessons==''"><p>Purchase separately</p></li>
+                    <li ng-if="plans.AllowTemplates=='yes'"><img src="images/priti.png"></li>
+                    <li ng-if="plans.AllowTemplates==''"><p>Purchase separately</p></li>
+                    <li><img src="images/priti.png"></li>
+                    <li><img src="images/priti.png"></li>
+                    <li><img src="images/priti.png"></li>
+                                        
+                    <li class="lc smkj" ng-if="plans.iPkPlanId == plans.current_plan && plans.plan_type == 'free'"><a href="javascript:void(0);"><p>Early Bird Promotion Offer</p><h4><span></span>Current Plan</h4></a></li>
+
+                    <li class="lc smkj" ng-if="plans.iPkPlanId != plans.current_plan || plans.plan_type != 'monthly'"><p>Early Bird Promotion Offer</p><a href="javascript:;"
+                                                       ng-click="checkapplication(plans.iPkPlanId,plans.Plan_prices,'monthly')"><h4><span>${{plans.Plan_prices}}</span></h4></a></li>
+
+                    <li class="lc smkj" ng-if="plans.iPkPlanId == plans.current_plan && plans.plan_type == 'monthly'"><p>Early Bird Promotion Offer</p><h4><span></span>Current Plan</h4></li>
+                </ul>
+                
+                
+            </div>       
+                
+        </div>
+        <div class="wedido4_p2_s2" ng-if="switchs == 'yearly'">                   
+            <div class="wedido4_p2_s1_sub" ng-repeat="plans in planyearly" ng-if="plans.ePlanFee == 'recurring' && plans.Plan_Duration == 'yearly'">
+            <!-- <h1>yearly {{$index}}</h1> {{plans.Plan_names}} {{plans.Plan_Duration}} -->
+            <ul ng-if="plans.ePlanFee == 'recurring' && plans.Plan_Duration == 'yearly'">
+                    <li class="fc" style="text-transform: uppercase;"><h3>{{plans.Plan_names}}</h3></li>
+                    <li><p>{{plans.no_application}}</p></li>
+                    <li ng-if="plans.AllowDC=='yes'"><img src="images/priti.png"></li>
+                    <li ng-if="plans.AllowDC==''"><p>Purchase separately</p></li>
+                    <li><img src="images/priti.png"></li>
+                    <li><img src="images/priti.png"></li>
+                    <li><img src="images/priti.png"></li>
+                    <li ng-if="plans.AllowLessons=='yes'"><img src="images/priti.png"></li>
+                    <li ng-if="plans.AllowLessons==''"><p>Purchase separately</p></li>
+                    <li ng-if="plans.AllowTemplates=='yes'"><img src="images/priti.png"></li>
+                    <li ng-if="plans.AllowTemplates==''"><p>Purchase separately</p></li>
+                    <li><img src="images/priti.png"></li>
+                    <li><img src="images/priti.png"></li>
+                    <li><img src="images/priti.png"></li>
+                                        
+                    <li class="lc smkj" ng-if="plans.iPkPlanId == plans.current_plan && plans.plan_type == 'free'"><a href="javascript:void(0);"><p>Early Bird Promotion Offer</p><h4><span></span>Current Plan</h4></a></li>
+
+                    <li class="lc smkj" ng-if="plans.iPkPlanId != plans.current_plan || plans.plan_type != 'yearly'"><p>Early Bird Promotion Offer</p><a href="javascript:;"
+                                                       ng-click="checkapplication(plans.iPkPlanId,plans.Plan_prices,'yearly')"><h4><span>${{plans.Plan_prices}}</span></h4></a></li>
+
+                    <li class="lc smkj" ng-if="plans.iPkPlanId == plans.current_plan && plans.plan_type == 'yearly'"><p>Early Bird Promotion Offer</p><h4><span></span>Current Plan</h4></li>
+                </ul>
+            </div>     
+        </div>
+        <div class="wedido4_p2_s3" ng-if="switchs == 'monthly'">
+            <span><p>All monthly plans are in AUD and billed monthly.</p>
+            <p><i>Early Bird Pricing! Lock In Your Discounted Price. </i><b>Ends Soon!</b></p></span>
+        </div>
+        <div class="wedido4_p2_s3" ng-if="switchs == 'yearly'">
+            <span><p>Purchase an annual plan, get 12 months access and save 25% off the monthly plans.</p>
+            <p>All yearly plans are in AUD and billed annualy.</p>
+            <p><i>Early Bird Pricing! Lock In Your Discounted Price. </i><b>Ends Soon!</b></p></span>
+        </div>
+    </div>
+    <div class="stripe_div" style="display:none"></div>
+        <div class="toggle" style="display:none"></div>
+        <!-- END CONTENT BODY -->
+</div>
+
+
+        
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="rolelistCtrl"
+     data-ng-if="is_main_user == 1 || role_dis_permission.main_menu_id =='3.1'">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{admin.hrole}}</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default table-responsive">
+                <div class="col-md-12" style="margin-top: 20px;">
+                    <button data-ng-show="is_main_user == 1 || role_dis_permission.add == 1" ui-sref="app.addrole"
+                            class="btn btn-addon m-b-xs btn-info"><i
+                            class="fa fa-plus"></i>Add New
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || role_dis_permission.delete == 1"
+                            class="btn btn-addon m-b-xs btn-danger" data-ng-click="removeAll();"><i
+                            class="fa fa-trash-o"></i> Delete All
+                    </button>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-right top_search"
+                         st-table="displayedCollection" st-safe-src="rowCollection">
+                        <input class="form-control ng-isolate-scope" st-search=""
+                               placeholder="Enter character to search..." type="text" data-ng-model="searchText"
+                               style="width:90% !important;display: inline;"/>
+                    </div>
+                </div>
+                <table st-table="displayedCollection" st-safe-src="rowCollection"
+                       class="table table-striped" st-filtered-collection="rowCollection">
+                    <thead>
+                    <tr>
+                        <th class="text-center">
+                            <div class="checkbox"><label class="i-checks"><input type="checkbox" id="checkAll"/> <i></i></label>
+                            </div>
+                        </th>
+                        <th class="text-center text-nowrap text-uppercase" st-sort="vRolName">{{role.name}}</th>
+                        <th class="text-center text-nowrap text-uppercase" data-ng-show="is_main_user == 1 || (role_dis_permission.update == 1 || role_dis_permission.delete == 1) "
+                            st-sort="">{{general.action}}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in displayedCollection">
+                        <td class="text-center">
+                            <div class="checkbox"><label class="i-checks">
+                                <input type='checkbox'
+                                       class="rolestatus"
+                                       id="role{{row.iPkRoleId}}"
+                                       name='checklist[]'
+                                       data-ng-model="checklist"><i></i></label>
+                            </div>
+                        </td>
+                        <td class="text-center text-nowrap">{{row.vRoleName}}</td>
+                        <td class="text-center text-nowrap">
+                            <button data-ng-show="is_main_user == 1 || role_dis_permission.update == 1"
+                                    class="btn btn-addon m-b-xs btn-sm btn-info info"
+                                    ui-sref="app.editrole({roleid:row.iPkRoleId})"><i class="fa fa-edit"></i>{{general.edit}}
+                            </button>
+                            <button data-ng-show="is_main_user == 1 || role_dis_permission.delete == 1"
+                                    class="btn btn-addon m-b-xs btn-sm btn-info btn-danger"
+                                    ng-click="removeItem(row.iPkRoleId,row.vRoleName)"><i class="fa fa-trash-o"></i>{{general.delete}}
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-if="displayedCollection.length == 0">
+                        <td colspan="3">
+                            <div class="row"><span class="col-md-4 col-md-offset-5">{{general.norecord}}</span></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10" class="text-right">
+                            <div st-pagination="" st-items-by-page="10" st-displayed-pages="7" class="no-margin"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- / right col -->
+</div>
+

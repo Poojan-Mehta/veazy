@@ -1,0 +1,67 @@
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="coverletterController">
+    <div data-ng-if="is_cl" class="master_dashbaord">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- BEGIN TAB PORTLET-->
+                <div class="portlet light category_protlet">
+                    <div class="portlet-body">
+                        <p class="text-light marketplace_desc bg-white"><i class="fa fa-exclamation-circle color_theme bg-white "></i>
+                            Looking for a Professional finish to your application? Choose one of our Cover Letter templates below, fill in the gaps and attach it along with the rest of your supporting documentation. Each Cover Letter has been drafted with your application type specifically in mind and can help you explain your facts to the Australian Government with the intention of improving the quality of your evidence.
+                        </p>
+                        <div class="row">
+                            <div class="col-lg-4 col-lg-6 col-xs-12 col-sm-12 col_flex">
+                                <div class="portlet light shadow">
+                                    <div class="portlet-title text-center bg_trans border-none border-bottom"
+                                         style="width: 100%;">
+                                        <div class="caption" style="width: 100%;">
+                                            <span class="caption-subject bold">What is Cover Letter?</span>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body veazy_form">
+                                        <img id="veazy_video" class="img-responsive veazy_video" src="assets/global/img/how-to.png" style="width:100%;border-radius: 10px!important;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="portlet light portlet-fit shadow">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-microphone font-dark hide"></i>
+                                    <span class="caption-subject "> Cover Letter Marketplace </span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="row product_row">
+                                    <div class="col-sm-6 col-md-6 col-xs-12 col-lg-4" data-ng-repeat="cl in coverletterlist">
+                                        <div class="mt-widget-3">
+                                            <div class="mt-head bg-white">
+                                                <div class="mt-head-icon">
+                                                    <h4 class="text-light bold" style="height: 50px;">{{cl.vCoverLetterTitle}}</h4>
+                                                    <img src="{{cl.vCoverLetterThumbFile}}" style="max-height: 110px;" class="img-responsive"/>
+                                                </div>
+                                                <div style="text-align: left !important;min-height: 130px;max-height: 130px;overflow-y : scroll;" class="mt-head-desc text-light bg-white text-left" data-ng-bind-html="cl.vCoverLetterDesc"></div>
+                                                <div class="mt-head-button" data-ng-if="cl.eCoverFee == 'paid'">
+                                                    <p class="product_btn_price"><span class="purple border text-light border-grey-silver">${{cl.dCoverLetterPrice}}</span></p>
+                                                    <a data-ng-click="createPayment(cl.iPkCoverLetterId)" class="btn purple bg-purple-theme font-white">Purchase</a>
+                                                </div>
+                                                <div class="mt-head-button" data-ng-if="cl.eCoverFee == 'free'">
+                                                    <p class="product_btn_price"><span class="purple border text-light border-grey-silver font-green-jungle">Free</span></p>
+                                                    <a data-ng-click="downloadFile(cl.iPkCoverLetterId,cl.vCoverLetterFile)" class="btn btn-outline green-jungle  bg-white">Download</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END TAB PORTLET-->
+            </div>
+        </div>
+    </div>
+    <div class="stripe_div" style="display:none"></div>
+</div>
+<!-- END MAIN CONTENT -->

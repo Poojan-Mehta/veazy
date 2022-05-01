@@ -1,0 +1,54 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="addmenuCtrl"  data-ng-if="is_main_user == 1 || menu_dis_permission.main_menu_id =='5.1'">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{pagename}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                          name="menuform" novalidate>
+                        <div class="control-group">
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{menu.name}}<span class="required">*</span></label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="MenuName" data-ng-model="MenuName" placeholder={{menu.ecmenu}} required>
+                                    <span data-ng-show="submitted && menuform.MenuName.$invalid">
+                                        <span class="text-danger" data-ng-show="menuform.MenuName.$error.required">{{general.required}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group" >
+                                <label class="col-sm-2 control-label">{{general.status}}<span class="required">*</span></label>
+                                <div class="col-sm-5">
+                                    <select class="form-control" name="MenuStatus" data-ng-model="MenuStatus" id="MenuStatus" required>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                    <span data-ng-show="submitted && menuform.MenuStatus.$invalid">
+                                        <span class="text-danger" data-ng-show="menuform.MenuStatus.$error.required">{{general.required}}</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-sm btn-info" ng-click="add_menu_form(menuform.$valid)">{{general.btnsave}}</button>
+                                    <button type="submit" class="btn btn-sm btn-danger" ui-sref="app.menu">{{general.btncancel}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

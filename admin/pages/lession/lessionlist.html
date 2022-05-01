@@ -1,0 +1,142 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="lessionCtrl"
+     data-ng-if="is_main_user == 1 || lesson_listing_permission.main_menu_id == '7.2'">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{lession.title}}</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default table-responsive">
+                <div class="col-sm-12 col-lg-8 col-md-8 col-xs-12" style="margin-top: 20px;">
+                    <button data-ng-show="is_main_user == 1 || lesson_listing_permission.add == 1"
+                            ui-sref="app.addlession" class="btn btn-addon m-b-xs btn-info"><i
+                            class="fa fa-plus"></i> Add New
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || lesson_listing_permission.delete == 1"
+                            class="btn btn-addon m-b-xs btn-danger" data-ng-click="removeAll();"><i
+                            class="fa fa-trash-o"></i> Delete All
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || lesson_listing_permission.active == 1"
+                            class="btn btn-addon m-b-xs btn-primary" data-ng-click="activeAll();"><i
+                            class="fa fa-check"></i> Active All
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || lesson_listing_permission.inactive == 1"
+                            class="btn btn-addon m-b-xs btn-yellow" data-ng-click="deactiveAll();"><i
+                            class="icon-close"></i> Inactive All
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1"
+                            class="btn btn-addon m-b-xs btn-info" data-ng-click="duplicate();"><i
+                            class="fa fa-copy"></i> Duplicate
+                    </button>
+                    &nbsp;
+                </div>
+                <div class="col-sm-12 col-lg-4 col-md-4 col-xs-12 form-group pull-right top_search"
+                     st-table="displayedCollection" st-safe-src="rowCollection" style="margin-top: 20px;">
+                    <input class="form-control ng-isolate-scope" st-search="" placeholder="Enter character to search..."
+                           type="text" data-ng-model="searchText"/>
+                </div>
+                <table st-table="displayedCollection" st-safe-src="rowCollection"
+                       class="table table-striped" st-filtered-collection="rowCollection">
+                    <thead>
+                    <tr>
+                        <th class="text-center">
+                            <div class="checkbox"><label class="i-checks"><input type="checkbox" id="checkAll"/><i></i></label>
+                            </div>
+                        </th>
+                        <th class="text-nowrap text-uppercase" st-sort="vFolderName">Folder Name</th>
+                        <th class="text-nowrap text-uppercase">Title</th>
+                        <!--<th class="text-center text-nowrap text-uppercase">Description</th>-->
+                        <th class="text-center text-nowrap text-uppercase">Image</th>
+                        <th class="text-center text-nowrap text-uppercase">Priority</th>
+                        <th class="text-center text-nowrap text-uppercase">Created Date</th>
+
+                        <th class="text-nowrap text-uppercase"
+                            data-ng-show="is_main_user == 1 || (lesson_listing_permission.active==1 && lesson_listing_permission.inactive==1)">
+                            {{general.status}}
+                        </th>
+                        <th class="text-center text-nowrap text-uppercase"
+                            data-ng-show="is_main_user == 1 || (lesson_listing_permission.update==1 || lesson_listing_permission.delete==1)"
+                            st-sort="">{{general.action}}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="row in displayedCollection">
+                        <td class="text-center">
+                            <div class="checkbox"><label class="i-checks">
+                                <input type='checkbox'
+                                       class="sliderstatus"
+                                       id="slider{{row.iPkLessonId}}"
+                                       name='checklist[]'
+                                       data-ng-model="checklist"
+                                       value="<?php echo $row['iPkLessonId']; ?>"><i></i></label>
+                            </div>
+                        </td>
+                        <td class="text-nowrap">{{row.vFolderName}}</td>
+                        <td class="text-nowrap">{{row.vLessonTitle}}</td>
+
+                        <!--<td class="text-center text-nowrap">{{row.vLessonDescription}}</td>-->
+
+                        <td>
+                            <img class="img-responsive" width="100" height="100" controls
+                                 ng-src="{{path + row.vthumbnailFile}}" style="height:100px;width:auto;/*maintain aspect ratio*/
+    max-width:100px; border-radius: 10px!important;"/>
+                        </td>
+                        <td class="text-center text-nowrap"><input type="text" placeholder={{row.iPriority}}
+                                                                   ng-model="iPriority" style="width: 30%;"
+                                                                   ng-blur="onBlur($event,row.iPkLessonId,iPriority)"/>
+                        </td>
+                        <td class="text-center text-nowrap">{{row.dtLessonCreatedDate}}</td>
+                        <td data-ng-show="is_main_user == 1 || (lesson_listing_permission.active == 1 && lesson_listing_permission.inactive == 1)  ">
+                            <label class="i-switch m-t-xs m-r"
+                                   ng-init="stay=row.eLessonStatus=='active' ? true : false">
+                                <input type="checkbox" checked="true" ng-model="stay"
+                                       ng-click="changestatus(row.iPkLessonId,row.eLessonStatus)">
+                                <i></i>
+                            </label>
+                        </td>
+                        <td class="text-center text-nowrap">
+                            <button data-ng-show="is_main_user == 1 || lesson_listing_permission.update==1"
+                                    class="btn m-b-xs btn-sm btn-info info"
+                                    ui-sref="app.editlession({lid:row.iPkLessonId})"><i class="fa fa-edit"></i> Edit
+                            </button>
+                            <button data-ng-show="is_main_user == 1 || lesson_listing_permission.delete==1"
+                                    class="btn m-b-xs btn-sm btn-info btn-danger"
+                                    ng-click="removeItem(row.iPkLessonId,row.vLessonTitle)"><i
+                                    class="fa fa-trash-o"></i>
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-if="displayedCollection.length == 0">
+                        <td colspan="10">
+                            <div class="row"><span class="col-md-4 col-md-offset-5">{{general.norecord}}</span></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10" class="text-right">
+                            <div st-pagination="" st-items-by-page="10" st-displayed-pages="7" class="no-margin"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <!-- / right col -->
+</div>
+

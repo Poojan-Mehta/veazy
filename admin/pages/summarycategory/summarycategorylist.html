@@ -1,0 +1,119 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="summarycategorylistCtrl"
+     data-ng-if="is_main_user == 1 || summary_categories_permission.main_menu_id =='8.2'">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{documentCategory.title}}</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default table-responsive">
+                <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12" style="margin-top: 20px;">
+                    <button data-ng-show="is_main_user == 1 || summary_categories_permission.add == 1" ui-sref="app.addsummarycat"
+                            class="btn btn-addon m-b-xs btn-info"><i
+                            class="fa fa-plus"></i> Add New
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || summary_categories_permission.delete == 1"
+                            class="btn btn-addon m-b-xs btn-danger" data-ng-click="removeAll();"><i
+                            class="fa fa-trash-o"></i> Delete All
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || summary_categories_permission.active == 1"
+                            class="btn btn-addon m-b-xs btn-primary" data-ng-click="activeAll();"><i
+                            class="fa fa-check"></i> Active All
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || summary_categories_permission.inactive == 1"
+                            class="btn btn-addon m-b-xs btn-yellow" data-ng-click="deactiveAll();"><i
+                            class="icon-close"></i> Inactive All
+                    </button>
+                </div>
+                <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12" style="margin-top: 20px;"></div>
+                <!--folder start-->
+                <div class="col-sm-6 col-lg-3 col-md-3 col-xs-12">
+                    <select class="form-control" name="iPkFolderId" data-ng-model="iPkFolderId" ng-change="SearchbyCriteria()" id="iPkFolderId"
+                            data-ng-options="option.iPkFolderId as option.vFolderName for option in getFolder">
+                        <option value="">Select Folder</option>
+                    </select>
+                </div>
+                <!--folder end-->
+                <div class="col-sm-6 col-lg-4 col-md-4 col-xs-12 pull-right top_search form-group pull-right top_search"
+                     st-table="displayedCollection" st-safe-src="rowCollection">
+                    <input class="form-control ng-isolate-scope" st-search="" placeholder="Enter character to search..." type="text" data-ng-model="searchText"/>
+                </div>
+                <table st-table="displayedCollection" st-safe-src="rowCollection"
+                       class="table table-striped" st-filtered-collection="rowCollection">
+                    <thead>
+                    <tr>
+                        <th class="text-center">
+                            <div class="checkbox"><label class="i-checks"><input type="checkbox" id="checkAll"/> <i></i></label></div>
+                        </th>
+                        <th class="text-nowrap text-uppercase" st-sort="IFKFolderId">Folder Name</th>
+                        <th class="text-nowrap text-uppercase" st-sort="vDocCat">{{category.name}}</th>
+                        <th class="text-nowrap text-uppercase">Priority</th>
+                        <th class="text-uppercase" data-ng-show="is_main_user == 1 || (summary_categories_permission.active == 1 && summary_categories_permission.inactive == 1)  ">
+                            {{general.status}}
+                        </th>
+                        <th class="text-center text-nowrap text-uppercase" data-ng-show="is_main_user == 1 || (summary_categories_permission.update == 1 || summary_categories_permission.delete == 1)"
+                            st-sort="">{{general.action}}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in displayedCollection">
+                        <td class="text-center">
+                            <div class="checkbox"><label class="i-checks">
+                                <input type='checkbox'
+                                       class="catstatus"
+                                       id="cat{{row.iPkDocCatId}}"
+                                       name='checklist[]'
+                                       data-ng-model="checklist" ng-disabled="row.assign == 'yes'"><i></i></label>
+                            </div>
+                        </td>
+                        <td class="text-nowrap">{{row.vFolderName}}</td>
+                        <td class="text-nowrap">{{row.vDocCat}}</td>
+                        <td class="text-nowrap"><input type="text" placeholder={{row.iPriority}} ng-model="iPriority" style="width: 30%;" ng-blur="onBlur($event,row.iPkDocCatId,iPriority)"/></td>
+                        <td data-ng-show="is_main_user == 1 || (summary_categories_permission.active == 1 && summary_categories_permission.inactive == 1)  ">
+                            <label class="i-switch m-t-xs m-r" ng-init="stay=row.eDocStatus=='active' ? true : false">
+                                <input type="checkbox" checked="true" ng-model="stay"
+                                       ng-click="changestatus(row.iPkDocCatId,row.eDocStatus)" ng-disabled="row.assign == 'yes'">
+                                <i></i>
+                            </label>
+                        </td>
+                        <td class="text-center text-nowrap">
+                            <button data-ng-show="is_main_user == 1 || summary_categories_permission.update == 1"
+                                    class="btn btn-addon m-b-xs btn-sm btn-info info"
+                                    ui-sref="app.editsummarycat({scid:row.iPkDocCatId})"><i class="fa fa-edit"></i> {{general.edit}}
+                            </button>
+                            <button data-ng-show="is_main_user == 1 || summary_categories_permission.delete == 1"
+                                    class="btn btn-addon m-b-xs btn-sm btn-info btn-danger"
+                                    ng-click="removeItem(row.iPkDocCatId,row.vDocCat)" ng-disabled="row.assign == 'yes'"><i class="fa fa-trash-o"></i>{{general.delete}}
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-if="displayedCollection.length == 0">
+                        <td colspan="6">
+                            <div class="row"><span class="col-md-4 col-md-offset-5">{{general.norecord}}</span></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10" class="text-right">
+                            <div st-pagination="" st-items-by-page="10" st-displayed-pages="7" class="no-margin"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- / right col -->
+</div>
+

@@ -1,0 +1,7 @@
+{
+    "require": {
+        "multidots/cakephp-rest-api": "^1.1",
+        "intervention/image": "^2.4",
+        "stripe/stripe-php": "^6.4"
+    }
+}

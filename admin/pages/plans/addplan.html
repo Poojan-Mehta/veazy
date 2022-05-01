@@ -1,0 +1,166 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="addplanCtrl"
+     data-ng-if="is_main_user == 1 || plan_list_permission.add == 1 || plan_list_permission.update == 1">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{pagename}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                          name="sliderform"  novalidate>
+                        <!--  <div class="form-group">-->
+                        <!--    <label for="packageId" class="col-sm-2 control-label">Select Package<span class="text-danger">*</span></label>-->
+                        <!--    <div class="col-sm-5">-->
+                        <!--        <select class="form-control" name="packageId" data-ng-model="packageId" id="packageId" required-->
+                        <!--                data-ng-options="option.iPkPackageId as option.vPackageName for option in packageListing">-->
+                        <!--            <option value="">Select Package</option>-->
+                        <!--        </select>-->
+                        <!--        <span data-ng-show="submitted && sliderform.packageId.$invalid">-->
+                        <!--            <span class="text-danger" data-ng-show="sliderform.packageId.$error.required">Select Package</span>-->
+                        <!--        </span>-->
+                        <!--    </div>-->
+                        <!--</div>-->
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{plans.uniquename}}</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="Unique_Plan_ID" data-ng-model="Unique_Plan_ID"
+                                       placeholder={{plans.uniquename}} ng-keypress="checkspace($event)" required>
+                                <span data-ng-show="submitted && sliderform.Unique_Plan_ID.$invalid">
+                                    <span class="text-danger" data-ng-show="sliderform.Unique_Plan_ID.$error.required">{{general.required}}</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{plans.name}}</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="Plan_names" data-ng-model="Plan_names"
+                                       placeholder={{plans.name}} required>
+                                <span data-ng-show="submitted && sliderform.Plan_names.$invalid">
+                                    <span class="text-danger" data-ng-show="sliderform.Plan_names.$error.required">{{general.required}}</span>
+                                </span>
+                            </div>
+                        </div>                        
+
+                        <!-- PRODUCT PRICE -->
+                        <!--<div class="form-group">-->
+                        <!--    <label class="col-md-2 control-label">Plan Fee<span class="text-danger">*</span></label>-->
+                        <!--    <div class="col-md-4">-->
+                        <!--        <select class="form-control text-capitalize" name="payment_type" data-ng-model="payment_type"-->
+                        <!--                 id="payment_type" data-ng-change="check_payment_price()">-->
+                        <!--            <option ng-repeat='(key,value) in productfeetype' value="{{value}}">{{value}}</option>-->
+                        <!--        </select>-->
+                        <!--    </div>-->
+                        <!--</div>-->
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Plan Duration<span class="text-danger">*</span></label>
+                            <div class="col-md-4">
+                                <select class="form-control text-capitalize" name="Plan_Duration" data-ng-model="Plan_Duration"
+                                        id="Plan_Duration">
+                                    <option ng-repeat='(key,value) in duration' value="{{value}}">{{value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- PRODUCT PRICE END -->
+
+                        <div class="form-group" data-ng-show="Plan_Duration != 'lifetime'">
+                            <label class="col-sm-2 control-label">No of <span data-ng-show="Plan_Duration == 'yearly'">Years</span><span data-ng-show="Plan_Duration == 'monthly'">Months</span></label>
+                            <div class="col-sm-5">
+                                <input type="number" class="form-control" name="duration_number" data-ng-model="duration_number"
+                                       oninput="validity.valid||(value='');" placeholder='e.g. 10'>
+                            </div>
+                        </div>
+                        <!--<div class="form-group" data-ng-show="payment_type == 'recurring'">-->
+                        <!--    <label class="col-sm-2 control-label">{{plans.price}}</label>-->
+                        <!--    <div class="col-sm-5">-->
+                        <!--        <input type="number" class="form-control" name="Plan_prices" data-ng-model="Plan_prices"-->
+                        <!--               oninput="validity.valid||(value='');" placeholder={{plans.price}}>-->
+                                <!--<span data-ng-show="submitted && sliderform.Plan_prices.$invalid">-->
+                                    <!--<span class="text-danger" data-ng-show="sliderform.Plan_prices.$error.required">{{general.required}}</span>-->
+                                <!--</span>-->
+                        <!--    </div>-->
+                        <!--</div>-->
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{plans.noa}}</label>
+                            <div class="col-sm-5">
+                                <input type="number" class="form-control" min="1" name="no_application" data-ng-model="no_application"
+                                       placeholder={{plans.noa}} oninput="validity.valid||(value='');" required>
+                                <span data-ng-show="submitted && sliderform.no_application.$invalid">
+                                    <span class="text-danger" data-ng-show="sliderform.no_application.$error.required">{{general.required}}</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <div class="checkbox">
+                                    <label class="i-checks">
+                                        <input type="checkbox" data-ng-model="AllowLessons" data-ng-change="check_allow()"><i></i>
+                                        Lessons included or not
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <div class="checkbox">
+                                    <label class="i-checks">
+                                        <input type="checkbox" data-ng-model="AllowTemplates" data-ng-change="check_allow()"><i></i>
+                                        Templates included or not
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <div class="checkbox">
+                                    <label class="i-checks">
+                                        <input type="checkbox" data-ng-model="AllowDC" data-ng-change="check_allow()"><i></i>
+                                        Upload documents to Checklist or not
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <div class="checkbox">
+                                    <label class="i-checks">
+                                        <input type="checkbox" data-ng-model="Pro_Features"><i></i>
+                                        Allow Pro Features
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line line-dashed b-b line-lg"></div>
+                        <div class="form-group">
+                            <div class="col-sm-9 col-sm-offset-2">
+                                <button type="submit" class="btn btn-sm btn-info" data-ng-click="add_plans_form(sliderform.$valid)">{{general.btnsave}}</button>
+                                <button type="submit" class="btn btn-sm btn-danger" data-ui-sref="app.plans">{{general.btncancel}}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>

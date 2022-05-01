@@ -1,0 +1,30 @@
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="faqController">
+    <div data-ng-if="is_faq" class="master_dashbaord">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-light marketplace_desc soc_desc bg-white"><i class="fa fa-exclamation-circle color_theme bg-white "></i>
+                    <p>Read the <b>Frequently Asked Questions</b> and <b>Answers</b> below as it may contain some helpfull information for you!</p>
+                </div>
+                <!-- BEGIN TAB PORTLET-->
+                <div class="col-md-10 col-xs-12">
+                    <div class="faq_section shadow bg-white" data-ng-repeat="faq in faqlist">
+                        <div data-toggle="collapse" data-target="#faq_{{faq.iPkFAQId}}" class="faq_collapse" aria-expanded="false">
+                            <h3 class="bold">{{faq.vFAQ}}</h3>
+                            <button class="btn font-white bg-purple-theme bold faq_open pull-right">Open</button>
+                            <button class="btn pull-right btn-outline bold green-jungle faq_close">Close</button>
+                        </div>
+
+                        <div id="faq_{{faq.iPkFAQId}}" class="collapse">
+                            <div class="faq_ans">
+                                {{faq.vFAQAnswer}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END TAB PORTLET-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT -->

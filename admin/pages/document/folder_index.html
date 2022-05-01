@@ -1,0 +1,99 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="docFolderCtrl"
+     data-ng-if="is_main_user == 1 || document_folder_permission.main_menu_id =='9.1'">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">Doc Folders</h1>
+                </div>
+            </div>
+        </div>
+        <!-- main header end -->
+
+        <!-- content -->
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default table-responsive">
+                <div class="col-sm-12 col-lg-8 col-md-8 col-xs-12" style="margin-top: 20px;">
+                    <!-- ADD BUTTON -->
+                    <button data-ng-show="is_main_user == 1 || document_folder_permission.add == 1"
+                            ui-sref="app.adddocfolder"
+                            class="btn btn-addon m-b-xs btn-info"><i
+                            class="fa fa-plus"></i>Add New
+                    </button>
+                    &nbsp;
+                    <!-- DELETE ALL BUTTON -->
+                    <button data-ng-show="is_main_user == 1 || document_folder_permission.delete == 1"
+                            class="btn btn-addon m-b-xs btn-danger" data-ng-click="removeAll()"><i
+                            class="fa fa-trash-o"></i>Delete All
+                    </button>
+                    &nbsp;
+                </div>
+                <div class="col-sm-12 col-lg-4 col-md-4 col-xs-12 form-group pull-right top_search" st-table="displayedCollection" st-safe-src="rowCollection" style="margin-top: 20px;">
+                    <input class="form-control ng-isolate-scope" st-search="" placeholder="Enter character to search..." type="text" data-ng-model="searchText"/>
+                </div>
+                <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped" st-filtered-collection="rowCollection">
+                    <!-- TABLE HEADER -->
+                    <thead>
+                    <tr>
+                        <th class="text-center">
+                            <div class="checkbox"><label class="i-checks"><input type="checkbox" id="checkAll"/><i></i></label>
+                            </div>
+                        </th>
+                        <th class="text-nowrap text-uppercase" st-sort="vFolderName">Folder Name</th>
+                        <th class="text-center text-nowrap text-uppercase"
+                            data-ng-show="is_main_user == 1 || (document_folder_permission.update == 1 || document_folder_permission.delete == 1)"
+                            st-sort="">Action
+                        </th>
+                    </tr>
+                    </thead>
+                    <!-- HEADER END -->
+                    <tbody>
+                    <tr ng-repeat="row in displayedCollection">
+                        <td class="text-center">
+                            <div class="checkbox"><label class="i-checks">
+                                <input type='checkbox'
+                                       class="catstatus"
+                                       id="cat{{row.iPkFolderId}}"
+                                       name='checklist[]'
+                                       data-ng-model="checklist" ng-disabled="row.assign == 'yes'"><i></i></label>
+                            </div>
+                        </td>
+                        <td class="text-nowrap">{{row.vFolderName}}</td>
+                        <td class="text-center text-nowrap">
+                            <!-- EDIT BUTTON -->
+                            <button data-ng-show="is_main_user == 1 || document_folder_permission.update == 1"
+                                    class="btn btn-addon m-b-xs btn-sm btn-info info"
+                                    ui-sref="app.editdocfolder({fid:row.iPkFolderId})"><i class="fa fa-edit"></i>
+                                Edit
+                            </button>
+                            <!-- DELETE BUTTON -->
+                            <button data-ng-show="is_main_user == 1 || document_folder_permission.delete == 1"
+                                    class="btn btn-addon m-b-xs btn-sm btn-info btn-danger"
+                                    ng-click="removeItem(row.iPkFolderId,row.vFolderName)"
+                                    ng-disabled="row.assign == 'yes'"><i class="fa fa-trash-o"></i>Delete
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-if="displayedCollection.length == 0">
+                        <td class="text-center text-nowrap" colspan="3">
+                            No records found
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-right">
+                            <div st-pagination="" st-items-by-page="10" st-displayed-pages="7" class="no-margin"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <!-- content end -->
+    </div>
+    <!-- main end -->
+</div>
+

@@ -1,0 +1,350 @@
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="TimelineController">
+    <style>
+        body[ng-controller] .modaldeletetag {
+            z-index: 100100 !important;
+        }
+    </style>
+    <div class="master_dashbaord">
+        <!--BEGIN MASTER TASK -->
+        <div class="row">
+            <div class="col-md-12">
+                
+                <div class="" style="display:flex;">
+                        <div class="full_width">
+                            <span class="caption-subject" style="font-size:30px;"><b>Application Timeline</b></span> &nbsp;
+                        </div>
+                        <div> 
+                            <ul class="nav nav-tabs veazy_tabs" style="display:flex;">
+                                <li class="active">
+                                    <a data-target="#tab_1_1" data-toggle="tab" aria-expanded="true">Tabular</a>
+                                </li>
+                                <li>
+                                    <a data-target="#tab_1_2" data-toggle="tab" aria-expanded="true">Graphical</a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                
+                <div class="tab-content">
+                    <div class="portlet light shadow tab-pane active" id="tab_1_1">
+                        <div class="portlet-title d-flex">
+                            <div class="caption full_width">
+                                <div class="pull-right">
+                                    <a data-ui-sref="app.maindashboard" class="btn btn-md green-jungle btn-outline bold">
+                                        Main Dashboard
+                                    </a>
+                                </div>
+                                <div class="pull-right" style="margin-right:10px;" ng-if="allcase">
+                                    <a href="javascript:void(0);" data-ng-click="myCase()" class="btn btn-md green-jungle btn-outline bold">
+                                        My Case
+                                    </a>
+                                </div>
+                                <div class="pull-right" style="margin-right:10px;" ng-if="!allcase">
+                                    <a href="javascript:void(0);" data-ng-click="allCase()" class="btn btn-md green-jungle btn-outline bold">
+                                        All Case
+                                    </a>
+                                </div>
+                                <div class="pull-right" style="margin-right:10px;" ng-if="disable_add_case_btn == 'no'">
+                                    <a data-ui-sref="app.addeditcase" class="btn btn-md green-jungle btn-outline bold">
+                                        <i class="fa fa-plus-circle " aria-hidden="true"></i> &nbsp; Add Case
+                                    </a>
+                                </div>
+                                <div class="pull-right" style="margin-right:10px;" ng-if="disable_add_case_btn == 'yes'">
+                                    <a href="javascript:void(0)" class="btn btn-md green-jungle btn-outline bold" disabled>
+                                        <i class="fa fa-plus-circle " aria-hidden="true"></i> &nbsp; Add Case
+                                    </a>
+                                </div>
+                                <div class="pull-right" style="margin-right:10px;" ng-if="!showfilter">
+                                    <a href="javascript:void(0)" class="btn btn-md green-jungle btn-outline bold" ng-click="filterHideShow(true)">
+                                        <i class="fa fa-filter" aria-hidden="true"></i> &nbsp; Show filters
+                                    </a>
+                                </div>
+                                <div class="pull-right" style="margin-right:10px;" ng-if="showfilter">
+                                    <a href="javascript:void(0)" class="btn btn-md green-jungle bold" ng-click="filterHideShow(false)">
+                                        <i class="fa fa-filter" aria-hidden="true"></i> &nbsp; Hide filters
+                                    </a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!--added new 11-10 start-->
+                        <div class="container" ng-if="showfilter" style="border-bottom: 2px solid #f0f1f3;border-spacing: 5px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <label for="search_field.nationality">Nationality</label>
+                                        <select class="form-control" placeholder="Nationality" ng-model="search_field.Nationality" ng-options="country.iPkCountryId as country.vCountryName for country in countries">
+                                                            <option value="">-- Select Nationality --</option>
+                                                        </select>    
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="search_field.ApplicationSubclass">Application Subclass</label>
+                                        <select class="form-control" ng-model="search_field.ApplicationSubclass" ng-options="subclass.iPkVisaProductId as subclass.vVisaProductTitle for subclass in applicationsubclass">
+                                                            <option value="">-- Select Subclass --</option>
+                                                        </select> 
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="search_field.OnOffShore">Onshore/Offshore</label>
+                                        <select class="form-control" ng-model="search_field.OnOffShore">
+                                                            <option value="">-- Onshore/Offshore --</option>
+                                                            <option value="Offshore"  ng-if="search_field.ApplicationSubclass != '1'">Offshore</option>
+                                                            <option value="Onshore" ng-if="search_field.ApplicationSubclass == '1' || search_field.ApplicationSubclass == null">Onshore</option>
+                                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <label for="search_field.CurrentStatus"> Current status</label>
+                                        <select class="form-control" ng-model="search_field.CurrentStatus">
+                                                            <option value="">-- Select Application Status --</option>
+                                                            <option value="Lodged">Lodged</option>
+                                                            <option value="Granted">Granted</option>
+                                                            <option value="Refused">Refused</option>
+                                                        </select> 
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="search_field.VisaOffice">Location at Lodgement</label>
+                                        <select class="form-control" placeholder="Location" ng-model="search_field.VisaOffice" ng-options="country.iPkCountryId as country.vCountryName for country in lal_country | filter:locationShow">
+                                                            <option value="">-- Select Location --</option>
+                                                        </select>    
+                                    </div>
+                                    <!--<div class="col-md-4">
+                                        <label for="search_field.VisaOffice">Visa Office</label>
+                                        <input type="text" ng-model="search_field.VisaOffice" placeholder="ex. Sydney" class="form-control"/> 
+                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                        <a href="javascript:void(0);" class="btn btn-md green-jungle btn-outline bold" ng-click="resetSearchFilter()">
+                                            Reset
+                                        </a>
+                                    </div>
+                                    <div class="pull-right" style="margin-right:10px;">
+                                        <a href="javascript:void(0);" class="btn btn-md green-jungle bold" ng-click="searchFilter()">
+                                            Search
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--added new 11-10 end-->
+                        <div class="portlet-body">
+                            <div class="table-responsive">
+                                <table class="table master_task_table">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th ng-if="allcase"></th>
+                                        <th ng-if="allcase">Name</th>
+                                        <th>Nationality</th>
+                                        <th>Location</th>
+                                        <th>Subclass</th>
+                                        <th><i class="fa fa-calendar"></i>&nbsp; Lodgement Date</th>
+                                        <th><i class="fa fa-calendar"></i>&nbsp; Medical Completion Date</th>
+                                        <th>Onshore / Offshore</th>
+                                        <th>Application Status</th>
+                                        <th><i class="fa fa-calendar"></i>&nbsp; Grant Date</th>
+                                        <th>Days between Lodgement & Visa Grant</th>
+                                        <th><i class="fa fa-calendar"></i>&nbsp; Created Date</th>
+                                        <th><i class="fa fa-calendar"></i>&nbsp; Last Updated</th>
+                                        <th>State</th>
+                                        <th ng-if="!allcase">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody ng-if="allcase">
+                                    <tr data-ng-repeat="allcase in alltimelinecase" ng-style="login_user_id == allcase.iFkUserId ? {'background':'#2be688','color':'white'} : ''">
+                                        <td></td>
+                                        <td><img alt="" width="50" height="50" class="img-circle" src="api/avatar/{{allcase.vProfileImage}}"></td>
+                                        <td>{{allcase.vFirstName}} {{allcase.vLastName}}</td>
+                                        <td>{{allcase.vCountryName}}</td>
+                                        <td>{{allcase.visa_office}}</td>
+                                        <td>{{allcase.vVisaProductTitle}}</td>
+                                        <td>{{allcase.DateOfLodgement}}</td>
+                                        <td>{{allcase.MedicalCompDate}}</td>
+                                        <td>{{allcase.OnOffShore}}</td>
+                                        <td>{{allcase.CurrentStatus}}</td>
+                                        <td>{{allcase.dtGrantedOn}}</td>
+                                        <td>{{allcase.DayBLodgeGrant}}</td>
+                                        <td>{{allcase.dtCreatedOn}}</td>
+                                        <td>{{allcase.dtUpdatedOn}}</td>
+                                        <td>{{allcase.State}}</td>
+                                    </tr>
+                                    </tbody>
+                                    <tbody ng-if="!allcase">
+                                    <tr data-ng-repeat="allcase in alltimelinecase" ng-if="login_user_id == allcase.iFkUserId">
+                                        <td></td>
+                                        <td>{{allcase.vCountryName}}</td>
+                                        <td>{{allcase.visa_office}}</td>
+                                        <td>{{allcase.vVisaProductTitle}}</td>
+                                        <td>{{allcase.DateOfLodgement}}</td>
+                                        <td>{{allcase.MedicalCompDate}}</td>
+                                        <td>{{allcase.OnOffShore}}</td>
+                                        <td>{{allcase.CurrentStatus}}</td>
+                                        <td>{{allcase.dtGrantedOn}}</td>
+                                        <td>{{allcase.DayBLodgeGrant}}</td>
+                                        <td>{{allcase.dtCreatedOn}}</td>
+                                        <td>{{allcase.dtUpdatedOn}}</td>
+                                        <td>{{allcase.State}}</td>
+                                        <td>
+                                            <a data-ui-sref="app.addeditcase({caseid:allcase.enc_iPkTimelineId})" class="icon-note color_theme bold"></a> &nbsp;
+                                            
+                                            <a data-ng-click="deleteCase(allcase.iPkTimelineId)"><i class="manage_dc fa icon-close"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>                           
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet light shadow tab-pane" id="tab_1_2">
+                        <div class="portlet-title d-flex">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="">
+                                            <div class="" style="background:grey;text-align: center;">
+                                                <span class="text-center" style="font-size:15px;color:white;border-radius:25px !important;">No. of Cases</span>
+                                            </div>
+                                            <div class="">
+                                                <div class="" style="display:flex;justify-content: space-between;align-item:center;padding:10px;">
+                                                <div class="col-md-3 total_cases" style="margin:auto;">
+                                                    <span style="font-size:50px;color:#6f47df;">{{total_cases}}</span>
+                                                </div>
+                                                <div class="col-md-5 cases_count" style="margin-right:20px;">
+                                                    <span style="color:#6f47df;font-size:15px;">Subclass 820 </span><span style="font-size:15px;margin-left: 10px;">{{graph_data.subclass800}}</span><br>
+                                                    <span style="color:#6f47df;font-size:15px;">Subclass 300 </span><span style="font-size:15px;margin-left: 10px;">{{graph_data.subclass300}}</span><br>
+                                                    <span style="color:#6f47df;font-size:15px;">Subclass 309 </span><span style="font-size:15px;margin-left: 10px;">{{graph_data.subclass309}}</span>
+                                                </div>
+                                            </div>    
+                                            </div>
+                                            
+                                        </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="">
+                                            <div class="" style="background:grey;text-align: center;">
+                                                <span class="text-center" style="font-size:15px;color:white;border-radius:25px !important;">No. of New Cases</span>
+                                            </div>
+                                            
+                                            <div class="" style="display:flex;justify-content:space-around;align-item:center;padding:10px;">
+                                                <div class="">
+                                                    <span style="font-size:15px;color:#6f47df;">This Week</span><br>
+                                                    <span style="font-size:15px;color:#6f47df;">This Month</span><br>
+                                                    <span style="font-size:15px;color:#6f47df;">This Year</span><br>
+                                                </div>
+                                                <div class="cases_count" style="text-align:center;margin-left:-50px;">
+                                                    <span style="font-size:15px;">{{noOfNewCases.thisWeekCases}} </span><br>
+                                                    <span style="font-size:15px;">{{noOfNewCases.thisMonthCases}} </span><br>
+                                                    <span style="font-size:15px;">{{noOfNewCases.thisYearCases}} </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="">
+                                            <div class="" style="background:grey;text-align: center;">
+                                                <span class="text-center" style="font-size:15px;color:white;border-radius:25px !important;">Avg. Visa Processing time (Days)</span>
+                                            </div>
+                                            
+                                            <div class="" style="display:flex;justify-content:space-around;align-item:center;padding:10px;"> 
+                                                <div class="">
+                                                    <span style="font-size:15px;color:#6f47df;">Subclass 820</span><br>
+                                                    <span style="font-size:15px;color:#6f47df;">Subclass 300</span><br>
+                                                    <span style="font-size:15px;color:#6f47df;">Subclass 309</span><br>
+                                                </div>
+                                                <div class="cases_count" style="text-align:center;martin-left:-50px;">
+                                                    <span style="font-size:15px;">{{graph_data.avgtimefor800}}</span><br>
+                                                    <span style="font-size:15px;">{{graph_data.avgtimefor300}}</span><br>
+                                                    <span style="font-size:15px;">{{graph_data.avgtimefor309}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="">
+                                            <div class="" style="background:grey;text-align: center;">
+                                                <span class="text-center" style="font-size:15px;color:white;border-radius:25px !important;">Avg. Processing time (By Visa and Country) In Days</span>
+                                            </div>
+                                            <div style="padding:10px;">
+                                                <div class="" style="display:flex;justify-content:space-between;align-item:center;padding:5px;">
+                                                <div class="col-md-9" style="padding:5px;">
+                                                    <div class="">
+                                                        <!--<span style="font-size:20px;color:#6f47df;">Select Country: </span>-->
+                                                            <span><select class="form-control" ng-model="graph_search.ApplicationSubclass" ng-options="subclass.iPkVisaProductId as subclass.vVisaProductTitle for subclass in applicationsubclass" ng-change="searchGraphFilter()" style="width:65%;">
+                                                                <option value="">Select Visa Type</option>
+                                                            </select></span><br>
+                                                    </div>
+                                                    <div class="">
+                                                        <!--<span style="font-size:20px;color:#6f47df;">Select Visa Type: </span>-->
+                                                        <span><select class="form-control" placeholder="Nationality" ng-model="graph_search.Nationality" ng-options="country.iPkCountryId as country.vCountryName for country in countries" ng-change="searchGraphFilter()" style="width:65%;">
+                                                                <option value="">Select Country</option>
+                                                            </select></span><br>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 cases_count" style="font-size: 50px;margin: auto;text-align:center;color: white;background: #6f47df;opacity: 0.7;">
+                                                    {{country_vise_case_count}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-9" style="padding-left:10px;">
+                                                <span style="font-size:20px;color:white;background:#6f47df;opacity: 1;">No. Cases Found: {{NoofCase}}</span><br>
+                                            </div>
+                                            </div>
+                                            
+                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="" style="background:grey;text-align: center;">
+                                                <span class="text-center" style="font-size:15px;color:white;border-radius:25px !important;">Conversation Statistics</span>
+                                            </div>
+                                        <div class="col-md-12 graph_dates" style="display:flex;padding:10px;">
+                                            <div class="col-md-8">
+                                                <input type="text" name="daterange" ng-model="graphdates.daterange" placeholder="Ex. 10/31/2021 - 12/10/2021" class="form-control"/>        
+                                            </div>
+                                            <div class="col-md-2">
+                                                <a href="javascript:void(0)" class="btn btn-md green-jungle btn-outline bold" ng-click="graphDatesWise();">Search</a>
+                                            </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin-top:15px;">
+                                            <div id="chartContainer" style="height: 250px; max-width: 920px; margin: 0px auto;"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END MASTER TASK -->
+    </div>
+    <!--START ADD CASE -->
+    <!-- DELETE CASE POPUP -->
+    <script type="text/ng-template" id="delete_case.html">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Are you sure you want to delete this case?</p>
+            </div>
+            <div class="modal-footer text-center">
+                <button class="btn b bg-purple-theme font-white btn-md bold" data-ng-click="deleteCaseConfirm()">
+                    Yes
+                </button>
+                <button class="btn btn-outline purple" aria-hidden="true" data-ng-click="deleteCaseNo()">No</button>
+            </div>
+        </div>
+    </script>
+    <!-- DELETE CASE POPUP END -->
+</div>
+<!-- END MAIN CONTENT -->

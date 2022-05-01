@@ -1,0 +1,213 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="addbranchCtrl">
+<!-- main -->
+<div class="col">
+<toaster-container toaster-options="{'position-class': 'toast-top-right'}"></toaster-container>
+<!-- main header -->
+<div class="bg-light lter b-b wrapper-md">
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <h1 class="m-n font-thin h3 text-black">{{pagename}}</h1>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper-md ng-scope">
+
+<div class="panel panel-default">
+
+<div class="panel-body">
+<form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+      name="bussinessform" novalidate>
+<div class="control-group" ng-class="{true: 'error'}[submitted && form.email.$invalid]">
+<div class=" col-md-6 pull-left">
+    <div class=" panel-heading font-bold"><span  class="ng-scope">{{branch.tab}}</span></div>
+    <div class="form-group"></div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{branch.mainbranch}}</label>
+        <div class="col-sm-10" >
+            <div class="btn-group">
+                <label class="btn btn-default ng-untouched ng-valid ng-dirty active"  ng-model="eIsMain" btn-radio="'yes'">{{branch.yes}}</label>
+                <label class="btn btn-default ng-untouched ng-valid ng-dirty" data-ng-hide="flag == 1" ng-model="eIsMain" btn-radio="'no'">{{branch.no}}</label>
+            </div>
+        </div>
+
+    </div>
+ 
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{branch.brname}}</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="vBranchName" data-ng-model="vBranchName"
+                   placeholder="{{branch.brname}}" required>
+                                    <span data-ng-show="submitted && bussinessform.vBranchName.$invalid">
+                                        <span class="text-danger" data-ng-show="bussinessform.vBranchName.$error.required">{{branch.bnamerequired}}</span>
+                                    </span>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{branch.bemail}}</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" name="vBranchEmail" data-ng-model="vBranchEmail"
+                   placeholder="{{branch.bemail}}" ng-blur="checkbEmail();" data-ng-disabled="disableemail" required>
+
+            <span class="text-danger" ng-show="bussinessform.vBranchEmail.$error.email">{{business.emailinvalid}}</span>
+            <span class="text-danger" ng-show="bussinessform.$submitted && bussinessform.vBranchEmail.$error.required">{{branch.branchemailrequired}}</span>
+            <span class="text-danger"  ng-if="bemailalreadyexists!=''">{{bemailalreadyexists}}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{branch.bphone}}</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="iBranchPhone" data-ng-model="iBranchPhone"
+                   placeholder="{{branch.bphone}}" required valid-number>
+                                    <span data-ng-show="submitted && bussinessform.iBranchPhone.$invalid">
+                                        <span class="text-danger" data-ng-show="bussinessform.iBranchPhone.$error.required">{{branch.bphonerequired}}</span>
+                                    </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{branch.bmobile}}</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="iBranchMobile" data-ng-model="iBranchMobile"
+                   placeholder="{{branch.bmobile}}" required valid-number>
+                                    <span data-ng-show="submitted && bussinessform.iBranchMobile.$invalid">
+                                        <span class="text-danger" data-ng-show="bussinessform.iBranchMobile.$error.required">{{branch.bmobilerequired}}</span>
+                                    </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{branch.bcountry}}</label>
+        <div class="col-sm-10" ng-init="iCountryId=0">
+            <select class="form-control" name="iCountryId" data-ng-model="iCountryId" ng-change="getstate(iCountryId,1)">
+                <option value="0" ng-click="getdata()" >-Select Country-</option>
+                <option ng-repeat="c in bcontrydata" value="{{c.iCountryId}}"  ng-selected="iCountryId==c.iCountryId">{{c.VCountryName}}</option>
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+
+        <label class="col-sm-2 control-label"> {{branch.branchstate}}</label>
+        <div class="col-sm-10" ng-init="iStateId=0">
+            <select class="form-control" name="iStateId" data-ng-model="iStateId" ng-change="getcity(iStateId,1)">
+                <option value="0" >-Select State-</option>
+                <option ng-repeat="b in bstatedata" value="{{b.iStateId}}"  ng-selected="iStateId==b.iStateId" >{{b.vStateName}}</option>
+
+            </select>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{branch.bcity}}</label>
+        <div class="col-sm-10"  ng-init="iCityId=0" >
+            <select class="form-control" name="iCityId" data-ng-model="iCityId">
+                <option value="0" >-Select City-</option>
+                <option ng-repeat="c in bcitydata" ng-selected="iCityId==c.iCityId" value="{{c.iCityId}}" >{{c.vCityName}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{branch.branchzipcode}}</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="vZipCode" data-ng-model="vZipCode"
+                   placeholder="{{branch.branchzipcode}}" required >
+                                   <span data-ng-show="submitted && bussinessform.vZipCode.$invalid">
+                                        <span class="text-danger" data-ng-show="bussinessform.vZipCode.$error.required">{{branch.bzipcoderequired}}</span>
+                                    </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"> {{branch.baddress}}</label>
+        <div class="col-sm-10">
+            <textarea  class="form-control" name="vBranchAddress" rows="2" placeholder=" {{branch.baddress}}" data-ng-model="vBranchAddress"required></textarea>
+                                        <span data-ng-show="submitted && bussinessform.vBranchAddress.$invalid">
+                                        <span class="text-danger" data-ng-show="bussinessform.vBranchAddress.$error.required">{{branch.baddrequired}}</span>
+                                    </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{branch.branchgpslocation}}</label>
+        <div class="col-sm-10">
+            <div class="input-group m-b"  >
+                                        <span class="input-group-addon">
+                                            <a title="open map and choose gps location" ng-click="openmapmodal();addMarker($event, $params);" class="btn-sm"><i class="glyphicon glyphicon-map-marker"></i></a>
+                                        </span>
+                <input type="text" name="latlong" data-ng-model="latlong"  ng-disabled="true" class="form-control"  value="{{c.dlongitude}}{{c.dLangitude}}" required>
+
+            </div>
+            <span data-ng-show="submitted && bussinessform.latlong.$invalid">
+                    <span class="text-danger"  ng-if="submitted && !latlong">{{branch.gpsrequire}}</span>
+                </span>
+        </div>
+    </div>
+
+
+    <div class="form-group" ng-if="reviewImage">
+        <label class="col-sm-2 control-label">Preview</label>
+        <div class="col-sm-10" >
+            <img ng-src="{{reviewImage}}" style="border: 3px solid #cfdadd" ng-model="reviewImage" height="100">
+        </div>
+    </div>
+</div>
+
+<!--Owner Info-->
+<div class="col-md-6 pull-right">
+
+
+<!----Content onother Side Add--->
+
+
+</div>
+
+<div class="col-sm-12">
+    <div class="pull-right">
+        <button type="submit" class="btn btn-sm btn-info"
+                ng-click="add_branch_form(bussinessform.$valid)">{{general.btnsave}}
+        </button>
+        <button type="submit" class="btn btn-sm btn-danger" ui-sref="app.branch">{{general.btncancel}}</button>
+    </div>
+</div>
+
+<!--data-ng-show="!vPassword"-->
+
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<script type="text/ng-template" id="myModalContent2.html">
+
+    <div class="modal-header">
+        <h5 class="modal-title"><b>Choose Gps location by click on location</b> ( You can drag marker to adjust gps location )</h5>
+    </div>
+    <div class="modal-body ng-scope">
+        <div class="row">
+            <div class="panel-body">
+
+
+                <!--<div id="map" style="min-height:400px" ui-map-marker="myMarker" ui-map="myMap" ui-event="{'map-click': 'addMarker($event, $params)','map-resize': 'test()'}" ui-options="mapOptions"></div>-->
+                <!--<my-map></my-map>-->
+                <div id='map' style="min-height: 550px;" class="col-md-12"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer ng-scope">
+        <button ng-click="ok()" class="btn btn-primary">OK</button>
+        <button ng-click="cancel()" class="btn btn-default">Cancel</button>
+    </div></div>
+</script>
+
+<style>
+    #map_container {
+        height: 500px;
+        cursor: pointer;
+    }
+</style>

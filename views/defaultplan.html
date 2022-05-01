@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<div data-ng-controller="DefaultPlanController">
+    <!--[if !IE]><!-->
+    <html lang="en">
+    <!-- END HEAD -->
+    <form class="defaultplan" name="defaultplan" novalidate>
+        <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo  page-sidebar-fixed vz_page_log_bg">
+        <div class="vz_page_log_bg">
+            <div class="vz_page">
+                <div class="vz_side_pop1_bg1"></div>
+                <div class="vz_side_pop1_bg2"></div>
+                <div class="vz_side_pop4">
+                    <div class="vz_side_pop4_p1">
+                        <img src="http://app.veazy.com.au/assets/layouts/layout/img/vz_profile_2.png">
+                        <h4>
+                            Plan
+                            Details</h4>
+                    </div>
+                    <div class="vz_side_pop4_p2">
+                        <h4>Plan Name:<i>{{plan.Plan_names}}</i></h4>
+                        <h4>Plan Duration:<i class="text-capitalize">{{plan.Plan_Duration}}</i></h4>
+                        <h4>Plan Price:<i>AUD${{plan.Plan_prices}}</i></h4>
+                    </div>
+                    <div class="vz_side_pop4_p3">
+                        <p ng-if="trial.trial != 'free'"><br></p>
+                        <p ng-if="trial.trial != 'paid'">Your free trial begins on {{plan.Start_date}} and will end on {{plan.End_date}}.</p>
+                        <p>Your Next Bill Will be<span>{{plan.End_date}}.</span></p>
+                    </div>
+
+                    <div class="vz_side_pop4_p4">
+                        <a href="javascript:;"
+                           class="vz_side_pop1_btn2 mr1" data-ng-click="logout()">Log out</a>
+                        <a href="javascript:;"
+                           class="vz_side_pop1_btn2" ng-click="checkoutPayment();">Proceed to Checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </body>
+    </form>
+
+    </html>
+</div>
+<div class="stripe_div" style="display:none"></div>
+<div class="toggle" style="display:none"></div>

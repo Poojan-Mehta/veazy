@@ -1,0 +1,47 @@
+
+<div data-ng-controller="OtpController">    
+
+    <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo  page-sidebar-fixed vz_page_log_bg">
+    <div class="vz_page_log_bg" style="width: 100% !important;">
+
+        <div class="vz_page">
+            <form class="login-form" name="otpform" novalidate>
+                <div class="vz_side_pop1_bg1"></div>
+                <div class="vz_side_pop1_bg2"></div>
+                <div class="vz_side_pop1 vz_side_pop2 rp">
+                    <div class="vz_side_pop1_p2">
+                        <div class="vz_side_pop1_p2_s1">
+                            <span>x</span>
+                        </div>
+                        <div class="vz_side_pop1_p2_s2">
+                            <h4>Confirm OTP</h4>
+                        </div>
+                        <div class="vz_side_pop1_p2_s3">
+                            <label>E-mail</label>
+                            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" 
+                                   name="email" data-ng-model="email" readonly />                            
+                            <span class="text-danger ccl1dnr" data-ng-show="password && otpform.email.$error.passwordPattern">Password must be minimum length of 6 with special character,digit!</span>
+                            <span class="text-danger ccl1dnr" data-ng-show="submitted && otpform.email.$invalid">
+                    <span class="text-danger ccl1dnr" data-ng-show="otpform.email.$error.required">
+                        Password is required
+                    </span>
+                </span>
+                            <label>OTP</label>
+                            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Confirm OTP" name="otp" data-ng-model="otp" maxlength="6" required/>
+                            <span class="text-danger ccl1dnr" data-ng-show="submitted && password && otpform.otp.$invalid">
+                    <span class="text-danger ccl1dnr" data-ng-show="otpform.otp.$error.noMatch">Passwords do not match.</span>
+                </span>
+                        </div>
+                        <div class="vz_side_pop1_p2_s5">
+                            <button class="vz_side_pop1_btn2" data-ng-click="submit(otpform.$valid)" data-ng-disabled="disabled">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    </body>
+    <div class="copyright"> 2018 © Veazy</div>
+</div>
+

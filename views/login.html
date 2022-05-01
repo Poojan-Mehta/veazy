@@ -1,0 +1,170 @@
+<!-- <!DOCTYPE html>
+
+<body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo  page-sidebar-fixed vz_page_log_bg">
+<div class="vz_page_log_bg">
+<div data-ng-controller="LoginController">
+    <div class="vz_page">
+        <form class="login-form" name="loginform" novalidate>
+            <div class="vz_side_pop1_bg1"></div>
+            <div class="vz_side_pop1_bg2"></div>
+            <div class="vz_side_pop1 vz_cus2">
+                <div class="vz_side_pop1_p1">
+                    <div class="borrig1"></div>
+                    <div class="vz_side_pop1_p1_s1">
+                        <h5>New user?</h5>
+                        <p>Create a<span>Veazy</span>account</p>
+                    </div>
+                    <div class="vz_side_pop1_p1_s2">
+                        <a data-ui-sref="register" class="vz_side_pop1_btn1">Create account</a>
+                    </div>
+                </div>
+                <div class="vz_side_pop1_p2">
+                    <div class="vz_side_pop1_p2_s1">
+                        <span>x</span>
+                    </div>
+                    <div class="vz_side_pop1_p2_s2">
+                        <img src="http://app.veazy.com.au/assets/layouts/layout/img/vz_profile_1.png">
+                        <h4>
+                            LOGIN</h4>
+                    </div>
+                    <div class="vz_side_pop1_p2_s3">
+                        <div class="form-group">
+                            <label class="control-label visible-ie8 visible-ie9">Email</label>
+                            <input class="form-control form-control-solid placeholder-no-fix" type="email"
+                                   autocomplete="off" placeholder="Email" name="email" data-ng-model="email" required/>
+                            <span data-ng-show="submitted && loginform.email.$invalid">
+                    <span class="text-danger ccl1dn"
+                          data-ng-show="loginform.email.$error.required">Email address is required.</span>
+                    <span class="text-danger " data-ng-show="loginform.email.$error.email">Please enter valid email address.</span>
+                </span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label visible-ie8 visible-ie9">Password</label>
+                            <input class="form-control form-control-solid placeholder-no-fix" type="password"
+                                   autocomplete="off" placeholder="Password" name="password" data-ng-model="password"
+                                   required/>
+                            <span class="text-danger ccl1dn" data-ng-show="submitted && loginform.password.$invalid">
+                    <span class="text-danger"
+                          data-ng-show="loginform.password.$error.required">Password is required.</span>
+                </span>
+                        </div>
+
+                    </div>
+                    <div class="vz_side_pop1_p2_s4">
+                        <p><input type="checkbox" name=""><span>Keep me Logged in</span></p>
+                        <a data-ui-sref="forgotpassword" id="forget-password" class="forget-password">Forgot
+                            Password?</a>
+                    </div>
+                    <div class="form-actions vz_side_pop1_p2_s5">
+                        <button class="vz_side_pop1_btn2" data-ng-click="submit(loginform.$valid)"
+                                data-ng-disabled="disabled">Login
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <title>Veazy</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="veazy" name="description"/>
+    <meta content="Martin" name="author"/>
+    <link rel="stylesheet" type="text/css" href="http://app.veazy.com.au/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://app.veazy.com.au/css/custom.css"/>
+    <link rel="stylesheet" href="http://app.veazy.com.au/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="http://app.veazy.com.au/css/owl.theme.default.min.css">
+    <style>
+        input:focus,textarea:focus{  outline: none !important;  }
+        input.error, textarea.error{  outline:red groove thin;  }
+    </style>
+</head>
+<!-- END HEAD -->
+
+<body>
+
+<div class="vz_log" data-ng-controller="LoginController">
+<form class="login-form" name="loginform" novalidate>
+    <div class="vz_log_b1">
+        <div class="vz_log_p1">
+            <div class="vz_logbox">
+                <div class="vz_log_p1_s1">
+                    <img src="images/veazy_logo.png">
+                </div>
+                <div class="vz_log_p1_s2">
+                    <!--<h2>New to Veazy?</h2>
+                    <h2>Start your free trial <a data-ui-sref="register">here</a> .</h2>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="vz_log_b2">
+        <div class="vz_log_p2">
+            <div class="vz_log_p2_p1">
+                <h2>Login</h2>
+            </div>
+            <div class="vz_log_p2_p2">
+                <!-- <label>Email Address</label>
+                <input type="email" name="" placeholder="Email"> -->
+                <label class="control-label visible-ie8 visible-ie9">Email</label>
+                <input class="form-control form-control-solid placeholder-no-fix" type="email"
+                                   autocomplete="off" placeholder="Email" name="email" data-ng-model="email" required/>
+                            <span data-ng-show="submitted && loginform.email.$invalid">
+                    <span class="text-danger ccl1dn"
+                          data-ng-show="loginform.email.$error.required">Email address is required.</span>
+                    <span class="text-danger " data-ng-show="loginform.email.$error.email">Please enter valid email address.</span>
+                </span>
+                <!-- <label>Password</label>
+                <input type="Password" name="" placeholder="Password"> -->
+                <label class="control-label visible-ie8 visible-ie9">Password</label>
+                            <input class="form-control form-control-solid placeholder-no-fix" type="password"
+                                   autocomplete="off" placeholder="Password" name="password" data-ng-model="password"
+                                   required/>
+                            <span class="text-danger ccl1dn" data-ng-show="submitted && loginform.password.$invalid">
+                    <span class="text-danger"
+                          data-ng-show="loginform.password.$error.required">Password is required.</span>
+                </span>
+            </div>
+            <div class="vz_log_p2_p3">
+                <div class="vz_togbtn">
+                    <div class="switch-container">
+                      <input type="checkbox" id="switch" ng-model="switch">
+                      <label for="switch" class="switch-label">
+                        <div class="switch-rail">
+                          <div class="switch-slider"></div>
+                        </div>    
+                      </label>
+                    </div>
+                </div>
+                <label class="vz_loglb">Keep me logged in</label>
+            </div>
+            <div class="vz_log_p2_p4">
+                <button data-ng-click="submit(loginform.$valid)"
+                                data-ng-disabled="disabled"><a>Login</a>
+                        </button>
+            </div>
+            <div class="vz_log_p2_p5">
+                <a data-ui-sref="forgotpassword" id="forget-password" class="forget-password">Forgot
+                            Password?</a>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+
+</body>
+</html>
+
+

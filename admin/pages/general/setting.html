@@ -1,0 +1,250 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="settingCtrl" data-ng-if="is_main_user == 1 || gsetting_permission_dis_permission.main_menu_id == '4'">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{settings.title}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                          name="generalform" novalidate>
+
+
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{settings.supportmail}}</label>
+                            <div class="col-sm-5">
+                                <input type="email" class="form-control" name="vSettingEmailSupport" data-ng-model="vSettingEmailSupport"
+                                       ng-pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/" placeholder={{settings.esupportmail}} required>
+                                <span data-ng-show="submitted && generalform.vSettingEmailSupport.$invalid">
+                                     <span class="text-danger" ng-show="generalform.vSettingEmailSupport.$error.pattern">{{settings.invalidmail}}</span>
+                                     <span class="text-danger" data-ng-show="generalform.vSettingEmailSupport.$error.required">{{general.required}} </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{settings.supportcontact}}</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="vSettingSupportContact" data-ng-model="vSettingSupportContact"
+                                       placeholder={{settings.esupportcontact}} ng-pattern="/^[0-9]{10,10}$/" required valid-number>
+                                <span data-ng-show="submitted && generalform.vSettingSupportContact.$invalid">
+                                    <span style="color: #cc4e4e;" data-ng-show="generalform.vSettingSupportContact.$error.pattern">{{settings.invalidnumber}}</span>
+                                    <span class="text-danger" data-ng-show="generalform.vSettingSupportContact.$error.required">{{general.required}}</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{settings.adminemail}}</label>
+                            <div class="col-sm-5">
+                                <input type="email" ng-pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/" class="form-control" name="vSettingEmailAdmin" data-ng-model="vSettingEmailAdmin"
+                                       placeholder="Admin Email" required>
+                                <span data-ng-show="submitted && generalform.vSettingEmailAdmin.$invalid">
+                                    <span class="text-danger" ng-show="generalform.vSettingEmailAdmin.$error.pattern">{{settings.invalidmail}}</span>
+                                    <span class="text-danger" data-ng-show="generalform.vSettingEmailAdmin.$error.required">{{general.required}}</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{settings.emailcc}}</label>
+                            <div class="col-sm-5">
+                                <input type="email" ng-pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/" class="form-control" name="vSettingEmailCC" data-ng-model="vSettingEmailCC"
+                                       placeholder={{settings.eemailcc}} required>
+                                <span data-ng-show="submitted && generalform.vSettingEmailCC.$invalid">
+                                    <span class="text-danger" ng-show="generalform.vSettingEmailCC.$error.pattern">{{settings.invalidmail}}</span>
+                                    <span class="text-danger" data-ng-show="generalform.vSettingEmailCC.$error.required">{{general.required}}</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{settings.emailbcc}}</label>
+                            <div class="col-sm-5">
+                                <input type="email" ng-pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/" class="form-control" name="vSettingEmailBCC" data-ng-model="vSettingEmailBCC"
+                                       placeholder={{settings.eemailbcc}} required>
+                                <span data-ng-show="submitted && generalform.vSettingEmailBCC.$invalid">
+                                    <span class="text-danger" ng-show="generalform.vSettingEmailBCC.$error.pattern">{{settings.invalidmail}}</span>
+                                    <span class="text-danger" data-ng-show="generalform.vSettingEmailBCC.$error.required">{{general.required}}</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{settings.emailreply}}</label>
+                            <div class="col-sm-5">
+                                <input type="email" ng-pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/" class="form-control" name="vSettingEmailReplyTo" data-ng-model="vSettingEmailReplyTo"
+                                       placeholder={{settings.eemailreply}} required>
+                                <span data-ng-show="submitted && generalform.vSettingEmailReplyTo.$invalid">
+                                    <span class="text-danger" ng-show="generalform.vSettingEmailReplyTo.$error.pattern">{{settings.invalidmail}}</span>
+                                    <span class="text-danger" data-ng-show="generalform.vSettingEmailReplyTo.$error.required">{{general.required}}</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{settings.emailsystemtype}}</label>
+                            <div class="col-sm-5">
+                                <div class="btn-group m-r ng-scope">
+                                    <label uncheckable="" btn-radio="'gmail'" ng-model="emailtype" class="btn btn-default">Gmail</label>
+                                    <label uncheckable="" btn-radio="'default'" ng-model="emailtype" class="btn btn-default">Default</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{settings.smtphost}}</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="smtphost" data-ng-model="smtphost"
+                                       placeholder={{settings.esmtphost}} required>
+                                <span data-ng-show="submitted && generalform.smtphost.$invalid">
+                                    <span class="text-danger" data-ng-show="generalform.smtphost.$error.required">
+                                      {{general.required}}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{settings.smtpport}}</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="smtpport" data-ng-model="smtpport"
+                                       placeholder={{settings.esmtpport}} required>
+                                <span data-ng-show="submitted && generalform.smtpport.$invalid">
+                                    <span class="text-danger" data-ng-show="generalform.smtpport.$error.required">
+                                      {{general.required}}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{settings.smtpuser}}</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="smtpusername" data-ng-model="smtpusername"
+                                       placeholder={{settings.esmtpuser}} required>
+                                <span data-ng-show="submitted && generalform.smtpusername.$invalid">
+                                    <span class="text-danger" data-ng-show="generalform.smtpusername.$error.required">
+                                      {{general.required}}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{settings.smtppas}}</label>
+                            <div class="col-sm-5">
+                                <input type="password" class="form-control" name="smtppassword" data-ng-model="smtppassword"
+                                       placeholder={{settings.esmtppas}} required>
+                                <span data-ng-show="submitted && generalform.smtppassword.$invalid">
+                                    <span class="text-danger" data-ng-show="generalform.smtppassword.$error.required">
+                                      {{general.required}}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Enable PayPal Mode</label>
+                            <div class="col-sm-5">
+                                <div class="btn-group m-r ng-scope">
+                                    <label uncheckable="" btn-radio="'sandbox'" ng-model="paymentmode" class="btn btn-default" data-ng-click="showTwo()">Sandbox</label>
+                                    <label uncheckable="" btn-radio="'live'" ng-model="paymentmode" class="btn btn-default" data-ng-click="showOne()">Live</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" data-ng-show="one">
+                            <label class="col-sm-2 control-label">PayPal API UserName</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="sandUserName" data-ng-model="sandUserName"
+                                       placeholder="PayPal API UserName">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group" data-ng-show="one">
+                            <label class="col-sm-2 control-label">PayPal API Password</label>
+                            <div class="col-sm-5">
+                                <input type="password" class="form-control" name="sandPassword" data-ng-model="sandPassword"
+                                       placeholder="PayPal API Password">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group" data-ng-show="one">
+                            <label class="col-sm-2 control-label">PayPal API Signature</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="sandSignature" data-ng-model="sandSignature"
+                                       placeholder="PayPal API Signature" >
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" data-ng-show="two">
+                            <label class="col-sm-2 control-label">PayPal API UserName</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="LiveUserName" data-ng-model="LiveUserName"
+                                       placeholder="PayPal API UserName">
+                            </div>
+                        </div>
+
+                        <div class="form-group" data-ng-show="two">
+                            <label class="col-sm-2 control-label">PayPal API Password</label>
+                            <div class="col-sm-5">
+                                <input type="password" class="form-control" name="LivePassword" data-ng-model="LivePassword"
+                                       placeholder="PayPal API Password">
+                            </div>
+                        </div>
+
+                        <div class="form-group" data-ng-show="two">
+                            <label class="col-sm-2 control-label">PayPal API Signature</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="LiveSignature" data-ng-model="LiveSignature"
+                                       placeholder="PayPal API Signature">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Select Plan </label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="iPkPlanId" data-ng-model="iPkPlanId" ng-change="InsertPlan(iPkPlanId)" id="iPkPlanId" required
+                                        data-ng-options="option.iPkPlanId as option.Unique_Plan_ID for option in plan">
+                                    <option value="">Select Plan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-show="ePlanFee != 'free'">
+                            <label class="col-sm-2 control-label">Trial Days</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="ITrialPeriod" data-ng-model="ITrialPeriod"
+                                       style="width: 30%;" placeholder="Trial Days">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-9 col-sm-offset-2">
+                                <button type="submit" class="btn btn-sm btn-info"
+                                        ng-click="add_general_form(generalform.$valid)">{{general.btnsave}}
+                                </button>
+
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                         ui-sref="app.dashboard-v1">{{general.btncancel}}
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

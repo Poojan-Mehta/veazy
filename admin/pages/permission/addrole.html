@@ -1,0 +1,44 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="addroleCtrl"
+     data-ng-if="is_main_user == 1 || role_dis_permission.main_menu_id =='3.1'">
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{pagename}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                          name="roleform" novalidate>
+                        <div class="control-group">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{role.name}}</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="vRolName" data-ng-model="vRolName"
+                                           placeholder={{role.rolename}} required>
+                                    <span data-ng-show="submitted && roleform.vRolName.$invalid">
+                                        <span class="text-danger" data-ng-show="roleform.vRolName.$error.required">{{general.required}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-addon btn-info"
+                                            ng-click="add_role_form(roleform.$valid)"><i class="fa fa-save"></i>{{general.btnsave}}
+                                    </button>
+                                    <button type="submit" class="btn btn-danger" ui-sref="app.rolelist">{{general.btncancel}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

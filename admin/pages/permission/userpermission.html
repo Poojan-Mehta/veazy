@@ -1,0 +1,80 @@
+<style>
+    .childmenuclass{
+        margin-left: 25px;
+    }
+</style>
+
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="permissionCtrl"
+     data-ng-if="is_main_user == 1 || userpermission_dis_permission.main_menu_id =='3.2'">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{pagetitle}}</h1>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="x_content">
+            <form name="permissionAddform" class="form-horizontal form-label-left" data-parsley-validate=""
+                  id="demo-form2" novalidate>
+                <div class="control-group">
+                    <div class="form-group">
+                        <label for="main_role" class="control-label col-md-3 col-sm-3 col-xs-12">{{permission.selectrole}}<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select class="form-control" name="main_role" data-ng-model="main_role" id="main_role" required
+                                    data-ng-change="display_menu()"
+                                    data-ng-options="option.iPkRoleId as option.vRoleName for option in role_details">
+                                <option value="">{{permission.selectrole}}</option>
+                            </select>
+                            <span data-ng-show="submitted && permissionAddform.main_role.$invalid">
+                                <span class="text-danger" data-ng-show="permissionAddform.main_role.$error.required">{{permission.selectrole}}</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">{{permission.setpermission}}</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12 class row" style="margin-left: 0px;">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div ng-repeat="mat in menu_describe_in_order">
+                                        <div class="col-md-12" data-ng-class="mat.parent ? 'childmenuclass':''"><h4>
+                                            <span data-ng-show="!mat.parent"><i
+                                                    class="fa fa-folder-open text-success"></i>&nbsp;</span>
+                                            <span data-ng-show="mat.parent"><i
+                                                    class="glyphicon glyphicon-folder-close"></i>&nbsp;</span>
+                                            {{mat.name}}&nbsp;<input type="checkbox" id="disoption{{mat.id}}"
+                                                                     data-ng-model="disoption" data-ng-show="!mat.isparent"
+                                                                     data-ng-click="showhide(mat.id);"></h4>
+
+                                            <div data-ng-hide="mat.id=='1' || mat.id=='2' || mat.id=='3' || mat.id=='3.2' || mat.id=='4'">
+                                                <div id="disoptiondiv{{mat.id}}" data-ng-show="disoption" data-ng-hide="true">
+                                                    <input type="checkbox" data-ng-hide="mat.id=='12'" id="add{{mat.id}}"><span data-ng-hide="mat.id=='12'">Add</span>
+                                                    <input type="checkbox" id="delete{{mat.id}}">Delete
+                                                    <input type="checkbox" data-ng-hide="mat.id=='12'" id="update{{mat.id}}"><span data-ng-hide="mat.id=='12'">Update</span>
+                                                    <input type="checkbox" id="active{{mat.id}}">Active
+                                                    <input type="checkbox" id="inactive{{mat.id}}">Inactive
+                                                    <input type="checkbox" data-ng-show="mat.id=='12'" id="verify{{mat.id}}"><span data-ng-show="mat.id=='12'">Verify</span>
+                                                    <input type="checkbox" data-ng-show="mat.id=='12'" id="reject{{mat.id}}"><span data-ng-show="mat.id=='12'">Reject</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+
+                            <button class="btn btn-primary pull-right" type="submit"
+                                    ng-click="add_permission_form(permissionAddform.$valid)">{{general.submit}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

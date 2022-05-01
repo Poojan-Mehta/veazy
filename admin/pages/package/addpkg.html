@@ -1,0 +1,596 @@
+<style>
+    .chosen-container-multi .chosen-choices {
+        height: 80px !important;
+    }
+</style>
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="addpkgCtrl"
+     data-ng-if="is_main_user == 1 || product_listing_permission.add == 1 || product_listing_permission.update == 1">
+    <div class="col">
+        <!-- START: PAGE TITLE -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{pagename}}</h1>
+                </div>
+            </div>
+        </div>
+        <!-- END: PAGE TITLE -->
+
+        <!--START: ADD PACKAGE FORM-->
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                      name="packageform" novalidate>
+                    <div class="panel-heading font-bold text-uppercase">Product Details</div>
+                    <div class="panel-body">
+                        <div class="control-group">
+                            <!--MARKETPLACE START-->
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Select Marketplace<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-md-4">
+                                    <select class="form-control" name="iFKMPId" data-ng-model="iFKMPId" id="iFKMPId"
+                                            data-ng-options="option.iPKMPId as option.vMPName for option in marketlisting"
+                                            required>
+                                        <option value="">Select Marketplace</option>
+                                    </select>
+                                    <span data-ng-show="submitted && packageform.iFKMPId.$invalid">
+                                        <span class="text-danger" data-ng-show="packageform.iFKMPId.$error.required">Please select market place</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <!--MARKETPLACE END-->
+
+                            <!-- CATEGORY -->
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Select Category<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-md-4">
+                                    <select class="form-control" name="iFkVisaCatId" data-ng-model="iFkVisaCatId"
+                                            id="iFkVisaCatId"
+                                            data-ng-options="option.id as option.name for option in product_categories"
+                                            required>
+                                        <option value="">Select Category</option>
+                                    </select>
+                                    <span data-ng-show="submitted && packageform.iFkVisaCatId.$invalid">
+                                        <span class="text-danger"
+                                              data-ng-show="packageform.iFkVisaCatId.$error.required">Please select product category</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- CATEGORY END -->
+
+                            <!-- PRODUCT NAME & DESCRIPTION -->
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Product Title<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" name="vVisaProductTitle"
+                                           data-ng-model="vVisaProductTitle" placeholder="Product Title" required>
+                                    <span data-ng-show="submitted && packageform.vVisaProductTitle.$invalid">
+                                        <span class="text-danger"
+                                              data-ng-show="packageform.vVisaProductTitle.$error.required">Product Title is required field</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Product Description<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-md-8">
+                                    <div text-angular ta-max-text="140" data-ng-model="vVisaProductDesc"
+                                         name="vVisaProductDesc" required class="btn-groups"></div>
+                                </div>
+                                <div class="col-md-offset-2 col-md-8">
+                                    <span class="text-danger" data-ng-show="packageform.$error.taMaxText">Allow only 140 characters</span>
+                                </div>
+                                <div class="col-md-offset-2 col-md-8">
+                                <span data-ng-show="submitted && packageform.vVisaProductDesc.$invalid">
+                                        <span class="text-danger"
+                                              data-ng-show="packageform.vVisaProductDesc.$error.required">Product Description is required field</span>
+                                </span>
+                                </div>
+                            </div>
+                            <!-- PRODUCT NAME & DESCRIPTION END -->
+
+                            <!-- PRODUCT PRICE -->
+                            <!-- <div class="form-group">
+                                <label class="col-md-2 control-label">Product Fee<span class="text-danger">*</span></label>
+                                <div class="col-md-4">
+                                    <select class="form-control" name="payment_type" data-ng-model="payment_type"
+                                            id="payment_type" data-ng-change="check_payment_price()">
+                                        <option ng-repeat='(key,value) in productfeetype' value="{{value}}">{{value}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" data-ng-show="payment_type == 'recurring' || payment_type == 'once'">
+                                <label class="col-md-2 control-label">Product Price<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-md-2">
+                                    <label class="control-label">Monthly Price</label>
+                                    <div class="input-group m-b">
+                                        <span class="input-group-addon">AUD($)</span>
+                                        <input class="form-control" placeholder="Ex. 50" type="text" data-ng-model="monthly_price" valid-number>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">Yearly Price</label>
+                                    <div class="input-group m-b">
+                                        <span class="input-group-addon">AUD($)</span>
+                                        <input class="form-control" placeholder="Ex. 50" type="text" data-ng-model="yearly_price" valid-number>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- PRODUCT PRICE END -->
+
+                            <!-- PRODUCT IMAGE -->
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Product Image<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-md-4">
+                                    <input ui-jq="filestyle" type="file"
+                                           data-icon="false"
+                                           accept="image/*"
+                                           onchange="angular.element(this).scope().uploadFile(this.files,'')"
+                                           data-classButton="btn btn-default"
+                                           data-ng-model="product_image"
+                                           data-classInput="form-control inline v-middle input-s">
+                                    <span class="text-success">Accept image type only *.png, *.jpg, *.jpeg</span><br><br>
+                                </div>
+                                <div class="col-md-2 profile-img" data-ng-if="reviewImage != ''">
+                                    <img ng-src="{{reviewImage}}" height="100">
+                                </div>
+                            </div>
+                            <!-- PRODUCT IMAGE END-->
+
+                            <!-- PRODUCT VIDEO -->
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Product Video<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-md-4">
+                                    <input ui-jq="filestyle" type="file"
+                                           Your new password is: ciqz1umsDHDw
+
+                                           data-icon="false"
+                                           accept="video/*"
+                                           onchange="angular.element(this).scope().uploadProductVideo(this.files,'')"
+                                           data-classButton="btn btn-default"
+                                           data-ng-model="product_video"
+                                           data-classInput="form-control inline v-middle input-s">
+                                    <span class="text-success">Accept video type only *.mp4, *.3gp, *.mpeg</span><br><br>
+                                </div>
+
+                                <div class="col-md-2" data-ng-if="isvideouploaded">
+                                    <video width="250" controls>
+                                        <source ng-src="{{reviewVideo}}" id="video_here">
+                                        Your browser does not support HTML5 video.
+                                    </video>
+                                </div>
+                            </div>
+                            <!-- PRODUCT VIDEO END-->
+                        </div>
+                    </div>
+
+                    <div class="panel-heading font-bold text-uppercase">Applicant Tree</div>
+                    <div class="panel-body">
+                        <div class="control-group">
+                            <div class="col-md-offset-2 col-md-6">
+                                <!-- PRODUCT WIDGETS -->
+                                <div class="form-group" data-ng-show="allowbusiness != true">
+                                    <div class="col-md-7">
+                                        <div class="checkbox">
+                                            <label class="i-checks">
+                                                <input type="checkbox" data-ng-model="allowapplicant"
+                                                       data-ng-change="check_allowapplicant()"><i></i>
+                                                Allow applicant details
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" data-ng-show="allowapplicant != true">
+                                    <div class="col-md-7">
+                                        <div class="checkbox">
+                                            <label class="i-checks">
+                                                <input type="checkbox" data-ng-model="allowbusiness"
+                                                       data-ng-change="check_allowbusiness()"><i></i>
+                                                Allow business details
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- APPLICANT DETAILS -->
+                                <div class="form-group" data-ng-show="allowapplicant == true">
+                                    <div class="col-md-offset-1 col-md-7">
+                                        <div class="checkbox">
+                                            <label class="i-checks">
+                                                <input type="checkbox" data-ng-model="allowfut"
+                                                       data-ng-change="check_allowfut()"><i></i>
+                                                Allow to add migrating family member
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button data-ng-if="allowfut" data-ng-click="addTag()"
+                                                class="btn btn-rounded btn-sm btn-icon btn-primary"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" data-ng-show="allowapplicant == true">
+                                    <div class="col-md-offset-1 col-md-7">
+                                        <div class="checkbox">
+                                            <label class="i-checks">
+                                                <input type="checkbox" data-ng-model="allowfamilysponsor"
+                                                       data-ng-change="check_allowfamilysponsor()"><i></i>
+                                                Allow to add family sponsor
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button data-ng-if="allowfamilysponsor" data-ng-click="addSponseTag()"
+                                                class="btn btn-rounded btn-sm btn-icon btn-primary"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <!-- APPLICANT DETAILS END -->
+
+                                <!-- BUSINESS DETAILS -->
+                                <div class="form-group" data-ng-show="allowbusiness == true">
+                                    <div class="col-md-offset-1 col-md-7">
+                                        <div class="checkbox">
+                                            <label class="i-checks">
+                                                <input type="checkbox" data-ng-model="allowsponsorworker"
+                                                       data-ng-change="check_allowsponsorworker()"><i></i>
+                                                Allow to add sponsored worker
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button data-ng-if="allowsponsorworker" data-ng-click="addBizzSponseTag()"
+                                                class="btn btn-rounded btn-sm btn-icon btn-primary"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <!-- BUSINESS DETAILS END -->
+
+                                <!-- PRODUCT WIDGETS END -->
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="b-a bg-light dk r r-2x" data-ng-if="my_data.length > 0">
+                                    <abn-tree
+                                            tree-data="my_data"
+                                            tree-control="my_tree"
+                                            expand-level="2"
+                                            icon-leaf="fa fa-file-o"
+                                            icon-expand="fa fa-plus"
+                                            icon-collapse="fa fa-minus">
+                                    </abn-tree>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-heading font-bold text-uppercase">Product Elements</div>
+                    <div class="panel-body">
+                        <div class="control-group">
+                            <!-- PRODUCT ELEMENTS -->
+
+                            <!-- LESSONS -->
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-5">
+                                    <div class="checkbox">
+                                        <label class="i-checks">
+                                            <input checked="" type="checkbox" data-ng-model="allowlessons"
+                                                   data-ng-change="check_allow_widget()"><i></i>
+                                            Allow Lessons?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-if="allowlessons">
+                                <label class="col-md-2 control-label">Select Lesson Folders</label>
+                                <div class="col-md-5">
+                                    <select ui-jq="chosen" multiple
+                                            ui-options="{'max_selected_options': '20','display_selected_options':'false'}"
+                                            data-placeholder="Select Lesson Folders" data-ng-model="records.lessons"
+                                            class="form-control input-lg chosenbox">
+                                        <option ng-repeat="option in lesson_folders" value="{{option.iPkFolderId}}">
+                                            {{option.vFolderName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-show="allowlessons == true">
+                                <label class="col-md-2 control-label">Want to set lesson fee?</label>
+                                <div class="col-md-5">
+                                    <label class="i-switch m-t-xs m-r">
+                                        <input ng-model="lessonpayment" type="checkbox"
+                                               data-ng-change="check_lesson_payment()">
+                                        <i></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-show="lessonpayment">
+                                <label class="col-md-2 control-label">Set Price</label>
+                                <div class="col-md-2">
+                                    <div class="input-group m-b">
+                                        <span class="input-group-addon">AUD($)</span>
+                                        <input class="form-control" placeholder="Ex. 50" type="text"
+                                               data-ng-model="lesson_price" valid-number>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- LESSONS END-->
+
+                            <div class="line line-dashed b-b line-lg"></div>
+
+                            <!-- SUMMARY OF CRITERIA -->
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-5">
+                                    <div class="checkbox">
+                                        <label class="i-checks">
+                                            <input type="checkbox" data-ng-model="allowsummary"
+                                                   data-ng-change="check_allow_widget()"><i></i>
+                                            Allow Summary of criteria?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-if="allowsummary">
+                                <label class="col-md-2 control-label">Select SOC Folders</label>
+                                <div class="col-md-5">
+                                    <select ui-jq="chosen" multiple
+                                            ui-options="{'max_selected_options':'20','display_selected_options':'false'}"
+                                            data-placeholder="Select SOC Folders" data-ng-model="records.summaries"
+                                            class="form-control input-lg chosenbox">
+                                        <option ng-repeat="option in summary_folders" value="{{option.iPkFolderId}}">
+                                            {{option.vFolderName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- SUMMARY OF CRITERIA END -->
+
+                            <div class="line line-dashed b-b line-lg"></div>
+
+                            <!-- DOCUMENT CHECKLIST -->
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-7">
+                                    <div class="checkbox">
+                                        <label class="i-checks">
+                                            <input checked="" type="checkbox" data-ng-model="allowdocument"><i></i>
+                                            Allow Document Checklist?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-if="allowdocument">
+                                <div class="col-md-offset-2 col-md-7 table-responsive">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading text-uppercase">Document Checklist</div>
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-uppercase">Tag Name</th>
+                                                <th class="text-uppercase">Select Folder</th>
+                                                <th><span class="text-uppercase">Set Price</span>
+                                                    <small>(Optional)</small>
+                                                </th>
+                                                <th class="text-uppercase"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody data-ng-repeat="(main_key,tags_key) in tags">
+                                            <tr data-ng-repeat="(key,tags_value) in tags_key"
+                                                data-ng-if="tags_key.length != 0">
+                                                <td>{{tags_value.name}}</td>
+                                                <td class="col-md-5 col-xs-12">
+                                                    <select class="form-control" data-ng-model="tags_value.folder">
+                                                        <option data-ng-selected="tags_value.folder == option.iPkFolderId"
+                                                                ng-repeat="option in document_folders"
+                                                                value="{{option.iPkFolderId}}">
+                                                            {{option.vFolderName}}
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td class="col-md-3 col-xs-12">
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">$</span>
+                                                        <input class="form-control" placeholder="Ex. 50" type="text"
+                                                               data-ng-model="tags_value.price" valid-number>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button data-ng-if="main_key != 'fut_main' && main_key != 'business_main'"
+                                                            data-ng-click="removeTag(main_key,key)"
+                                                            class="btn btn-rounded btn-sm btn-icon btn-danger"><i
+                                                            class="fa fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- DOCUMENT CHECKLIST END-->
+
+                            <div class="line line-dashed b-b line-lg"></div>
+
+                            <!-- COVER LETTER -->
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-5">
+                                    <div class="checkbox">
+                                        <label class="i-checks">
+                                            <input checked="" type="checkbox" data-ng-model="allowcoverletter"
+                                                   data-ng-change="check_allow_widget()"><i></i>
+                                            Allow Cover Letter?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-if="allowcoverletter">
+                                <label class="col-md-2 control-label">Select Cover Letter Folders</label>
+                                <div class="col-md-5">
+                                    <select ui-jq="chosen" multiple
+                                            ui-options="{'max_selected_options': '20','display_selected_options':'false'}"
+                                            data-placeholder="Select Cover Letter Folders"
+                                            data-ng-model="records.coverletters"
+                                            class="form-control input-lg chosenbox">
+                                        <option ng-repeat="option in coverletter_folders"
+                                                value="{{option.iPkFolderId}}">
+                                            {{option.vFolderName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- COVER LETTER END-->
+
+                            <div class="line line-dashed b-b line-lg"></div>
+
+                            <!-- FAQ -->
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-5">
+                                    <div class="checkbox">
+                                        <label class="i-checks">
+                                            <input type="checkbox" data-ng-model="allowfaq"
+                                                   data-ng-change="check_allow_widget()"><i></i>
+                                            Allow FAQ?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-if="allowfaq">
+                                <label class="col-md-2 control-label">Select FAQ Folders</label>
+                                <div class="col-md-5">
+                                    <select ui-jq="chosen" multiple
+                                            ui-options="{'max_selected_options': '20','display_selected_options':'false'}"
+                                            data-placeholder="Select FAQ Folders" data-ng-model="records.faq"
+                                            class="form-control input-lg chosenbox">
+                                        <option ng-repeat="option in faq_folders" value="{{option.iPkFolderId}}">
+                                            {{option.vFolderName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- FAQ END -->
+
+                            <div class="line line-dashed b-b line-lg"></div>
+
+                            <!-- TO DO -->
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-5">
+                                    <div class="checkbox">
+                                        <label class="i-checks">
+                                            <input checked="" type="checkbox" data-ng-model="allowtodo"
+                                                   data-ng-change="check_allow_widget()"><i></i>
+                                            Allow To Do?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-if="allowtodo">
+                                <label class="col-md-2 control-label">Select To Do Folders</label>
+                                <div class="col-md-5">
+                                    <select ui-jq="chosen" multiple
+                                            ui-options="{'max_selected_options': '20','display_selected_options':'false'}"
+                                            data-placeholder="Select To Do Folders" data-ng-model="records.todo"
+                                            class="form-control input-lg chosenbox">
+                                        <option ng-repeat="option in todo_folders" value="{{option.iPkFolderId}}">
+                                            {{option.vFolderName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- TO DO END-->
+                            <div class="line line-dashed b-b line-lg"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-5">
+                                    <div class="checkbox">
+                                        <label class="i-checks">
+                                            <input type="checkbox" data-ng-model="Pro_Features"><i></i>
+                                            Allow Pro Features
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- PRODUCT ELEMENTS END-->
+                        </div>
+                    </div>
+                    <footer class="panel-footer bg-light lter">
+                        <div class="form-group">
+                            <div class="col-md-9 col-md-offset-2">
+                                <button type="submit" class="btn btn-addon btn-info"
+                                        data-ng-click="add_package_form(packageform.$valid)"
+                                        data-ng-disabled="disable_btn">
+                                    <span data-ng-if="disable_btn"><i id="spin"
+                                                                      class="fa fa-spin fa-spinner hide show inline"></i>Please wait...</span>
+                                    <span data-ng-if="!disable_btn"><i class="fa fa-save"></i>{{save_btn_name}}</span>
+                                </button>
+                                <button type="submit" class="btn btn-danger" data-ui-sref="app.package">Back</button>
+                            </div>
+                        </div>
+                    </footer>
+                </form>
+            </div>
+        </div>
+        <!--END: ADD PACKAGE FORM-->
+    </div>
+</div>
+<!-- ADD TAG -->
+<script type="text/ng-template" id="addTag.html">
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="control-label">Add Tag</label>
+            <input type="text" limit-to="100" ng-paste="$event.preventDefault()" class="form-control"
+                   name="family_member_name" data-ng-model="tag.family_member_name"/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" data-ng-click="saveTagName()"
+                data-ng-disabled="tag.family_member_name == ''">Add
+        </button>
+        <button class="btn btn-default" type="button" data-ng-click="cancelTagModal()">Cancel</button>
+    </div>
+</script>
+<!-- ADD TAG END -->
+
+<!-- ADD FAMILY SPONSE TAG -->
+<script type="text/ng-template" id="addFamilySponseTag.html">
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="control-label">Add Tag</label>
+            <input type="text" limit-to="100" ng-paste="$event.preventDefault()" class="form-control"
+                   name="family_sponse_name" data-ng-model="tag.family_sponse_name"/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" data-ng-click="saveSponseTagName()"
+                data-ng-disabled="tag.family_sponse_name == ''">Add
+        </button>
+        <button class="btn btn-default" type="button" data-ng-click="cancelSponseTagModal()">Cancel</button>
+    </div>
+</script>
+<!-- ADD FAMILY SPONSE TAG END -->
+
+<!-- ADD BUSINESS SPONSE TAG -->
+<script type="text/ng-template" id="addBizzSponseTag.html">
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="control-label">Add Tag</label>
+            <input type="text" limit-to="100" ng-paste="$event.preventDefault()" class="form-control"
+                   name="business_sponse_name" data-ng-model="tag.business_sponse_name"/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" data-ng-click="saveBizzSponseTagName()"
+                data-ng-disabled="tag.business_sponse_name == ''">Add
+        </button>
+        <button class="btn btn-default" type="button" data-ng-click="cancelBizzSponseTagModal()">Cancel</button>
+    </div>
+</script>
+<!-- ADD BUSINESS SPONSE TAG END -->
+

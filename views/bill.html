@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plan</title>
+</head>
+<body>
+<div data-ng-controller="BillController">
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <div class="quick-nav-overlay"></div>
+            <div class="row   dashboard_flex">
+                <div class="col-lg-12 col-xs-12 col-sm-12 row_flex ">
+                    <div class="portlet light  shadow " style="width: 100%;">
+                        <div class="portlet-body acoundisc">
+                            <table class="table">
+                                <tbody>
+                                <tr class="top">
+                                    <td colspan="2">
+                                        <table class="acdis">
+                                            <tbody><tr>
+                                                <td class="title">
+                                                    <img src="{{settings.avatarPath}}/{{vProfileImage}}" width="300" height="100">
+                                                </td>
+
+                                                <td class="invoids">
+                                                    {{fname}} {{lname}}<br>
+
+                                                </td>
+                                            </tr>
+                                            </tbody></table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="course_container col-xs-12 account">
+                                <h2 class="pill_head " style="font-family: Nunito; "><b>Account</b></h2>
+                                <h3 class="pill_subhead" style="font-family: Nunito; "><b>Subscription</b></h3>
+
+
+                                <table class="table">
+                                    <tbody>
+                                    <!--<tr>-->
+                                    <!--    <td>Current Package :</td>-->
+                                    <!--    <td class="ng-binding text-capitalize">{{vPackageName}}</td>-->
+                                    <!--    <td></td>-->
+                                    <!--</tr>-->
+                                    <tr>
+                                        <td>Current Plan :</td>
+                                        <td class="ng-binding text-capitalize">{{Plan_names}}</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Expire on :</td>
+                                        <td class="ng-binding">{{dtExpireDate}}</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Call Credits :</td>
+                                       
+                                        <td style="display:flex;align-items:center">
+                                            <span ng-if="credit_call == 0">-</span><span ng-if="credit_call > 0">{{credit_call}}</span>
+                                            <div ng-if="credit_call > 0" style="padding-left:10px">
+                                                <a href="https://calendly.com/martinsalvo/veazy-coaching-call" target="_blank" type="button" class="btn green-jungle btn-lg add_app_top">
+                                                    <i class=" icon-phone pull-left"></i>
+                                                    <span class="hidden-sm hidden-xs pull-left">&nbsp; Book a Call</span>
+                                                </a>
+                                            </div>
+                                        </td>
+                                         <td></td>
+                                    </tr>
+                                    <!-- <tr ng-if="is_plan_exists == 'yes'">
+                                        <td>Plan Payment :</td>
+                                        <td class="ng-binding text-capitalize" ng-if="is_trial == true">Free</td>
+                                        <td class="ng-binding text-capitalize" ng-if="is_trial == false">AUD ${{dPaymentAmount}} {{vPlanType}}</td>                                        
+                                        <td></td>
+                                    </tr> -->
+                                    <!--<tr ng-if="is_plan_exists == 'no'">-->
+                                    <!--    <td>Plan Payment :</td>-->
+                                    <!--    <td class="ng-binding text-capitalize">-</td>-->
+                                    <!--    <td></td>-->
+                                    <!--</tr>-->
+                                    <!-- <tr>
+                                        <td>Subscribed :</td>
+                                        <td class="ng-binding text-capitalize">{{dtCreatedOn}}</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr ng-if="is_trial">
+                                        <td>Trial Ends :</td>
+                                        <td class="ng-binding text-capitalize">{{Trial_End_Date}}</td>
+                                        <td></td>
+                                    </tr> -->
+                                    <!-- <tr>
+                                        <td ng-if="!is_trial">Last Payment :</td>
+                                        <td ng-if="is_trial"></td>
+                                        <td class="ng-binding" ng-if="!is_trial">{{dateAsString1}}</td>
+                                        <td ng-if="is_trial"></td>
+                                        <td ng-if="is_plan_exists == 'yes'">
+                                            <div class="dropdown pull-right tabdrop active cus_inversdrop" style=""><a class="dropdown-toggle" data-toggle="dropdown" data-ui-sref="app.invoice" aria-expanded="false">Invoice</a></div>
+                                        </td>
+                                    </tr> -->
+                                    <!-- <tr>
+                                        <td>Renewals :</td>
+                                        <td class="ng-binding">{{dateAsString2}}</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr ng-if="!is_trial">
+                                        <td>Expiration Date :</td>
+                                        <td class="ng-binding">{{dateAsString2}}</td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr ng-if="!is_trial">
+                                        <td>Payment Method :</td>
+                                        <td class="ng-binding">{{brand}}</td>
+                                        <td></td>
+                                    </tr> -->
+
+                                    <!--<tr>-->
+                                        <!--<td>Status:</td>-->
+                                        <!--<td class="ng-binding">{{ePaymentStatus}}</td>-->
+                                        <!--<td></td>-->
+                                    <!--</tr>-->
+                                    <!-- <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="acdis_btn"><button class="btn dc_status  btn-outline border-red-thunderbird font-red-thunderbird bold dotted bg_trans dbfm" ng-click="cancelplan()" ng-if="is_cancelVisible && !is_trial">Cancel Plan</button></div>
+                                        <button class="btn purple bg-purple-theme font-white" ng-click="redirectplan()" style="float: right;">Upgrade Plan</button></td>
+                                        
+                                    </tr> -->
+                                    </tbody>
+                                </table>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="stripe_div" style="display:none"></div>
+        <!-- END CONTENT BODY -->
+    </div>
+
+    <style>
+        .page-content-wrapper .page-content {
+            margin-left: 120px;
+
+        }
+    </style>
+</div>
+</body>
+</html>

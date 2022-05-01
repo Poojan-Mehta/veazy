@@ -1,0 +1,299 @@
+<style>
+    .chosen-container-multi .chosen-choices {
+        height: 80px !important;
+    }
+</style>
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="addlessionCtrl"
+     data-ng-if="is_main_user == 1 || lesson_listing_permission.add == 1 || lesson_listing_permission.update == 1">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{pagename}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <tabset justified="true" class="tab-container">
+                        <tab heading="Lesson Title">
+                            <div class="row">
+                                <form class="form-horizontal" name="titleForm" novalidate>
+                                    <div class="form-group">
+                                        <input type="hidden" id="iPkLessonId" name="iPkLessonId"
+                                               data-ng-model="iPkLessonId">
+                                    </div>
+                                    <div class="control-group col-md-12">
+                                        <div class="panel-heading font-bold">Add Lesson Title</div>
+                                        <div class="form-group"></div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 col-sm-12 control-label">Select Folder<span
+                                                    class="text-danger">*</span></label>
+                                            <div class="col-md-5 col-sm-12">
+                                                <select class="form-control" name="iPkFolderId" ng-disabled="isDisabled"
+                                                        data-ng-model="lessonparam.iPkFolderId" id="iPkFolderId"
+                                                        required
+                                                        data-ng-options="option.iPkFolderId as option.vFolderName for option in getFolder">
+                                                    <option value="">Select Folder</option>
+                                                </select>
+                                                <span data-ng-show="submitted && titleForm.iPkFolderId.$invalid">
+                                        <span class="text-danger" data-ng-show="titleForm.iPkFolderId.$error.required">Select Folder</span>
+                                    </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 col-sm-12 control-label">Title</label>
+                                            <div class="col-md-5 col-sm-12">
+                                                <div class="input-group">
+                                                    <input class="form-control no_rght_brdr" type="text"
+                                                           data-ng-model="lessonparam.vTitle" name="vTitle"
+                                                           ng-disabled="isDisabled" required maxlength="65">
+                                                    <span class="input-group-addon max_txt"> {{65 - lessonparam.vTitle.length}} &nbsp;</span>
+
+
+                                                </div>
+                                                <span data-ng-show="submitted && titleForm.vTitle.$invalid">
+                                    <span class="text-danger" data-ng-show="titleForm.vTitle.$error.required">{{general.required}}</span>
+                                </span>
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-group">-->
+                                        <!--<label class="col-md-2 col-sm-12 control-label">Description</label>-->
+                                        <!--<div class="col-md-5 col-sm-12">-->
+                                        <!--<textarea class="form-control no_rght_brdr" rows="3" cols="10" ng-disabled="isDisabled" data-ng-model="lessonparam.vDescription" name="vRules" required style="resize:none;"></textarea>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Lesson Description</label>
+                                            <div class="col-md-8">
+                                                <div text-angular ta-max-text="255"
+                                                     data-ng-model="lessonparam.vDescription" name="vDescription"
+                                                     class="btn-groups" required></div>
+                                            </div>
+                                            <div class="col-md-offset-2 col-md-8">
+                                                <span data-ng-show="submitted && titleForm.vDescription.$invalid">
+                                                <span class="text-danger" data-ng-show="titleForm.$error.taMaxText">Allow only 255 characters</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <span data-ng-show="submitted && titleForm.vDescription.$invalid">
+                                                        <span class="text-danger" style="padding-left: 210px;"
+                                                              data-ng-show="titleForm.vDescription.$error.required">This field is required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!--<div class="form-group">-->
+                                        <!--<label class="col-md-2 control-label">Product Description<span class="text-danger">*</span></label>-->
+                                        <!--<div class="col-md-8">-->
+                                        <!--<div text-angular ta-max-text="500" data-ng-model="lessonparam.vDescription" name="vRules" class="btn-groups"></div>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-md-offset-2 col-md-8">-->
+                                        <!--<span class="text-danger" data-ng-show="sliderform.$error.taMaxText">Allow only 500 characters</span>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+
+                                        <div class="col-md-5 col-sm-12">
+                                            <div class="text-right">
+                                                <button class="btn m-b-xs btn-info btn-addon" data-ng-if="isDisabled"
+                                                        ng-click="editTitleDescription()"><i class="fa fa-edit"></i>Edit
+                                                </button>
+                                                <button class="btn m-b-xs btn-success btn-addon"
+                                                        data-ng-if="!isDisabled" ng-disabled="flag"
+                                                        ng-click="addTitleDescription(titleForm.$valid)"><i
+                                                        class="fa fa-save"></i>Save
+                                                </button>
+                                                <button class="btn m-b-xs btn-danger" data-ui-sref="app.lession">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </tab>
+                        <tab heading="Lesson Video" disabled=tab>
+                            <div class="row">
+                                <div class="form-group"></div>
+                                <form class="form-horizontal" name="videosForm" novalidate>
+                                    <div class="control-group col-md-12">
+                                        <!-- Old Lesson code start-->
+                                        <!-- <div class="panel-heading font-bold">Upload Lesson Video</div> -->
+                                        <!-- <div class="form-group"></div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 col-sm-12 control-label">Select Video</label>
+                                            <div class="col-md-4 col-sm-12">
+                                                <input ui-jq="filestyle" type="file"
+                                                       data-icon="false"
+                                                       onchange="angular.element(this).scope().uploadVideo(this.files,'videos')"
+                                                       accept="video/*" data-classButton="btn btn-default"
+                                                       data-ng-model="videos"
+                                                       data-classInput="form-control inline v-middle input-s" required>
+                                                <span style="color: green">Accept only video files</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-4 col-sm-12">
+                                                <video id="video1" width="250px" controls
+                                                       ng-src="{{path + vLessonResourcepath}}" class="img-responsive"/>
+                                            </div>
+                                        </div> -->
+                                        <!-- Old Lesson code end-->
+                                        <div class="form-group"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 col-sm-12 control-label">Upload Lesson Video Link</label>
+                                            <div class="col-md-10 col-sm-12">
+                                                <div class="input-group">
+                                                    <input class="form-control no_rght_brdr" type="text"
+                                                           ng-model="lessonparam.vLessonVideoLink" name="vLessonVideoLink">                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--UPLOAD THUMBNAIL-->
+                                        <div class="form-group"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 col-sm-12 control-label">Upload Thumbnail<span
+                                                    class="text-danger">*</span></label>
+                                            <div class="col-sm-4 col-sm-12">
+                                                <input ui-jq="filestyle" type="file"
+                                                       data-icon="false"
+                                                       onchange="angular.element(this).scope().uploadResources(this.files,'thumbnail')"
+                                                       accept="image/*"
+                                                       data-classButton="btn btn-default"
+                                                       data-ng-model="thumbnail"
+                                                       data-classInput="form-control inline v-middle input-s">
+                                                <span class="text-success">Accept only *.png,*.jpg,*.jpeg</span><br><br>
+                                            </div>
+                                            <div class="col-sm-2 col-md-4 col-sm-12 profile-img"
+                                                 data-ng-if="reviewImage != ''">
+                                                <img ng-src="{{reviewImage}}" height="90" width="90">
+                                            </div>
+                                        </div>
+                                        <!--UPLOAD THUMBNAIL END-->
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-4 col-sm-12">
+                                                <button class="btn m-b-xs btn-info btn-addon"
+                                                        data-ng-if="isDisabledVideo" ng-click="edit_video_form()"><i
+                                                        class="fa fa-edit"></i>Edit
+                                                </button>
+                                                <button class="btn m-b-xs btn-success btn-addon"
+                                                        data-ng-if="!isDisabledVideo" ng-disabled="flag"
+                                                        ng-click="add_video_form()"><i class="fa fa-save"></i>Save
+                                                </button>
+                                                <button class="btn m-b-xs btn-danger" data-ui-sref="app.lession">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </tab>
+                        <tab heading="Lesson Resources" disabled=tab>
+                            <div class="row">
+                                <div class="control-group">
+                                    <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                                          name="resourceFileForm" novalidate>
+                                        <div class="col-sm-6">
+                                            <div class="form-group"></div>
+                                            <div class="panel-heading font-bold">Add Lesson Resources</div>
+                                            <div class="form-group"></div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 col-sm-12 control-label">Resource Name</label>
+                                                <div class="col-md-9 col-sm-12">
+                                                    <div class="input-group">
+                                                        <input class="form-control no_rght_brdr" type="text"
+                                                               data-ng-model="resource.resourceName" name="resourceName"
+                                                               required maxlength="65">
+                                                        <span class="input-group-addon max_txt"> {{65 - resource.resourceName.length}} &nbsp;</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 col-sm-12 control-label">Select File</label>
+                                                <div class="col-md-9 col-sm-12">
+                                                    <input ui-jq="filestyle" type="file"
+                                                           data-icon="false"
+                                                           onchange="angular.element(this).scope().uploadResources(this.files,'ResourcesFiles')"
+                                                           data-classButton="btn btn-default"
+                                                           data-ng-model="ResourcesFiles" id="ResourcesFiles"
+                                                           data-classInput="form-control inline v-middle input-s">
+                                                    <span style="color: green">File type must be *.png,*.jpg,*.pdf,*.doc</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="pull-right">
+                                                    <button type="submit"
+                                                            class="btn_orange btn m-b-xs btn-sm btn-primary btn-addon"
+                                                            ng-click="addResourceFiles(resourceFileForm.$valid)">
+                                                        <span><i class="fa fa-plus"></i>Add Resource</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="col-sm-6">
+                                        <div class="form-group"></div>
+                                        <div class="panel-heading font-bold">Resources Listing</div>
+                                        <div class="form-group"></div>
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Resource Name</th>
+                                                <th>File Name</th>
+                                                <th>File Type</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="row in displayedCollections">
+                                                <td>{{$index +1}}</td>
+                                                <td>{{row.vResourceName}}</td>
+                                                <td>
+                                                    <span class="fa fa-file-word-o"
+                                                          data-ng-if="row.eLessonResourceType=='DOC'"></span>
+                                                    <span class="fa fa-file-pdf-o"
+                                                          data-ng-if="row.eLessonResourceType=='PDF'"></span>
+                                                    <span class="fa fa-file-word-o"
+                                                          data-ng-if="row.eLessonResourceType=='DOCX'"></span>
+                                                    <span class="fa fa-file-excel-o"
+                                                          data-ng-if="row.eLessonResourceType=='XLSX'"></span>
+                                                    <span class="fa fa-file-image-o"
+                                                          data-ng-if="row.eLessonResourceType=='IMAGE'"></span>
+                                                    {{row.vLessonResource}}
+                                                </td>
+                                                <td>{{row.eLessonResourceType}}</td>
+                                                <td>
+                                                    <button class="btn m-b-xs btn-sm btn-info btn-danger"
+                                                            ng-click="removeItem(row.iPkLessonRId)"><i
+                                                            class="fa fa-trash-o"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5" class="text-center"
+                                                    data-ng-if="displayedCollections.length == 0 || displayedCollections.length == undefined">
+                                                    <span>Resources not found</span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-right">
+                                            <button class="btn m-b-xs btn-default" data-ui-sref="app.lession">Back
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,164 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="packageCtrl"
+     data-ng-if="is_main_user == 1 || product_listing_permission.main_menu_id =='6.3'">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">Product Listing</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default table-responsive">
+                <div class="col-md-12" style="margin-top: 20px;">
+                    <button data-ng-show="is_main_user == 1 || product_listing_permission.add == 1" ui-sref="app.addpkg"
+                            ui-sref-opts="{reload: true, notify: true}"
+                            class="btn btn-addon m-b-xs btn-info"><i
+                            class="fa fa-plus"></i> Add New
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || product_listing_permission.delete == 1"
+                            class="btn btn-addon m-b-xs btn-danger" data-ng-click="removeAll();"><i
+                            class="fa fa-trash-o"></i> Delete All
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || product_listing_permission.active == 1"
+                            class="btn btn-addon m-b-xs btn-primary" data-ng-click="activeAll();"><i
+                            class="fa fa-check"></i> Active All
+                    </button>
+                    &nbsp;
+                    <button data-ng-show="is_main_user == 1 || product_listing_permission.inactive == 1"
+                            class="btn btn-addon m-b-xs btn-yellow" data-ng-click="deactiveAll();"><i
+                            class="icon-close"></i> Inactive All
+                    </button>
+                    &nbsp;
+                    <button class="btn btn-addon m-b-xs btn-success " ng-csv="getcsv()"
+                            csv-header="['Market Place','Product Name','Product Fee','Monthly Price','Yearly Price']"
+                            filename="packageList.csv"><i class="glyphicon glyphicon-save"></i> {{general.export}}
+                    </button>
+
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-right top_search"
+                         st-table="displayedCollection" st-safe-src="rowCollection">
+                        <input class="form-control ng-isolate-scope" st-search=""
+                               placeholder="Enter character to search..." type="text" data-ng-model="searchText"
+                               style="width:90% !important;display: inline;"/>
+                    </div>
+                </div>
+
+                <table st-table="displayedCollection" st-safe-src="rowCollection"
+                       class="table table-striped" st-filtered-collection="rowCollection">
+                    <thead>
+                    <tr>
+                        <th class="text-center">
+                            <div class="checkbox"><label class="i-checks"><input type="checkbox" id="checkAll"/> <i></i></label>
+                            </div>
+                        </th>
+                        <th class="text-center text-nowrap text-uppercase" st-sort="iPkVisaProductId">Product ID</th>
+                        <th class="text-center text-nowrap text-uppercase" st-sort="vMPName">Market Place</th>
+                        <th class="text-center text-nowrap text-uppercase" st-sort="vVisaProductTitle">Product Name</th>
+                        <!--<th class="text-center text-nowrap text-uppercase" st-sort="eVisaproductFee">Product Fee</th>
+                        <th class="text-center text-nowrap text-uppercase" st-sort="dVisaProductMonthlyPrice">Monthly
+                            Price
+                        </th>
+                        <th class="text-center text-nowrap text-uppercase" st-sort="dVisaProductYearlyPrice">Yearly
+                            Price
+                        </th> -->
+                        <th class="text-center text-nowrap text-uppercase" st-sort="dtPackCreatedDate">Created Date</th>
+                        <th class="text-nowrap text-uppercase"
+                            data-ng-show="is_main_user == 1 || (product_listing_permission.active==1 && product_listing_permission.inactive==1)">
+                            is_Visible
+                        </th>
+                        <th class="text-uppercase"
+                            data-ng-show="is_main_user == 1 || (product_listing_permission.active == 1 && product_listing_permission.inactive == 1)  ">
+                            {{general.status}}
+                        </th>
+                        <th class="text-center text-nowrap text-uppercase"
+                            data-ng-show="is_main_user == 1 || (product_listing_permission.update == 1 || product_listing_permission.delete == 1)">
+                            {{general.action}}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in displayedCollection">
+                        <td class="text-center">
+                            <div class="checkbox"><label class="i-checks">
+                                <input type='checkbox'
+                                       class="packagestatus"
+                                       id="package{{row.iPkVisaProductId}}"
+                                       name='checklist[]'
+                                       data-ng-model="checklist" ng-disabled="row.assign == 'yes'"><i></i></label>
+                            </div>
+                        </td>
+                        <td class="text-center text-nowrap">{{row.iPkVisaProductId}}</td>
+                        <td class="text-center text-nowrap">{{row.vMPName}}</td>
+                        <td class="text-center text-nowrap">{{row.vVisaProductTitle}}</td>
+                        <!--<td class="text-center text-nowrap">
+                            <span data-ng-if="row.eVisaproductFee=='free'" class="label bg-success">Free</span>
+                            <span data-ng-if="row.eVisaproductFee=='recurring'" class="label bg-info">Recurring</span>
+                            <span data-ng-if="row.eVisaproductFee=='once'" class="label bg-primary">Once</span>
+                        </td>
+                        <td class="text-center text-nowrap">
+                            <span> {{row.eVisaproductFee=='free'?'Free':row.dVisaProductMonthlyPrice}} </span>
+                        </td>
+
+                        <td class="text-center text-nowrap">
+                            <span> {{row.eVisaproductFee=='free'?'Free':row.dVisaProductYearlyPrice}} </span>
+                        </td> -->
+
+                        <td class="text-center text-nowrap">{{row.dtVisaProductCreatedOn}}</td>
+                        <td data-ng-show="is_main_user == 1 || (product_listing_permission.active == 1 && product_listing_permission.inactive == 1)  ">
+                            <label class="i-switch m-t-xs m-r"
+                                   ng-init="is_Visible=row.is_Visible=='active' ? true : false">
+                                <input type="checkbox" checked="true" ng-model="is_Visible"
+                                       ng-click="changevisiblity(row.iPkVisaProductId,row.is_Visible)">
+                                <i></i>
+                            </label>
+                        </td>
+                        <td data-ng-show="is_main_user == 1 || (product_listing_permission.active == 1 && product_listing_permission.inactive == 1)  ">
+                            <label class="i-switch m-t-xs m-r"
+                                   ng-init="stay=row.eVisaProductStatus=='active' ? true : false">
+                                <input type="checkbox" checked="true" ng-model="stay" data-ng-disabled="row.assign == 'yes'"
+                                       ng-click="changestatus(row.iPkVisaProductId,row.eVisaProductStatus)">
+                                <i></i>
+                            </label>
+                        </td>
+
+                        <td class="text-center text-nowrap">
+                            <button data-ng-show="is_main_user == 1 || product_listing_permission.update == 1"
+                                    class="btn btn-addon m-b-xs btn-sm btn-info info"
+                                    ui-sref="app.editpkg({pkgid:row.iPkVisaProductId})"
+                                    ui-sref-opts="{reload: true, notify: true}"><i class="fa fa-edit"></i>
+                                {{general.edit}}
+                            </button>
+                            <button data-ng-show="is_main_user == 1 || product_listing_permission.delete == 1"
+                                    class="btn btn-addon m-b-xs btn-sm btn-info btn-danger" data-ng-disabled="row.assign == 'yes'"
+                                    ng-click="removeItem(row.iPkVisaProductId,row.vVisaProductTitle)"><i
+                                    class="fa fa-trash-o"></i>
+                                {{general.delete}}
+                            </button>
+
+                        </td>
+
+                    </tr>
+                    <tr ng-if="displayedCollection.length == 0">
+                        <td colspan="10">
+                            <div class="row"><span class="col-md-4 col-md-offset-5">No records found</span></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10" class="text-right">
+                            <div st-pagination="" st-items-by-page="10" st-displayed-pages="7" class="no-margin"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- / right col -->
+</div>
+

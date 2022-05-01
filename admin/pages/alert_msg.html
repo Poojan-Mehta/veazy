@@ -1,0 +1,11 @@
+<div>
+    <div class="modal-header bg-primary r"><div class="bootstrap-dialog-header"><div class="bootstrap-dialog-close-button" style="display: none;"><button class="close">×</button></div><div class="bootstrap-dialog-title" id="195608bc-177d-4ed0-a826-8dc99ebe60f7_title"><strong>Confirmation</strong></div></div></div>
+    <div class="modal-body">
+        <p ng-if="options.message">
+            {{options.message}}
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button ng-repeat="button in options.buttons track by button.label" class="btn btn-default {{button.class}}" ng-class="{'btn-primary':button.primary}" ng-click="buttonClicked(button)">{{button.label}}</button>
+    </div>
+</div>

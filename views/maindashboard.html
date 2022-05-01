@@ -1,0 +1,124 @@
+<div data-ng-controller="MainDashboardController">
+    <!-- BEGIN PAGE BASE CONTENT -->
+    <div class="master_dashbaord">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- BEGIN TAB PORTLET-->
+                <div class="portlet light category_protlet">
+                    <!--<div class="portlet-title bg_trans border-none">
+                        <div class="caption">
+                            <span class="caption-subject">Marketplace</span>
+                        </div>
+                    </div>-->
+                    <div class="portlet-body">
+                        <!--<p class="text-light marketplace_desc bg-white"><i class="fa fa-exclamation-circle color_theme bg-white"></i>
+                            Select below for the application that you would like to use Veazy to help you prepare. Access video lessons, document checklists, legal criteria explanations, and guidance specific to each application type, prepare by a team of experienced immigration lawyers and agents.
+                        </p>-->
+                        <div class="tabbable tabbable-tabdrop">
+                            <ul class="nav nav-tabs veazy_tabs">
+                                <li data-ng-class="$index == 0?'active':''" data-ng-repeat=""><a data-target="#tab{{$index}}" data-toggle="tab" aria-expanded="true">{{marketplace}}</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane ng-scope active" data-ng-class="" id="tab0"> <div class="portlet light portlet-fit bordered ng-scope">
+                                        <!--<div class="portlet-title">
+                                            <div class="caption">
+                                                <i class="icon-microphone font-dark hide"></i>
+                                                <span class="caption-subject">Main Dashboard</span>
+                                            </div>
+                                        </div>-->
+                                        <div class="portlet-body">
+                                            <div class="row product_row">
+                                                <div style="margin-bottom: 20px;" class="col-sm-6 col-md-6 col-xs-12 col-lg-4 ng-scope">
+                                                    <div class="mt-widget-3">
+                                                        <div class="mt-head bg-white">
+                                                            <div class="mt-head-icon">
+                                                                <h3 class="text-light bold ng-binding">Application Manager</h3>
+                                                                <img src="https://staging.veazy.com.au/api/product/product_1581942970_300x300.png" class="img-responsive">
+                                                            </div>
+                                                            <div style="text-align: left !important;min-height: 130px;max-height: 130px;" class="mt-head-desc text-light bg-white ng-binding" ><p>Select this application type if you are looking to prepare an <b>On-Shore</b>&nbsp;<b>Subclass 820.</b><br><br></p></div>
+                                                            <!--BEGIN HAS NO PLAN BUTTON -->
+                                                            <div class="mt-head-button ng-scope" ng-if="(is_plan_exists == 'no' || is_plan_exists == false) && already_has_plan == 'no'">
+                                                                <a href="https://veazy.salvomigration.com.au/" target="_blank" class="btn purple bg-purple-theme font-white">Buy now</a>
+                                                            </div>
+                                                            
+                                                            <!--BEGIN HAS PLAN BUTTON -->
+                                                            <div class="mt-head-button ng-scope" ng-if="(!is_plan_exists || is_plan_exists == 'yes') && already_has_plan == 'yes'">
+                                                                <a data-ui-sref="app.dashboard" class="btn purple bg-purple-theme font-white" data-ng-click="">Dashboard</a>
+                                                            </div>
+                                                            <div class="mt-head-button ng-scope" ng-if="(!is_plan_exists || is_plan_exists == 'no') && already_has_plan == 'yes'">
+                                                                <a href="#disable_application" class="btn purple bg-purple-theme font-white" data-toggle="modal">
+                                        Resubscribe
+                                    </a>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!--timeline start-->
+                                                <div style="margin-bottom: 20px;" class="col-sm-6 col-md-6 col-xs-12 col-lg-4 ng-scope">
+                                                    <div class="mt-widget-3">
+                                                        <div class="mt-head bg-white">
+                                                            <div class="mt-head-icon">
+                                                                <h3 class="text-light bold ng-binding">Timeline Database</h3>
+                                                                <img src="https://staging.veazy.com.au/api/product/product_1581942970_300x300.png" class="img-responsive">
+                                                            </div>
+                                                            <div style="text-align: left !important;min-height: 130px;max-height: 130px;" class="mt-head-desc text-light bg-white ng-binding" ><p>Select this application type if you are looking to prepare an <b>On-Shore</b>&nbsp;<b>Subclass 820.</b><br><br></p></div>
+                                                            <!--BEGIN HAS PLAN BUTTON -->
+                                                            <div class="mt-head-button ng-scope">
+                                                                <a data-ui-sref="app.timeline" class="btn purple bg-purple-theme font-white">Timeline</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--timeline end-->
+                                                
+                                                <!--3rd section start-->
+                                                <div style="margin-bottom: 20px;" class="col-sm-6 col-md-6 col-xs-12 col-lg-4 ng-scope">
+                                                    <div class="mt-widget-3">
+                                                        <div class="mt-head bg-white">
+                                                            <div class="mt-head-icon">
+                                                                <h3 class="text-light bold ng-binding">Application Manager</h3>
+                                                                <img src="https://staging.veazy.com.au/api/product/product_1581942970_300x300.png" class="img-responsive">
+                                                            </div>
+                                                            <div style="text-align: left !important;min-height: 130px;max-height: 130px;" class="mt-head-desc text-light bg-white ng-binding" data-ng-bind-html=""><p>Select this application type if you are looking to prepare an <b>On-Shore</b>&nbsp;<b>Subclass 820.</b><br><br></p></div>
+                                                            <!--BEGIN HAS PLAN BUTTON -->
+                                                            <div class="mt-head-button ng-scope" data-ng-if="">
+                                                                <a href="https://veazy.salvomigration.com.au/" target="_blank" class="btn purple bg-purple-theme font-white" data-ng-click="freePurchase()">Buy now</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--3rd section end-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END TAB PORTLET-->
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE BASE CONTENT -->
+    <!-- DELETE PRODUCT POPUP -->
+    <div id="disable_application" class="modal veazy_modal fade note_confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!--<p>Uh oh! In order to access this Application you must have a current active plan. Please click below choose the plan that is best for you!</p>-->
+                    <p>Woops! Looks like your access to Veazy has expired! Please click below to purchase a new plan :)</p>
+                </div>
+                <div class="modal-footer text-center">
+                    <button class="btn btn-outline purple" data-dismiss="modal" aria-hidden="true">No</button>
+                    <!--<button data-dismiss="modal" class="btn b bg-purple-theme font-white btn-md bold" data-ng-click="upgradePlan()">Resubscribe</button> -->
+                    <a href="https://veazy.salvomigration.com.au/" target="_blank" class="btn b bg-purple-theme font-white btn-md bold" >Click Here</a> 
+                    <!-- <a data-ui-sref="app.plan" class="btn b bg-purple-theme font-white btn-md bold"><b style="font-family: Nunito; ">Upgrade Plan</b></a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

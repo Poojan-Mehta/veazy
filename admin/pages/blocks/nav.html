@@ -1,0 +1,307 @@
+<!-- list -->
+<ul class="nav">
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs"></li>
+    <li ui-sref-active="active" ng-show="dismenu({{menu_describe_in_order[0].id}})">
+        <a ui-sref="app.dashboard-v1">
+            <i class="glyphicon glyphicon-stats icon text-success-lter"></i>
+            <span class="font-bold" translate="">{{menu_describe_in_order[0].name}}</span>
+        </a>
+    </li>
+    <li class=""
+        ng-show="dismenu({{menu_describe_in_order[1].id}}) || dismenu({{menu_describe_in_order[2].id}}) || dismenu({{menu_describe_in_order[3].id}})">
+        <a href="" class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-user text-success-lter"></i>
+            <span class="font-bold"><!--Users-->{{menu_describe_in_order[1].name}}</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[2].id}})">
+                <a ui-sref="app.admin">
+                    <i class="fa fa-users text-success-lter"></i>
+                    <span translate=""><!--Staff List-->{{menu_describe_in_order[2].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[3].id}})">
+                <a ui-sref="app.users">
+                    <i class="fa fa-users text-success-lter"></i>
+                    <span translate=""><!--Users List-->{{menu_describe_in_order[3].name}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="" ng-show="dismenu({{menu_describe_in_order[4].id}}) || dismenu({{menu_describe_in_order[5].id}}) || dismenu({{menu_describe_in_order[6].id}})">
+        <a href="" class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-sitemap text-success-lter"></i>
+           <span class="font-bold"><!--Permission-->{{menu_describe_in_order[4].name}}</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[5].id}})">
+                <a ui-sref="app.rolelist">
+                    <span translate=""><!--Role-->{{menu_describe_in_order[5].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[6].id}})">
+                <a ui-sref="app.userpermission">
+                    <span translate=""><!--User Permission-->{{menu_describe_in_order[6].name}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ui-sref-active="active" ng-show="dismenu({{menu_describe_in_order[7].id}})">
+        <a ui-sref="app.generalsetting">
+            <i class="fa fa-gears text-success-lter"></i>
+            <span class="font-bold"><!--General Setting-->{{menu_describe_in_order[7].name}}</span>
+        </a>
+    </li>
+
+    <li class="" ng-show="dismenu({{menu_describe_in_order[8].id}}) || dismenu({{menu_describe_in_order[9].id}}) || dismenu({{menu_describe_in_order[10].id}})">
+        <a href="" class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-list text-success-lter"></i>
+            <span class="font-bold"><!--CMS-->{{menu_describe_in_order[8].name}}</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[9].id}})">
+                <a ui-sref="app.menu">
+                    <span translate=""><!--Menu-->{{menu_describe_in_order[9].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[10].id}})">
+                <a ui-sref="app.cms">
+                    <span translate=""><!--CMS Pages-->{{menu_describe_in_order[10].name}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- Package -->
+    <!--<li ui-sref-active="active" ng-show="dismenu({{menu_describe_in_order[38].id}})">-->
+    <!--    <a ui-sref="app.plan_package">-->
+    <!--        <i class="fa fa-list-ol text-success-lter"></i>-->
+    <!--        <span class="font-bold">{{menu_describe_in_order[38].name}}</span>-->
+    <!--    </a>-->
+    <!--</li>-->
+    <!-- plans -->
+    <li ui-sref-active="active" ng-show="dismenu({{menu_describe_in_order[11].id}})">
+        <a ui-sref="app.plans">
+            <i class="fa fa-list-ol text-success-lter"></i>
+            <span class="font-bold"><!--plans-->{{menu_describe_in_order[11].name}}</span>
+        </a>
+    </li>
+
+    <!-- PRODUCT MAIN MENU -->
+    <li class="" ng-show="dismenu({{menu_describe_in_order[12].id}}) || dismenu({{menu_describe_in_order[13].id}}) || dismenu({{menu_describe_in_order[14].id}}) || dismenu({{menu_describe_in_order[15].id}})">
+        <a href="" class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-suitcase text-success-lter"></i>
+            <span class="font-bold">{{menu_describe_in_order[12].name}}</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" ng-show="dismenu({{menu_describe_in_order[13].id}})">
+                <a ui-sref="app.mplace">
+                    <i class="fa fa-shopping-cart text-success-lter"></i>
+                    <span class="font-bold">{{menu_describe_in_order[13].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" ng-show="dismenu({{menu_describe_in_order[14].id}})">
+                <a ui-sref="app.category">
+                    <i class="fa fa-tags text-success-lter"></i>
+                    <span class="font-bold">{{menu_describe_in_order[14].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" ng-show="dismenu({{menu_describe_in_order[15].id}})">
+                <a ui-sref="app.package">
+                    <i class="fa fa-suitcase text-success-lter"></i>
+                    <span class="font-bold">{{menu_describe_in_order[15].name}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- PRODUCT MAIN MENU END -->
+
+    <!-- LESSONS MAIN MENU -->
+    <li class="" ng-show="dismenu({{menu_describe_in_order[16].id}}) || dismenu({{menu_describe_in_order[17].id}}) || dismenu({{menu_describe_in_order[18].id}})">
+        <a href="" class="auto">
+              <span class="pull-right text-muted">
+                  <i class="fa fa-fw fa-angle-right text"></i>
+                  <i class="fa fa-fw fa-angle-down text-active"></i>
+              </span>
+                <i class="glyphicon glyphicon-film text-success-lter"></i>
+                <span class="font-bold">{{menu_describe_in_order[16].name}}</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[17].id}})">
+                <a ui-sref="app.lessonfolder">
+                    <span translate="">{{menu_describe_in_order[17].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[18].id}})">
+                <a ui-sref="app.lession">
+                    <span translate="">{{menu_describe_in_order[18].name}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- LESSONS MAIN MENU END-->
+
+    <!-- SUMMARY OF CRITERIA-->
+    <li class="" ng-show="dismenu({{menu_describe_in_order[20].id}}) || dismenu({{menu_describe_in_order[21].id}}) || dismenu({{menu_describe_in_order[22].id}})">
+        <a href="" class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-list-alt text-success-lter"></i>
+            <span class="font-bold">{{menu_describe_in_order[19].name}}</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[20].id}})">
+                <a ui-sref="app.summaryfolder">
+                    <span translate="">{{menu_describe_in_order[20].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[21].id}})">
+                <a ui-sref="app.summarycategory">
+                    <span translate="">{{menu_describe_in_order[21].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[22].id}})">
+                <a ui-sref="app.summery">
+                    <span translate="">{{menu_describe_in_order[22].name}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- SUMMARY OF CRITERIA END-->
+
+    <!-- DOCUMENT MAIN MENU-->
+    <li class="" ng-show="dismenu({{menu_describe_in_order[23].id}}) || dismenu({{menu_describe_in_order[24].id}}) || dismenu({{menu_describe_in_order[25].id}}) || dismenu({{menu_describe_in_order[26].id}}) || dismenu({{menu_describe_in_order[27].id}})">
+        <a href="" class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-book text-success-lter"></i>
+            <span class="font-bold">{{menu_describe_in_order[23].name}}</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[24].id}})">
+                <a ui-sref="app.docfolder">
+                    <span translate="">{{menu_describe_in_order[24].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[25].id}})">
+                <a ui-sref="app.businesscategory">
+                    <span translate="">{{menu_describe_in_order[25].name}}</span>
+                </a>
+            </li>
+            <!--<li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[25].id}})">-->
+                <!--<a ui-sref="app.doctemplate">-->
+                    <!--<span translate="">{{menu_describe_in_order[25].name}}</span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[27].id}})">
+                <a ui-sref="app.document">
+                    <span translate="">{{menu_describe_in_order[27].name}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- DOCUMENT MAIN MENU END-->
+
+    <!-- TO DO LIST MAIN MENU-->
+    <li class="" ng-show="dismenu({{menu_describe_in_order[28].id}}) || dismenu({{menu_describe_in_order[29].id}}) || dismenu({{menu_describe_in_order[30].id}}) || dismenu({{menu_describe_in_order[31].id}})">
+        <a href="" class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-check-square-o text-success-lter"></i>
+            <span class="font-bold">{{menu_describe_in_order[28].name}}</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[29].id}})">
+                <a ui-sref="app.todofolder">
+                    <span translate="">{{menu_describe_in_order[29].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[31].id}})">
+                <a ui-sref="app.todocategory">
+                    <span translate="">{{menu_describe_in_order[31].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[30].id}})">
+                <a ui-sref="app.todolist">
+                    <span translate="">{{menu_describe_in_order[30].name}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- TO DO LIST MAIN MENU END-->
+
+    <!-- COVER LETTER MAIN MENU-->
+    <li class="" ng-show="dismenu({{menu_describe_in_order[32].id}}) || dismenu({{menu_describe_in_order[33].id}}) || dismenu({{menu_describe_in_order[34].id}})">
+        <a href="" class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-envelope-o text-success-lter"></i>
+            <span class="font-bold">{{menu_describe_in_order[32].name}}</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[33].id}})">
+                <a ui-sref="app.covletcategory">
+                    <span translate="">{{menu_describe_in_order[33].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[34].id}})">
+                <a ui-sref="app.coverletter">
+                    <span translate="">{{menu_describe_in_order[34].name}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- COVER LETTER MAIN MENU END-->
+
+    <!-- FAQ MAIN MENU-->
+    <li class="" ng-show="dismenu({{menu_describe_in_order[35].id}}) || dismenu({{menu_describe_in_order[36].id}}) || dismenu({{menu_describe_in_order[37].id}})">
+        <a href="" class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="icon-question text-success-lter"></i>
+            <span class="font-bold">{{menu_describe_in_order[35].name}}</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[36].id}})">
+                <a ui-sref="app.faqcategory">
+                    <span translate="">{{menu_describe_in_order[36].name}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" class="active" ng-show="dismenu({{menu_describe_in_order[37].id}})">
+                <a ui-sref="app.faq">
+                    <span translate="">{{menu_describe_in_order[37].name}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- FAQ MAIN MENU END-->
+</ul>
+
+

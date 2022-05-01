@@ -1,0 +1,33 @@
+<div class="container w-xxl w-auto-xs" ng-controller="LoginController">
+    <a href class="navbar-brand block m-t">VEAZY ADMIN PANEL</a>
+    <div class="m-b-lg">
+        <div class="wrapper text-center"></div>
+        <form name="form" class="form-validation" name="login_form" novalidate>
+            <div class="text-danger wrapper text-center" ng-show="authError">
+                <p ng-show="authError!= ''" class="help-block" style="color:#ffffff;background:#a94442;
+border: 1px outset #f16702;
+padding:0.28em; width:auto;border-radius:10px;">{{authError}}</p>
+            </div>
+
+            <div class="list-group list-group-sm">
+                <div class="list-group-item" ng-class="{ 'has-error' : form.email.$invalid && !form.email.$pristine }">
+                    <input type="email" placeholder="Email" class="form-control no-border" ng-model="email" name="email" required>
+                </div>
+                <p ng-show="form.email.$invalid && !form.email.$pristine" class="help-block"
+                   style="color:#ffffff;background:#a94442;border: 1px outset #f16702;padding:0.28em; width:auto;border-radius:10px;">Email is Invalid.</p>
+                <div class="list-group-item"
+                     ng-class="{ 'has-error' : form.password.$invalid && !form.password.$pristine }">
+                    <input type="password" name="password" placeholder="Password" class="form-control no-border"
+                           ng-model="password" required>
+                </div>
+                <p ng-show="form.password.$invalid && !form.password.$pristine" class="help-block" style="color:#ffffff;background:#a94442;
+border: 1px outset #f16702;
+padding:0.28em; width:auto;border-radius:10px;">Password is required.</p>
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()"
+                    ng-disabled='form.$invalid'>Log in
+            </button>
+            <div class="text-center m-t m-b"><a ui-sref="forgotpassword">Forgot password?</a></div>
+        </form>
+    </div>
+</div>

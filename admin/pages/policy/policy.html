@@ -1,0 +1,87 @@
+
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="policyCtrl">
+
+    <!-- main -->
+
+    <div class="col">
+
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">Policy List</h1>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper-md ng-scope">
+
+            <div class="panel panel-default table-responsive">
+                <div class="col-md-12" style="margin-top: 20px;">
+
+                    <button  ui-sref="app.addpolicy" data-ng-hide="displayedCollection.length>0" class="btn m-b-xs w-xs btn-info"><i
+                            class="fa fa-plus"  ></i>{{general.add}}
+                    </button>
+
+                 <!--   <button class="btn m-b-xs w-xs btn-success "  ng-csv="getcsv()"
+                            csv-header="['Name', 'Description']"
+                            filename="Company_List.csv"><i class="glyphicon glyphicon-save"></i>{{general.export}}
+                    </button>-->
+               <!--     <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-right top_search"
+                         st-table="displayedCollection" st-safe-src="rowCollection">
+                        <input class="form-control ng-isolate-scope" st-search=""
+                               placeholder="{{general.search}}" type="text" data-ng-model="searchText"
+                               style="width:90% !important;display: inline;"/>
+
+                    </div>-->
+                </div>
+
+                <table st-table="displayedCollection" st-safe-src="rowCollection"
+                       class="table table-striped" st-filtered-collection="rowCollection">
+                    <thead>
+
+                    <tr>
+
+
+                        <th st-sort="name">Name</th>
+                        <th st-sort="vdescription">Description</th>
+
+
+                        <th st-sort="">{{general.action}}</th>
+                    </tr>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in displayedCollection">
+                        <td>{{row.name}}</td>
+                        <td ng-bind-html="row.vdescription">{{row.vdescription}}</td>
+                        <td>
+
+                           <button class="btn m-b-xs btn-sm btn-info info" ui-sref="app.editpolicy({companyid:row.id})"><i class="fa fa-edit"></i> {{general.edit}}</button>
+                           <button  class="btn m-b-xs btn-sm btn-info btn-danger"  ng-click="removeItem(row.id,row.name)"><i class="fa fa-trash-o"></i> {{general.delete}}</button>
+
+                        </td>
+                    </tr>
+                    <tr ng-if="displayedCollection.length == 0">
+                        <td colspan="10">
+                            <div class="row"><span class="col-md-4 col-md-offset-5">{{general.norecord}}</span></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10" class="text-right">
+                            <div st-pagination="" st-items-by-page="10"
+                                 st-displayed-pages="7" class="no-margin"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- / right col -->
+</div>

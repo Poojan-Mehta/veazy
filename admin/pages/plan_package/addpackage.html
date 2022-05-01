@@ -1,0 +1,62 @@
+<style>
+    .chosen-container-multi .chosen-choices {
+        height: 80px !important;
+    }
+</style>
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="addpackageCtrl"
+     data-ng-if="is_main_user == 1 || plan_package_list_permission.add ==1 || plan_package_list_permission.update ==1">
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">{{pagename}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal ng-valid ng-valid-date ng-valid-required ng-valid-date-disabled ng-dirty ng-valid-parse"
+                          name="catform" novalidate>
+                        <div class="control-group">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Package Name</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="vPackageName" data-ng-model="vPackageName"
+                                           placeholder="Enter Package Name" required>
+                                    <span data-ng-show="submitted && catform.vPackageName.$invalid">
+                                    <span class="text-danger" data-ng-show="catform.vPackageName.$error.required">{{general.required}}</span>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-if="loadplan">
+                                <label class="col-md-2 control-label">Select Plans</label>
+                                <div class="col-md-5">
+                                    <select ui-jq="chosen" multiple
+                                            ui-options="{'max_selected_options': '20','display_selected_options':'false'}"
+                                            data-placeholder="Select Plans"
+                                            data-ng-model="records.plans"
+                                            class="form-control input-lg chosenbox">
+                                        <option ng-repeat="option in planlist"
+                                                value="{{option.iPkPlanId}}" ng-selected="setValue(option.iPkPlanId)">
+                                                {{option.Unique_Plan_ID}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>                           
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-sm btn-info" data-ng-click="add_cat_form(catform.$valid)">{{general.btnsave}}</button>
+                                    <button type="submit" class="btn btn-sm btn-danger" ui-sref="app.plan_package">{{general.btncancel}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

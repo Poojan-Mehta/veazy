@@ -1,0 +1,498 @@
+<!-- <div data-ng-controller="RegisterController">
+    <!DOCTYPE html>
+
+    <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo  page-sidebar-fixed vz_page_log_bg">
+    <div class="vz_page_log_bg">
+    <form class="register-form" name="registerform" novalidate>
+        <div class="vz_page">
+            <div class="vz_side_pop1_bg1"></div>
+            <div class="vz_side_pop1_bg2"></div>
+            <div class="vz_side_pop3">
+                <div class="vz_side_pop3_p1">
+                    <span>x</span>
+                </div>
+                <div class="vz_side_pop3_p2">
+                    <img src="http://app.veazy.com.au/assets/layouts/layout/img/vz_profile_3.png"><h4>
+                    CREATE ACCOUNT</h4>
+                    <p>Things become more personal with a Veazy account.</p>
+                </div>
+                <div class="vz_side_pop3_p3">
+                    <h3>Personal Details</h3>
+                    <label>First Name</label>
+                    <label>Last Name</label>
+                    <input type="text" placeholder="First Name" name="firstname"
+                           data-ng-model="firstname" required/>
+                    <input type="text" placeholder="Last Name" name="lastname"
+                           data-ng-model="lastname" required/>
+                    <div class="ccl1dn"><span data-ng-show="submitted && registerform.firstname.$invalid" class="ccl1dn_spn">
+                    <span class="text-danger" data-ng-show="registerform.firstname.$error.required">First Name is required</span>
+                </span>
+                    <span data-ng-show="submitted && registerform.lastname.$invalid" class="ccl1dn_rs">
+                    <span class="text-danger"
+                          data-ng-show="registerform.lastname.$error.required">Last Name is required</span>
+                    </span></div>
+                </div>
+                <div class="vz_side_pop3_p3">
+                    <h3>Account</h3>
+                    <label>E-mail Address</label>
+                    <label>Mobile Number</label>
+                    <input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email" data-ng-model="email" required data-ng-pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"/>
+                    <input class="form-control placeholder-no-fix" type="number" placeholder="Mobile Number" name="mobile" data-ng-model="mobile" required/>
+                    <div class="ccl1dn"><span  data-ng-show="submitted && registerform.email.$invalid" class="ccl1dn_spn">
+                    <span class="text-danger" data-ng-show="registerform.email.$error.required">Email is required</span>
+                    <span class="text-danger" data-ng-show="registerform.email.$error.pattern">Email is invalid</span>
+                </span>
+                    <span  data-ng-show="submitted && registerform.mobile.$invalid" class="ccl1dn_rs">
+                    <span class="text-danger" data-ng-show="registerform.mobile.$error.required">Mobile is required</span>
+                    <span class="text-danger" data-ng-show="registerform.mobile.$error.pattern">Mobile is invalid</span>
+                    </span></div>
+                    <label>Choose a Password</label>
+                    <label>Repeat Password</label>
+                    <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password"
+                           name="password" data-ng-model="password" data-ng-model-options="{allowInvalid: true}" data-pattern-validator="((?=.*\d)(?=.*\W).{6,6})" required />
+                    <password-strength ng-model="password"></password-strength>
+                    <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Re-type Your Password" name="rpassword"
+                           data-ng-model="rpassword" data-valid-password-c="password" required/>
+                    <div class="ccl1dn"><span class="text-danger" data-ng-show="password && registerform.password.$error.passwordPattern">Password must be minimum length of 6 with special character,digit!</span>
+                    <span class="text-danger" data-ng-show="submitted && registerform.password.$invalid">
+                    <span class="text-danger" data-ng-show="registerform.password.$error.required">
+                        Password is required
+                    </span>
+                </span>
+                    <span class="text-danger ccl1d3" data-ng-show="submitted && password && registerform.rpassword.$invalid">
+                    <span class="text-danger" data-ng-show="registerform.rpassword.$error.noMatch">Passwords do not match.</span>
+                    </span></div>
+                </div>
+                <div class="vz_side_pop3_p4">
+                    <input type="checkbox" name="termofuse" data-ng-model="termofuse" required/>
+                    <p>I have read and agree to be bound by the<a data-ui-sref="terms">General Terms and Conditions</a></p>
+                    <div class="ccl1dn ccl1dn1"><span class="text-danger" data-ng-show="submitted && registerform.termofuse.$invalid">
+                    <span class="text-danger" data-ng-show="registerform.termofuse.$error.required">Please accept Terms of Services and Privacy Policy</span>
+                    </span></div>
+                    <button class="vz_side_pop1_btn2" data-ng-click="submit(registerform.$valid)" data-ng-disabled="disabled">Submit</button>
+                    <h5>If you already have account then<a data-ui-sref="login">Login</a></h5>
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+    <style>
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+    </body>
+
+    </html>
+</div> -->
+
+<div data-ng-controller="RegisterController">
+ <!DOCTYPE html>
+<html lang="en">
+
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <title>Veazy</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="veazy" name="description"/>
+    <meta content="Martin" name="author"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/custom.css"/>
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <style>
+        input:focus,textarea:focus{  outline: none !important;  }
+        input.error, textarea.error{  outline:red groove thin;  }
+    }
+    </style>
+</head>
+<!-- END HEAD -->
+
+<body>
+
+<div class="vz_sig">
+    <div class="vz_sig_sp1"><img src="images/sp1.png"></div>
+    <div class="vz_sig_sp2"><img src="images/sp2.png"></div>
+    <div class="vz_sig_box">
+    <div class="vz_sig_p1"><img src="images/veazy_logo.png"></div>
+    <div class="vz_sig_p2">
+        <div class="vz_sig_p2_s1">
+            <h2>Start Your 7 Day Free Trial!</h2>
+            <p>Complete the registration from below and start using</p>
+            <p>Veazy to prepare a better Australian visa application.</p>
+        </div>
+        <div class="vz_sig_p2_s2">
+            <p><img src="images/card_sig.png">No Card Required</p>
+        </div>
+        <form class="register-form" name="registerform" novalidate>
+        <div class="vz_sig_p2_s3">        
+            <div class="vz_sig_p2_s3_re be">
+                <label>First Name</label>
+                <input type="text" placeholder="First Name" name="firstname"
+                           data-ng-model="firstname" required/>
+                    
+                    <div class="ccl1dn"><span data-ng-show="submitted && registerform.firstname.$invalid" class="ccl1dn_spn">
+                    <span class="text-danger" data-ng-show="registerform.firstname.$error.required">First Name is required</span>
+                </span></div>
+                    
+            </div>
+            <div class="vz_sig_p2_s3_re be2">
+                <label>Surname</label>
+                <input type="text" placeholder="Last Name" name="lastname"
+                           data-ng-model="lastname" required/>
+                           <span data-ng-show="submitted && registerform.lastname.$invalid" class="ccl1dn_rs">
+                    <span class="text-danger"
+                          data-ng-show="registerform.lastname.$error.required">Last Name is required</span>
+                    </span>
+            </div>
+            <label>Email Address</label>
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email" data-ng-model="email" required data-ng-pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"/>
+                    
+                    <div class="ccl1dn"><span  data-ng-show="submitted && registerform.email.$invalid" class="ccl1dn_spn">
+                    <span class="text-danger" data-ng-show="registerform.email.$error.required">Email is required</span>
+                    <span class="text-danger" data-ng-show="registerform.email.$error.pattern">Email is invalid</span>
+                </span></div>
+                    
+            <label>Contact Number</label>
+            <input class="form-control placeholder-no-fix" type="number" placeholder="Mobile Number" name="mobile" data-ng-model="mobile" required/>
+            <!-- <span  data-ng-show="submitted && registerform.mobile.$invalid" class="ccl1dn_rs"> -->
+            <div class="ccl1dn"><span  data-ng-show="submitted && registerform.mobile.$invalid" class="ccl1dn_spn">
+                    <span class="text-danger" data-ng-show="registerform.mobile.$error.required">Mobile is required</span>
+                    <span class="text-danger" data-ng-show="registerform.mobile.$error.pattern">Mobile is invalid</span>
+                    </span></div>
+            <label>Password</label>
+            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password"
+                           name="password" data-ng-model="password" data-ng-model-options="{allowInvalid: true}" data-pattern-validator="((?=.*\d)(?=.*\W).{6,6})" required />
+                    <password-strength ng-model="password"></password-strength>
+                    
+                    <div class="ccl1dn"><span class="text-danger" data-ng-show="password && registerform.password.$error.passwordPattern">Password must be minimum length of 6 with special character,digit!</span>
+            <label>Re-type Password</label>
+            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Re-type Your Password" name="rpassword"
+                           data-ng-model="rpassword" data-valid-password-c="password" required/>
+                           <span class="text-danger ccl1d3" data-ng-show="submitted && password && registerform.rpassword.$invalid">
+                    <span class="text-danger" data-ng-show="registerform.rpassword.$error.noMatch">Passwords do not match.</span>
+                    </span></div>
+        </div>
+        <div class="vz_sig_p2_s4">
+            <div class="vz_togbtn">
+                <div class="switch-container">
+                    <input type="checkbox" id="switch" ng-model="switch">
+                    <label for="switch" class="switch-label">
+                        <div class="switch-rail">
+                          <div class="switch-slider"></div>
+                        </div>    
+                      </label>
+                    </div>
+                </div>
+            <p>I have read and agree to be bound by the <a href="https://www.salvomigration.com.au/veazyterms.html" target="_blank" style="color: blue;">General Terms and Conditions</a></p> 
+            <!-- <p><a href="https://www.salvomigration.com.au/veazyterms.html" style="color: blue;">and Conditions</a></p> -->
+        </div>
+        <div class="vz_sig_p2_s5">
+            <button class="smkj" data-ng-click="submit(registerform.$valid)" data-ng-disabled="disabled">Start Free Trial</button>
+            <img src="images/lock.png">
+        </div>
+        <div class="vz_sig_p2_s6">
+            <p>Already have an account? <a data-ui-sref="login">Login here</a></p>
+        </div>
+        </form>
+    </div>
+    <div class="vz_sig_p3"> <!-- data-toggle="modal" data-target="#myModal"-->
+        <!-- <div class="vz_sig_p3_s1"> <a href="javascript:void(0)" ng-click="openVideo()"><img src="images/videoplay.png"></a>     </div> -->
+
+        <!-- <div class="vz_sig_p3_s1">
+<iframe src="https://player.vimeo.com/video/380393043" frameborder="0" allow="autoplay;"></iframe></div> -->
+
+<div class="vz_sig_p3_s1" style="
+    position: relative;
+"> <a href="javascript:void(0)" ng-click="openVideo()"><img src="images/videoplay.png" style="
+    width: 100%;
+    opacity: 0;
+    display: block;
+"><iframe src="https://player.vimeo.com/video/383955895" frameborder="0" allow="autoplay;" style="
+    position: absolute;
+    left: 0px;
+    top: -15px;
+    height: 93%;
+    width: 99%;
+    border-radius: 7px;
+    box-shadow: 0px -7px 17px 16px rgba(255,255,255,0.1);
+"></iframe>
+</a>     </div>
+        
+        <div class="vz_sig_p3_s2">
+
+            <div class="wedido3 sdf">
+                    <div class="owl-carousel">
+                  <div>
+                    <div class="swiper-slide">
+                        <img src="images/slic16.png">
+                      </div>
+                  </div>
+                  <div>
+                    <div class="swiper-slide">
+                        <img src="images/slic17.png">
+                      </div>
+                  </div>
+                  <div>
+                    <div class="swiper-slide">
+                        <img src="images/slic18.png">
+                      </div>
+                  </div>
+                  <div>
+                    <div class="swiper-slide">
+                        <img src="images/slic16.png">
+                      </div>
+                  </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="vz_sig_p3_s3">
+            <h2>Here’s some common questions…</h2>
+        </div>
+        <div class="vz_sig_p3_s4">
+            <div class="container">
+              <div class="accordion">
+                <div class="accordion-item">
+                  <a>Q. Will I be billed during the trial period?</a>
+                  <div class="content">
+                    <p>A. No. Your 7 day trial is 100% free and does not require that you provide any card details! However, should you wish to purchase additional resources or upgrade your plan, you will be directed to a secure payment gateway.</p>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <a>Q. What do I get as part of my trial?</a>
+                  <div class="content">
+                    <p>A. As part of your trial you get full access to all of the amazing built in tools and features inside Veazy including HD Video Lessons, Visa Criteria Summaries & Explanations, Dynamic Document Checklists, Final to Do’s/Checks and much much more. There is also no limit on the number of application you can start preparing during your trial!</p>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <a>Q. What happens after my trial period ends?</a>
+                  <div class="content">
+                    <p>A. After your trial period ends, you will be given the option to choose a paid plan to continue using Veazy’s features. You can log back into Veazy at any stage and upgrade to a paid plan even after your trial.</p>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <a>Q. Can I cancel my trial at any stage?</a>
+                  <div class="content">
+                    <p>A. Yes you can, however there really isn’t any need to. After your trial ends, if you decide not to upgrade to a paid plan, you will still retain your account and can elect to upgrade at a later stage.</p>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <a>Q. Can I upgrade to a paid plan during my trial?</a>
+                  <div class="content">
+                    <p>A. Yes of course!</p>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+        </div>
+    </div>
+
+
+
+
+<p id="back-top">
+    <a href="#top"><img src="images/up-arrow.png"/></a>
+</p>
+
+
+<!-- video Modal -->
+<!-- <div class="modal modal_about_video" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+           <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <video controls style="width: 100%;">
+                    <source src="api/webroot/videos/movie.mp4" type="video/mp4">
+                    <source src="api/webroot/videos/movie.mp4" type="video/ogg">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!--START UPDATE PRODUCT INFORMATION POPUP -->
+    <script type="text/ng-template" class="modal modal_about_video" id="videoModal.html">
+        <div class="modal-header veazy_header" style="padding-right:0;">
+            <i class="icon-close font-white pull-right fa-2x" style="cursor: pointer;" data-ng-click="closeVideo()"></i>
+        </div>
+        <div class="modal-body">
+            <iframe id="modal-video" src='{{selected_video}}' style="width: 100%;height: 60vh;" class="veazy_video"></iframe>
+        </div>
+    </script>
+    <!--END UPDATE PRODUCT INFORMATION POPUP -->
+</div>
+
+
+</div>
+
+<!-- <script type="text/javascript">
+    $('.owl-carousel').owlCarousel({
+  autoplay: true,
+  center: true,
+  loop: true,
+  nav: true,
+  responsive: {
+                  0: {
+                    items: 1
+                  },
+                  500: {
+                    items: 3
+                  },
+                  768: {
+                    items: 1
+                  },
+                  1100: {
+                    items: 3
+                  }
+                }
+});
+
+  </script> -->
+<!-- 
+<script type="text/javascript " src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript " src="js/bootstrap.min.js"></script> -->
+<script src="js/swiper.min.js"></script>
+<script src="js/owl.carousel.js"></script>
+  <script type="text/javascript">
+    $('.owl-carousel').owlCarousel({
+  
+  responsive: {
+                  0: {
+                    items: 3
+                  },
+                  500: {
+                    items: 3
+                  },
+                  768: {
+                    items: 3
+                  },
+                  1100: {
+                    items: 3
+                  },
+                  2100: {
+                    items: 3
+                  }
+                }
+});
+
+  </script>
+<!-- <script type="text/javascript">
+    var $j = jQuery.noConflict();
+
+    // hide #back-top first
+    $j("#back-top").hide();
+
+    $j(document).ready(function() {
+
+        $j(window).scroll(function () {
+            if ($j(this).scrollTop() > 200) {
+                $j('#back-top').fadeIn();
+            } else {
+                $j('#back-top').fadeOut();
+            }
+        });
+
+        // scroll body to 0px on click
+        $j('#back-top a').click(function () {
+            $j('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+
+        // $j("#sec1").click(function() {$j('html, body').animate({scrollTop: $j("#sec1x").offset().top}, 2000);});
+        // $j("#sec2").click(function() {$j('html, body').animate({scrollTop: $j("#sec2x").offset().top}, 2000);});
+        // $j("#sec3").click(function() {$j('html, body').animate({scrollTop: $j("#sec3x").offset().top}, 2000);});
+        // $j("#sec4").click(function() {$j('html, body').animate({scrollTop: $j("#sec4x").offset().top}, 2000);});
+        // $j("#sec5").click(function() {$j('html, body').animate({scrollTop: $j("#sec5x").offset().top}, 2000);});
+        // $j("#sec6").click(function() {$j('html, body').animate({scrollTop: $j("#sec6x").offset().top}, 2000);});
+
+        $j('#register-btn').click(function() {
+            var email = $j('#register-email').val();
+            var valid_email = validateEmail(email);
+            if(valid_email){
+                $j('#register-email').removeClass('error');
+                geturl = $j.ajax({
+                    url: '', // the URL to this page.
+                    type: 'POST',
+                    data: { email: email },
+                    success: function(response, status, xhr) {
+                        $j('#register-email').val('');
+                        window.location = "thankyou";
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        window.location = "thankyou";
+                        console.log('Error: ' + textStatus);
+                    }
+                });
+            }else{
+                if(email.trim() == ''){
+                    $j('#register-email').removeClass('error');
+                }else{
+                    $j('#register-email').addClass('error');
+                }
+            }
+        });
+
+        $j('#footer-register-btn').click(function() {
+            var email = $j('#footer-email').val();
+            var valid_email = validateEmail(email);
+            if(valid_email){
+                $j('#footer-email').removeClass('error');
+                geturl = $j.ajax({
+                    url: '', // the URL to this page.
+                    type: 'POST',
+                    data: { email: email },
+                    success: function(response, status, xhr) {
+                        $j('#footer-email').val('');
+                        window.location = "thankyou";
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        window.location = "thankyou";
+                        console.log('Error: ' + textStatus);
+                    }
+                });
+            }else{
+                if(email.trim() == ''){
+                    $j('#footer-email').removeClass('error');
+                }else{
+                    $j('#footer-email').addClass('error');
+                }
+            }
+        });
+    });
+
+    function validateEmail(email) {
+        var re = /^(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+        return re.test(email);
+    }
+
+    $j("#about-link").click(function() {
+        $j('html,body').animate({scrollTop: $j("#about-section").offset().top}, 'slow');
+    });
+
+    $j("#feature").click(function() {
+        $j('html,body').animate({scrollTop: $j("#for-feature-section").offset().top}, 'slow');
+    });
+</script>
+ <script type="text/javascript">
+    const items = document.querySelectorAll(".accordion a");
+
+function toggleAccordion(){
+  this.classList.toggle('active');
+  this.nextElementSibling.classList.toggle('active');
+}
+
+items.forEach(item => item.addEventListener('click', toggleAccordion));
+</script>  -->
+
+ </body>
+</html>
+</div>

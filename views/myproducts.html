@@ -1,0 +1,205 @@
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="MyproductsController">
+    <div class="master_dashbaord">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light bordered shadow bg-white">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span class="caption-subject ">My Applications</span> &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3 col-lg-3 col-md-3 col-xs-12">
+                        <select class="form-control input-lg" ng-model="vLodgmentStatus" data-ng-change="getStatus(vLodgmentStatus)">
+                            <option value="" selected>All Status</option>
+                            <option value="Preparing">Preparing</option>
+                            <option value="Submitted">Submitted</option>
+                            <option value="Request Pending">Request Pending</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Refused">Refused</option>
+                        </select>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-responsive">
+                            <table class="table table-light table_product_list">
+                                <thead>
+                                <tr class="">
+                                    <th class=""></th>
+                                    <th class="text-left "> Status</th>
+                                    <th class="text-left" style="width:200px;"> Progress</th>
+                                    <th class="text-left"> Deadline Date</th>
+                                    <th class="text-left">Access</th>
+                                    <th class="text-left" data-ng-if="total_products > 1">Link</th>
+                                    <th class="text-center">Delete Application</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-repeat="product in products">
+                                    <td class="text-nowrap text-left"><img src="{{product.vUserProductImage | replaceA }}" width="50" height="50" style="border-radius: 5px !important;">&nbsp;&nbsp;&nbsp;{{product.vUserProductTitle}}</td>
+                                    <td class="text-nowrap text-left">
+                                        <span class="bold cus_m_orange text-light app_status2" ng-if="product.vLodgmentStatus == 'Submitted'">{{product.vLodgmentStatus}}</span>
+                                        <span class="bold cus_m_blue text-light app_status2" ng-if="product.vLodgmentStatus == 'Preparing'">{{product.vLodgmentStatus}}</span>
+                                        <span class="bold color_theme text-light app_status2" ng-if="product.vLodgmentStatus == 'Request Pending'">{{product.vLodgmentStatus}}</span>
+                                        <span class="bold font-green-crusta text-light app_status2" ng-if="product.vLodgmentStatus == 'Approved'">{{product.vLodgmentStatus}}</span>
+                                        <span class="bold font-red-thunderbird text-light app_status2" ng-if="product.vLodgmentStatus == 'Refused'">{{product.vLodgmentStatus}}</span>
+                                        <!-- <span data-ng-if="product.eUserProductStatus == 'inactive'"  class="bold font-red text-light border app_status">{{product.eUserProStatus}}</span> -->
+                                    </td>
+                                    <td class="text-nowrap"><span class="pull-left">{{product.keyProgress}}% &nbsp; </span>
+                                        <div class="progress veazy_progress_bar">
+                                            <div class="progress-bar progress-bar-danger " role="progressbar"
+                                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                                 style="width: {{product.keyProgress}}%">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <!-- <td class="text-nowrap" ng-if="product.is_date_max"><i class="fa fa-calendar font-purple" aria-hidden="true"></i>&nbsp; <b>{{product.dtDeadLineDate}} </b></td>
+                                    <td class="text-nowrap" ng-if="!product.is_date_max" style="color: #e7505a;"><i class="fa fa-calendar font-purple" aria-hidden="true"></i>&nbsp; <b>{{product.dtDeadLineDate}}</b></td> -->
+                                    <!-- Deadline date new start -->
+                                    <td class="text-nowrap" ng-if="product.is_date_max && !is_plan_exists">
+                                    <!-- <div ng-if="product.is_date_max && !is_plan_exists"> -->
+                                    <p style="margin-top: 20px;" class="border border-element border-grey-steel text-light shadow-light"><i class="icon-calendar bold font-purple"></i>&nbsp;<b><span ng-bind-html="product.duedate"></span></b> </p>
+	                                <!-- </div> -->
+                                    </td>
+                                    <td class="text-nowrap" ng-if="product.is_date_max && is_plan_exists" ng-disabled="is_plan_exists">
+                                    <!-- <div ng-if="product.is_date_max && is_plan_exists" ng-disabled="is_plan_exists"> -->
+	                                    <p style="margin-top: 20px;" class="border border-element border-grey-steel text-light shadow-light" data-ng-click="assignDueDate(product.pid,product.dtDeadLineDate)"><i class="icon-calendar bold font-purple"></i>&nbsp;<b><span ng-bind-html="product.duedate"></span></b> </p>
+
+	                                <!-- </div>  -->
+                                    </td>
+                                    <td class="text-nowrap" ng-if="!product.is_date_max && is_plan_exists" ng-disabled="is_plan_exists">
+                                    <!-- <div ng-if="product.is_date_max && is_plan_exists" ng-disabled="is_plan_exists"> -->
+	                                    <p style="margin-top: 20px;" class="border border-element border-grey-steel text-light shadow-light" data-ng-click="assignDueDate(product.pid,product.dtDeadLineDate)"><i class="icon-calendar bold font-purple"></i>&nbsp;<b><span ng-bind-html="product.duedate" style="color: #e7505a;"></span></b> </p>
+
+	                                <!-- </div>  -->
+                                    </td>             
+                                                                      
+	                                
+	                                
+                                <!-- Deadline date new End -->
+                                    <td class="text-nowrap text-left" data-ng-if="is_plan_exists"><a data-ui-sref="product_app.home({vpid:product.iPkUserProductId})" class="btn btn-sm bg-purple-theme font-white btn-shadow "><i class="fa fa-share-square-o" aria-hidden="true"></i> &nbsp; <span> Open </span></a></td>
+                                    <!-- <td class="text-nowrap text-left" data-ng-if="!is_plan_exists" style="opacity: 0.5"><a href="#disable_application" class="btn btn-block btn-lg card_btn_lg bg-purple-theme font-white btn-shadow bold" style="opacity: 0.5" data-toggle="modal">
+                                    <i class="fa fa-share-square-o"" aria-hidden="true"></i>&nbsp;  {{lang_trans.master_dashboard.open }}
+                                </a></td> -->
+                                <td class="text-nowrap text-center" data-ng-if="!is_plan_exists" style="opacity: 0.5">
+                                        <a href="#disable_application" data-toggle="modal" data-ng-click="cancelSubscription(product.pid,product.vUserProductTitle)" class="btn btn-sm bg-purple-theme font-white btn-shadow bold"><i class="fa fa-share-square-o" aria-hidden="true" style="opacity: 0.5"></i> &nbsp;{{lang_trans.master_dashboard.open }}</a>
+                                    </td>
+                                    <td class="text-nowrap text-center" data-ng-if="total_products > 1 && is_plan_exists">
+                                        <a data-ng-if="product.linked_product == ''" data-ng-click="link(product.pid)" class="btn btn-sm btn bg-grey-gallery bg-font-grey-gallery btn-shadow"><i class="fa fa-link"></i> &nbsp;Link</a>
+                                        <a data-ng-if="product.linked_product != ''" data-ng-click="unlink(product.linked_product)" class="btn btn-sm btn-shadow btn font-grey-gallery"><i class=" fa fa-unlink" ></i> &nbsp;Un-Link</a>
+                                    </td>
+                                    <td class="text-nowrap text-center" data-ng-if="total_products > 1 && !is_plan_exists" style="opacity: 0.5">
+                                        <a href="#disable_application" data-toggle="modal" data-ng-if="product.linked_product == ''"  class="btn btn-sm btn bg-grey-gallery bg-font-grey-gallery btn-shadow"><i class="fa fa-link"></i> &nbsp;Link</a>
+                                        <a href="#disable_application" data-toggle="modal" data-ng-if="product.linked_product != ''"  class="btn btn-sm btn-shadow btn font-grey-gallery"><i class=" fa fa-unlink" ></i> &nbsp;Un-Link</a>
+                                    </td>
+                                    <td class="text-nowrap text-center" data-ng-if="is_plan_exists">
+                                        <a href="#cancel_subscription" data-toggle="modal" data-ng-click="cancelSubscription(product.pid,product.vUserProductTitle)" class="btn color_theme btn-shadow"><i class="fa fa-times" aria-hidden="true"></i> &nbsp;Delete</a>
+                                    </td>
+                                    <td class="text-nowrap text-center" data-ng-if="!is_plan_exists" style="opacity: 0.5">
+                                        <a href="#disable_application" data-toggle="modal" class="btn color_theme btn-shadow"><i class="fa fa-times" aria-hidden="true"></i> &nbsp;Delete</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="linkproduct.html">
+        <div class="modal-content">
+            <div class="modal-header veazy_header ">
+                <p class="text-light marketplace_desc bg-white"><i class="fa fa-exclamation-circle color_theme bg-white"></i>Linking applications allows you to quickly switch between each.</p>
+                <i class="fa fa-times-circle pull-right fa-2x color_theme" style=" cursor: pointer;" data-ng-click="close_link()"></i>
+                <div class="row"><h4 class="col-xs-12 text-center bold">Which Application would you link to link to?</h4></div>
+                <div class=" text-center">
+                    <input type="text" class="form-control" name="product_filter" data-ng-model="product_filter" placeholder="Search">
+                </div>
+            </div>
+            <div class="modal-body">
+                <table class="table table-light table_product_list">
+                    <tbody>
+                    <tr data-ng-repeat="product in link_products |  filter:{ vUserProductTitle: product_filter }">
+                        <td><img src="{{product.vUserProductImage | replaceA }}" style="border-radius: 5px !important;" height="50" width="50"> &nbsp; {{product.vUserProductTitle}}</td>
+                        <td class="text-right" data-ng-if="confirm_product_id == product.iPkUserProductId">
+                            <a data-ng-click="confirm_link()" class="btn btn-md green-jungle btn-outline bold">Confirm</a>
+                        </td>
+                        <td class="text-right" data-ng-if="confirm_product_id != product.iPkUserProductId">
+                            <a data-ng-click="link_product(product.iPkUserProductId)" class="btn btn-sm btn-shadow btn bg-grey-gallery bg-font-grey-gallery"><i class="fa fa-link"></i> &nbsp;Link</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </script>
+    <!-- DELETE PRODUCT POPUP -->
+    <div id="disable_application" class="modal veazy_modal fade note_confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!--<p>Uh oh! In order to access this Application you must have a current active plan. Please click below choose the plan that is best for you!</p>-->
+                    <p>Woops! Looks like your access to Veazy has expired! Please click below to purchase a new plan :)</p>
+                </div>
+                <div class="modal-footer text-center">
+                    <button class="btn btn-outline purple" data-dismiss="modal" aria-hidden="true">No</button>
+                    <!--<button data-dismiss="modal" class="btn b bg-purple-theme font-white btn-md bold" data-ng-click="upgradePlan()">Resubscribe</button>-->
+                    <a href="https://veazy.salvomigration.com.au/" target="_blank" class="btn b bg-purple-theme font-white btn-md bold" >Resubscribe</a> 
+                    <!-- <a data-ui-sref="app.plan" class="btn b bg-purple-theme font-white btn-md bold"><b style="font-family: Nunito; ">Upgrade Plan</b></a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="unlinkproduct.html">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Are you sure you want to un-link with the following Application?</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-light table_product_list">
+                    <tbody>
+                    <tr>
+                        <td class="bold"><img src="{{linked_product_image | replaceA }}" width="50" height="50" style="border-radius: 5px !important;">
+                            &nbsp; {{linked_product_name}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer text-center">
+                <button data-ng-click="confirm_unlink()" class="btn b bg-purple-theme font-white btn-md bold">Yes</button>
+                <button data-ng-click="close_unlink()" class="btn btn-outline purple" aria-hidden="true">No</button>
+            </div>
+        </div>
+    </script>
+
+    <!-- DELETE PRODUCT POPUP -->
+    <div id="cancel_subscription" class="modal veazy_modal fade note_confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Are you sure you wish to DELETE "{{product_title}}"?</p>
+                </div>
+                <div class="modal-footer text-center">
+                    <button data-dismiss="modal" class="btn b bg-purple-theme font-white btn-md bold" data-ng-click="cancelSubscriptionConfirm()">Yes</button>
+                    <button class="btn btn-outline purple" data-dismiss="modal" aria-hidden="true">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- DELETE PRODUCT POPUP -->
+    <!--START ASSIGN DUEDATE POPUP -->
+    <script type="text/ng-template" id="assignDueDate.html">
+        <div class="modal-content">
+            <div class="modal-body">
+                <uib-datepicker data-ng-change="chooseDate()" data-ng-model="dateparam.duedate" datepicker-options="dateOptions"></uib-datepicker>
+            </div>
+            <div class="modal-footer">
+                <button data-ng-click="updateDueDate()" class="btn btn-outline green-jungle bold">Save</button>
+                <button data-ng-click="closeassignDueDate()" class="btn btn-outline purple bold" aria-hidden="true">Close</button>
+            </div>
+        </div>
+    </script>
+    <!--END ASSIGN DUEDATE POPUP -->
+</div>

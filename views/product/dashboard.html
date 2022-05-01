@@ -1,0 +1,834 @@
+
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="productHomeController">
+    <style>
+        .uib-datepicker-popup .uib-button-bar{
+            display: none !important;
+        }
+        body[ng-controller] .dashboard_soc {
+            z-index: 100100 !important;
+        }
+    </style>
+    <div data-ng-if="isproduct">
+        <div class="row dashboard_flex">
+            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+                <div class="row row_flex">
+                    <!-- START APPLICATION TYPE -->
+                    <div class="col-lg-4 col-xs-12 col-sm-12 col-md-12">
+                        <div class="portlet light  shadow app_portlet" style="height: 92%;">
+                            <div class="portlet-title">
+                                <div class="caption" style="width:100%;">
+                                    <span class="caption-subject">Application</span>
+                                    <span style="cursor: pointer" data-ng-click="updateInfo()" class="icon-note color_theme bold pull-right"></span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="media">
+                                    <div class="pull-left visa_user_img" style="border-radius: 25px;width: 100px !important;">
+                                        <label for="porduct_img" class="prod_img"><i class="icon-note color_theme bold"></i></label>
+                                        <input type="file" name="profile_picture" id="porduct_img" onchange="angular.element(this).scope().uploadFile(this.files)">
+                                        <img src="{{product.vUserProductImage | replaceA }}">
+                                    </div>
+                                    <div class="media-body"><h4 class="media-heading">{{product.product_name}}</h4></div>
+                                </div>
+                                <p class="text-light border-tag" dd-text-collapse dd-text-collapse-max-length="230" dd-text-collapse-text="{{ product.product_desc }}"></p>
+                                <div data-ng-if="product.linked_product != ''">
+                                    <p class="linked_product"><i class="fa fa-link" style="font-size: 21px;"></i> {{product.linked_product_name}} </p>
+                                    <p class="text-center">
+                                        <a data-ui-sref="product_app.home({vpid:product.linked_product})" class="btn bold btn-sm btn-shadow bg-purple-theme font-white"><i class="fa fa-share-square-o" aria-hidden="true"></i> &nbsp; <span> Open </span></a> &nbsp;
+                                        <a data-ng-click="unlink(product.linked_product)" class="btn font-grey-gallery bold btn-sm btn-shadow"><i class="fa fa-unlink"></i> &nbsp;Un-link</a>
+                                    </p>
+                                </div>
+                                <a data-ng-if="product.linked_product == ''" data-ng-click="link(product.iPkUserProductId)" class="btn btn-block btn-lg card_btn_lg btn bg-grey-gallery bg-font-grey-gallery btn-shadow bold"><i class="fa fa-link" style="font-size: 21px;"></i> &nbsp; Link</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END APPLICATION TYPE -->
+
+                    <!-- START FAMILY UNIT TREE -->
+                    <div class="col-lg-4 col-xs-12 col-sm-12 col-md-12">
+                        <div class="portlet light  shadow  app_tree_portlet" style="height:92%;">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <span class="caption-subject">Applicant Tree</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="row">
+                                    <!-- BUSINESS APPLICANT START -->
+                                    <span data-ng-if="eAllowBusinessDetails == 'yes'">
+                                        <div class="col-md-12">
+                                            <div data-ng-if="business_main_details != ''" class="app_tree_done">
+                                                <div class="complete_app_user">
+                                                    <span>Business Applicant</span>
+                                                    <label class="bold" style="cursor: pointer;min-height:75px;" data-ng-click="editBusinessApplicant()">{{business_main_details.vName}} {{business_main_details.vFamilyName}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div data-ng-if="business_main_details == ''" class="col-lg-10 col-lg-offset-1 col-md-12 text-center applcnt_btn" >
+                                            <a  class="btn btn-md green-jungle btn-outline bold" data-ng-click="addBusinessApplicant()">
+                                                <i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Add Business Applicant
+                                            </a>
+                                        </div>
+                                    </span>
+                                    <!-- BUSINESS APPLICANT END -->
+
+                                    <!-- BUSINESS SPONSE START -->
+                                    <hr class="col-md-12"  data-ng-if="eAllowSponser == 'yes'">
+                                    <span data-ng-if="eAllowSponser == 'yes'">
+                                        <div class="col-md-12">
+                                            <div data-ng-if="business_sponse_details != ''" class="app_tree_done">
+                                                <div class="complete_app_user">
+                                                    <span>Sponsored Worker</span>
+                                                    <label class="bold" style="cursor: pointer;min-height:75px;" data-ng-click="editBusinessSponse()">{{business_sponse_details.vName}} {{business_sponse_details.vFamilyName}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div data-ng-if="business_sponse_details == ''" class="col-lg-10 col-lg-offset-1 col-md-12 text-center applcnt_btn">
+                                            <a  class="btn  btn-md bold green-jungle btn-outline"  data-ng-click="addBusinessSponse()">
+                                                <i class="fa fa-plus-circle " aria-hidden="true"></i> &nbsp; Add Sponsored Worker
+                                            </a>
+                                        </div>
+                                    </span>
+                                    <!-- BUSINESS SPONSE END -->
+
+                                    <!-- MAIN APPLICANT START -->
+                                    <span data-ng-if="eAllowApplicantDetails == 'yes'">
+                                        <div class="col-md-12" >
+                                            <div data-ng-if="fut_main_details != ''" class="app_tree_done">
+                                                <div class="complete_app_user">
+                                                    <span>Main Applicant</span>
+                                                    <label class="bold" style="cursor: pointer;min-height:75px;" data-ng-click="editMainApplicant()">{{fut_main_details.vName}} {{fut_main_details.vFamilyName}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div data-ng-if="fut_main_details == ''" class="col-lg-10 col-lg-offset-1 col-md-12 text-center applcnt_btn">
+                                            <a  class="btn btn-md green-jungle btn-outline bold" data-ng-click="addMainApplicant()">
+                                                <i class="fa fa-plus-circle " aria-hidden="true"></i> &nbsp; Add Main Applicant
+                                            </a>
+                                        </div>
+                                    </span>
+                                    <!-- MAIN APPLICANT END -->
+
+                                    <!-- SPONSER START -->
+                                    <hr class="col-md-12"  data-ng-if="eAllowFUTsponser == 'yes'">
+                                    <span data-ng-if="eAllowFUTsponser == 'yes'">
+                                        <div class="col-md-12">
+                                            <div data-ng-if="fut_main_sponse_details != ''" class="app_tree_done">
+                                                <div class="complete_app_user">
+                                                    <span>Family Sponsor</span>
+                                                    <label class="bold" style="cursor: pointer;min-height:75px;" data-ng-click="editSponser()">{{fut_main_sponse_details.vName}} {{fut_main_sponse_details.vFamilyName}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div data-ng-if="fut_main_sponse_details == ''" class="col-lg-10 col-lg-offset-1 col-md-12 text-center applcnt_btn">
+                                            <a  class="btn btn-md bold green-jungle btn-outline" data-ng-click="addSponser()">
+                                                <i class="fa fa-plus-circle " aria-hidden="true"></i> &nbsp; Add Sponsor
+                                            </a>
+                                        </div>
+                                    </span>
+                                    <!-- SPONSER END -->
+
+                                    <!-- FAMILY MEMBER START -->
+                                    <hr class="col-md-12" data-ng-if="eAllowFUT == 'yes'">
+                                    <span data-ng-if="eAllowFUT == 'yes'">
+                                        <div class="col-md-12">
+                                            <div data-ng-if="fut_main_family_details != ''" class="app_tree_done">
+                                                <div class="complete_app_user">
+                                                    <span>Migrating Family</span>
+                                                    <label class="bold" data-ng-class="fut_main_family_details.length > 1?'margin_2':''" style="cursor: pointer;min-height:75px;" data-ng-repeat="family in fut_main_family_details | limitTo:1" data-ng-click="editFamily(family)">{{family.vName}} {{family.vFamilyName}}</label>
+                                                </div>
+                                                <div class="pull-right app_tree_setting">
+                                                    <a data-ng-click="addFamily()" class="btn btn-md bold green-jungle btn-outline"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-right applcnt_btn" data-ng-if="fut_main_family_details.length > 1">
+                                            <a data-ng-click="viewMembers()" class="font-purple"><b>View More  &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></b> </a>
+                                        </div>
+                                        <div data-ng-if="fut_main_family_details == ''" class="col-lg-10 col-lg-offset-1 col-md-12 text-center applcnt_btn" style="margin-bottom: 25px;">
+                                            <a class="btn btn-md bold green-jungle btn-outline" data-ng-click="addFamily()">
+                                                <i class="fa fa-plus-circle " aria-hidden="true"></i>&nbsp; Add Family Member
+                                            </a>
+                                        </div>
+                                    </span>
+                                    <!-- FAMILY MEMBER START -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END FAMILY UNIT TREE -->
+
+                    <!-- START LODGEMENT DETAILS -->
+                    <div class="col-lg-4 col-xs-12 col-sm-12 col-md-12">
+                        <div class="portlet light shadow" style="height: 92%;">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <span class="caption-subject">Lodgement Details</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body veazy_form">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-md-3 label_dashboard control-label font-purple bold  text-center">eIMMI Username</label>
+                                        <div class="col-md-9 input_div">
+                                            <input type="text" ng-model="paramprod.eIMMIUsername" data-ng-blur="saveProductInfo('username')"  class="form-control input-inline input-lg" placeholder="Enter text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-md-3 label_dashboard control-label font-purple bold  text-center">Password</label>
+                                        <div class="col-md-6 input_div">
+                                            <input type="text" ng-model="paramprod.eIMMIPassword" data-ng-blur="saveProductInfo('password')" class="form-control input-inline input-lg" placeholder="Enter text">
+                                        </div>
+                                        <div class="col-md-3 lodgement_pass_btn">
+                                            <a href="https://online.immi.gov.au/lusc/login" target="_blank" class="btn btn-sm bg-purple-theme font-white bold">
+                                                <i class="fa fa-share-square-o" aria-hidden="true"></i> &nbsp; Open
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <p class="input-group">
+                                            <input type="text" class="form-control input-lg"
+                                                   placeholder="Date of lodgement" readonly
+                                                   data-ng-change="saveProductInfo('lodgement_date')"
+                                                   uib-datepicker-popup="dd-MMMM-yyyy" ng-model="paramprod.lodgement_date"
+                                                   is-open="popup1.opened"
+                                                   datepicker-options="dateOptions" close-text="Close"
+                                                   alt-input-formats="altInputFormats"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default btn-lg" ng-click="open1()">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </button>
+                                        </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control input-lg" ng-model="paramprod.vTrnNumber"
+                                                   data-ng-blur="saveProductInfo('vTrnNumber')"
+                                                   placeholder="{{lang_trans.product_dashboard.trn_number}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control input-lg" ng-model="paramprod.vFileNumber"
+                                                   data-ng-blur="saveProductInfo('vFileNumber')"
+                                                   placeholder="{{lang_trans.product_dashboard.file_number}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control input-lg" ng-model="paramprod.vLodgmentStatus" data-ng-change="saveProductInfo('vLodgmentStatus')">
+                                        <option value="Preparing">Preparing</option>
+                                        <option value="Submitted">Submitted</option>
+                                        <option value="Request Pending">Request Pending</option>
+                                        <option value="Approved">Approved</option>
+                                        <option value="Refused">Refused</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END LODGEMENT DETAILS -->
+                </div>
+            </div>
+            <!-- START KEY SUBJECT ELEMENT -->
+            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 row_flex"  data-ng-if="product.eAllowSummary == 'yes' || product.eAllowLession == 'yes' || product.eAllowDocumentChecklist == 'yes' || product.eAllowToDo == 'yes'">
+                <div class="portlet light shadow" style="width: 100%;">
+                    <div class="portlet-title">
+                        <div class="caption text-center full_width">
+                            <span class="caption-subject text-center">Key Progress Summary</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <div class="row">
+                                <ul class="progress_step_ul">
+                                    <li>
+                                        <h4 class="progress_title text-center">STEP 1 - LEARN</h4>
+                                        <div class="veazy_progress pull-left ng-scope cus_cls1" data-ng-if="product.eAllowLession == 'no'">
+                                            <p class="progress_bar_text bold text-center"></p>
+                                            <p> </p>
+                                            <p class="caption-subject bold text-center">No Lessons Included</p>
+                                            
+                                        </div>
+                                        <div class="veazy_progress pull-left" data-ng-if="product.eAllowLession == 'yes'">
+                                            <p class="progress_bar_text bold text-center">Lessons</p>
+                                            <h2 class="bold text-center">{{lessons_completed}} of {{total_lessons}}</h2>
+                                            <div class="progress veazy_progress_bar">
+                                                <div class="progress-bar progress-bar-danger " role="progressbar"
+                                                     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                                     style="width: {{lessons_completed_per}}%">
+                                                    <span class="sr-only"> {{lessons_completed_per}}% Complete </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="veazy_progress pull-right ng-scope cus_cls1" data-ng-if="product.eAllowSummary == 'no'">
+                                            <p class="progress_bar_text bold text-center"></p>
+                                            <p> </p>
+                                            <p class="caption-subject bold text-center">No SOC Included</p>
+                                            
+                                        </div>
+                                        <div class="veazy_progress pull-right" data-ng-if="product.eAllowSummary == 'yes'">
+                                            <p class="progress_bar_text text-center bold"> Summary of Criteria </p>
+                                            <h2 class="bold text-center">{{summary_completed}} of {{total_summary}}</h2>
+                                            <div class="progress veazy_progress_bar">
+                                                <div class="progress-bar progress-bar-danger " role="progressbar"
+                                                     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                                     style="width: {{summary_completed_per}}%">
+                                                    <span class="sr-only"> {{summary_completed_per}}% Complete </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li data-ng-if="product.eAllowDocumentChecklist == 'no'">
+                                        <h4 class="progress_title text-center">STEP 2 - PREPARE</h4>                                        
+                                        <div class="veazy_progress pull-left ng-scope cus_cls1" data-ng-if="product.eAllowDocumentChecklist == 'no'">
+                                            <p class="progress_bar_text bold text-center"></p>
+                                            <p> </p>
+                                            <p class="caption-subject bold text-center">No Document Included</p>
+                                            
+                                        </div>
+                                    </li>
+                                    
+                                    <li data-ng-if="product.eAllowDocumentChecklist == 'yes'">
+                                        <h4 class="progress_title text-center">STEP 2 - PREPARE</h4>                                        
+                                        <div class="veazy_progress">
+                                            <p class="progress_bar_text bold text-center"> Core Document</p>
+                                            <h2 class="bold text-center">{{doc_completed}} of {{total_doc}}</h2>
+                                            <div class="progress veazy_progress_bar">
+                                                <div class="progress-bar progress-bar-danger " role="progressbar"
+                                                     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                                     style="width:{{doc_completed_per}}%">
+                                                    <span class="sr-only">{{doc_completed_per}}% Complete </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li data-ng-if="product.eAllowToDo == 'no'">
+                                        <h4 class="progress_title text-center">STEP 3 - SUBMIT</h4>                                        
+                                        <div class="veazy_progress pull-left ng-scope cus_cls1" data-ng-if="product.eAllowToDo == 'no'">
+                                            <p class="progress_bar_text bold text-center"></p>
+                                            <p> </p>
+                                            <p class="caption-subject bold text-center">No TODO Included</p>
+                                            
+                                        </div>
+                                    </li>
+                                    <li data-ng-if="product.eAllowToDo == 'yes'">
+                                        <h4 class="progress_title text-center">STEP 3 - SUBMIT</h4>                                        
+                                        <div class="veazy_progress">
+                                            <p class="progress_bar_text text-center bold">Final To Do</p>
+                                            <h2 class="bold text-center">{{todo_completed}} of {{total_todo}}</h2>
+                                            <div class="progress veazy_progress_bar">
+                                                <div class="progress-bar progress-bar-danger " role="progressbar"
+                                                     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                                     style="width: {{todo_completed_per}}%">
+                                                    <span class="sr-only"> {{todo_completed_per}}% Complete </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="veazy_progress_map">
+                                        <p>{{completed_percentage}}%</p>
+                                        <img src="assets/global/img/aus_map_theme.png" class="img-responsive"/>
+                                    </li>
+                                </ul>
+
+                                <div class="col-xs-12">
+                                    <div class="veazy_map_progress_bar">
+                                        <div class="total_veazy_bar">
+                                            <div class="progress veazy_progress_bar">
+                                                <div class="progress-bar progress-bar-danger " role="progressbar"
+                                                     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                                     style="width: {{completed_percentage}}%">
+                                                    <span class="sr-only"> {{completed_percentage}}% Complete </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END KEY SUBJECT ELEMENT -->
+        </div>
+
+        <!--START UPDATE PRODUCT INFORMATION POPUP -->
+        <script type="text/ng-template" id="updateInfo.html">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form name="myForm">
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <input type="text" ng-maxlength="50" class="form-control input_theme input-lg"
+                                   name="product_name" data-ng-model="paramprod.product_name"/>
+                        </div>
+                        <h5 ng-if="!myForm.product_name.$valid"><i style="color: red">Allow only 50 Characters</i></h5>
+                        <div class="col-lg-12">
+                            <div text-angular ta-max-text="140" data-ng-model="paramprod.product_desc"
+                                 name="product_desc" required class="btn-groups"></div>
+                        </div>
+                        <h5 ng-if="!myForm.product_desc.$valid"><i style="color: red">Allow only 140 Characters</i></h5>
+                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center">
+                    <button class="btn bg-purple-theme font-white bold"
+                            data-ng-disabled="!paramprod.product_name || !paramprod.product_desc"
+                            data-ng-click="saveProductInfo('info')">Save</button>
+                </div>
+            </div>
+        </script>
+        <!--END UPDATE PRODUCT INFORMATION POPUP -->
+
+        <!--START LINK APPLICATION POPUP -->
+        <script type="text/ng-template" id="linkproduct.html">
+            <div class="modal-content">
+                <div class="modal-header veazy_header ">
+                    <p class="text-light marketplace_desc bg-white"><i class="fa fa-exclamation-circle color_theme bg-white"></i>Linking applications allows you to quickly switch between each.</p>
+                    <i class="fa fa-times-circle pull-right fa-2x color_theme" style=" cursor: pointer;" data-ng-click="close_link()"></i>
+                    <div class="row"><h4 class="col-xs-12 text-center bold">Which Application would you link to link to?</h4></div>
+                    <div class=" text-center">
+                        <input type="text" class="form-control" name="product_filter" data-ng-model="product_filter" placeholder="Search">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-light table_product_list">
+                        <tbody>
+                        <tr data-ng-repeat="product in link_products |  filter:{ vUserProductTitle: product_filter }">
+                            <td><img src="{{product.vUserProductImage | replaceA }}" style="border-radius: 5px !important;" height="50" width="50"> &nbsp; {{product.vUserProductTitle}}</td>
+                            <td class="text-right" data-ng-if="confirm_product_id == product.iPkUserProductId">
+                                <a data-ng-click="confirm_link()" class="btn btn-md green-jungle btn-outline bold">Confirm</a>
+                            </td>
+                            <td class="text-right" data-ng-if="confirm_product_id != product.iPkUserProductId">
+                                <a data-ng-click="link_product(product.iPkUserProductId)" class="btn btn-sm btn-shadow btn bg-grey-gallery bg-font-grey-gallery"><i class="fa fa-link"></i> &nbsp;Link</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </script>
+        <!--END LINK APPLICATION POPUP -->
+
+        <!--START UNLINK APPLICATION POPUP -->
+        <script type="text/ng-template" id="unlinkproduct.html">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Are you sure you want to un-link with the following Application?</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-light table_product_list">
+                        <tbody>
+                        <tr>
+                            <td class="bold"><img src="{{linked_product_image | replaceA }}" width="50" height="50" style="border-radius: 5px !important;">
+                                &nbsp; {{linked_product_name}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer text-center">
+                    <button data-ng-click="confirm_unlink()" class="btn b bg-purple-theme font-white btn-md bold">Yes</button>
+                    <button data-ng-click="close_unlink()" class="btn btn-outline purple" aria-hidden="true">No</button>
+                </div>
+            </div>
+        </script>
+        <!--END UNLINK APPLICATION POPUP -->
+
+        <!--START ADD MAIN APPLICANT -->
+        <script type="text/ng-template" id="add_main_app.html">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a type="button" class="close" aria-hidden="true" data-ng-click="closeMainApplicant()"> <i class="fa fa-close font-purple "></i></a>
+                    <h4 class="text-center">Main Applicant</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-comments add_main_app_profile">
+                        <span class="profile_caption">Profile Photo</span>
+                        <div class="mt-comment ">
+                            <div class="mt-comment-img" ng-style="fut_main_reviewImage != '' && {'border':'none'}">
+                                <label for="add_main_app_pic"><i class="icon-note color_theme bold"></i></label>
+                                <input type="file" name="" id="add_main_app_pic"
+                                       onchange="angular.element(this).scope().uploadProfilePicture(this.files,'fut_main')"
+                                       accept="image/*">
+                                <img src="images/fut_default.png" data-ng-if="fut_main_reviewImage == ''" class="img-responsive" style="border-radius: 10px!important;">
+                                <img ng-src="{{fut_main_reviewImage}}" data-ng-if="fut_main_reviewImage != ''" height="85px" width="85px" class="" style="border-radius: 10px!important;">
+                            </div>
+                            <div class="mt-comment-body">
+                                <div class="form-group">
+                                    <input type="text" name="name" limit-to="100" data-ng-model="fut_main.name" class="form-control" placeholder="Enter given name...">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="family_name" limit-to="100" data-ng-model="fut_main.family_name" class="form-control" placeholder="Enter family names...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-2x font-purple fa-fw"></i></span>
+                            <input type="text" name="email" limit-to="100" data-ng-model="fut_main.email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone fa-2x font-purple fa-fw"></i></span>
+                            <input type="text" name="phone" limit-to="100" data-ng-model="fut_main.phone" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class=" icon-home fa-2x font-purple fa-fw"></i></span>
+                            <textarea class="form-control" limit-to="100" name="address" data-ng-model="fut_main.address" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <button data-ng-click="saveMainApplicant()" class="btn btn-outline green-jungle btn-md bold">Save</button>
+                </div>
+            </div>
+        </script>
+        <!--END ADD MAIN APPLICANT -->
+
+        <!--START ADD SPONSER -->
+        <script type="text/ng-template" id="add_sponser.html">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a type="button" class="close" aria-hidden="true" data-ng-click="closeSponser()"> <i class="fa fa-close font-purple "></i></a>
+                    <h4 class="text-center">Family Sponsor</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-comments add_main_app_profile">
+                        <span class="profile_caption">Profile Photo</span>
+                        <div class="mt-comment ">
+                            <div class="mt-comment-img" ng-style="fut_main_sponse_reviewImage != '' && {'border':'none'}">
+                                <label for="add_main_app_pic"><i class="icon-note color_theme bold"></i></label>
+                                <input type="file" name="" id="add_main_app_pic"
+                                       onchange="angular.element(this).scope().uploadProfilePicture(this.files,'fut_main_sponse')"
+                                       accept="image/*">
+                                <img src="images/fut_default.png" data-ng-if="fut_main_sponse_reviewImage == ''" class="img-responsive" style="border-radius: 10px!important;">
+                                <img ng-src="{{fut_main_sponse_reviewImage}}" data-ng-if="fut_main_sponse_reviewImage != ''" height="85px" width="85px" class="" style="border-radius: 10px!important;">
+                            </div>
+                            <div class="mt-comment-body">
+                                <div class="form-group">
+                                    <input type="text" name="name" limit-to="100" data-ng-model="fut_main_sponse.name" class="form-control" placeholder="Enter given name...">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="family_name" limit-to="100" data-ng-model="fut_main_sponse.family_name" class="form-control" placeholder="Enter family names...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5>Relation to Main Applicant *</h5>
+                    <p>* To ensure that the system generates the appropriate Document Checklist, you must select the
+                        relation to the Main Applicant.</p>
+                    <div class="form-group">
+                        <div class="select_main_app">
+                            <div class="select_input"><div class="select_text">{{selected_tag_name}}</div><span class="select_icon" data-ng-click="changeTag('sponsor')"><i class="fa fa-pencil"></i></span></div>
+                            <div class="select_dropdown slimScrollDiv" data-ng-if="display_tags">
+                                <table class="table">
+                                    <tbody>
+                                    <tr data-ng-if="tags.iPKTagId != selected_tag_ID" data-ng-repeat="tags in taglists">
+                                        <td>{{tags.vTagName}}</td>
+                                        <td class="text-right" data-ng-if="confirm_tag_ID == tags.iPKTagId">
+                                            <a data-ng-click="confirm_tag(tags.vTagName)" class="btn btn-md green-jungle btn-outline bold">Confirm</a>
+                                        </td>
+                                        <td class="text-right" data-ng-if="confirm_tag_ID != tags.iPKTagId">
+                                            <a data-ng-click="link_tag(tags.iPKTagId)" class="btn bold bg-purple-theme font-white">Select</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-2x font-purple fa-fw"></i></span>
+                            <input type="text" name="email" limit-to="100" data-ng-model="fut_main_sponse.email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone fa-2x font-purple fa-fw"></i></span>
+                            <input type="text" name="phone" limit-to="100" data-ng-model="fut_main_sponse.phone" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class=" icon-home fa-2x font-purple fa-fw"></i></span>
+                            <textarea class="form-control" limit-to="100" name="address" data-ng-model="fut_main_sponse.address" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <button data-ng-click="saveSponser()" class="btn btn-outline green-jungle btn-md bold">Save</button>
+                </div>
+            </div>
+        </script>
+        <!--END ADD SPONSER -->
+
+        <!--START ADD FAMILY MEMBER -->
+        <script type="text/ng-template" id="add_family.html">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a type="button" class="close" aria-hidden="true" data-ng-click="closeFamily()"> <i class="fa fa-close font-purple "></i></a>
+                    <h4 class="text-center">Migrating Family Member</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-comments add_main_app_profile">
+                        <span class="profile_caption">Profile Photo</span>
+                        <div class="mt-comment ">
+                            <div class="mt-comment-img" ng-style="fut_main_family_reviewImage != '' && {'border':'none'}">
+                                <label for="add_main_app_pic"><i class="icon-note color_theme bold"></i></label>
+                                <input type="file" name="" id="add_main_app_pic"
+                                       onchange="angular.element(this).scope().uploadProfilePicture(this.files,'fut_main_family')"
+                                       accept="image/*">
+                                <img src="images/fut_default.png" data-ng-if="fut_main_family_reviewImage == ''" class="img-responsive" style="border-radius: 10px!important;">
+                                <img ng-src="{{fut_main_family_reviewImage}}" data-ng-if="fut_main_family_reviewImage != ''" height="85px" width="85px" class="" style="border-radius: 10px!important;">
+                            </div>
+                            <div class="mt-comment-body">
+                                <div class="form-group">
+                                    <input type="text" name="name" limit-to="100" data-ng-model="fut_main_family.name" class="form-control" placeholder="Enter given name...">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="family_name" limit-to="100" data-ng-model="fut_main_family.family_name" class="form-control" placeholder="Enter family names...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5>Relation to Main Applicant *</h5>
+                    <p>* To ensure that the system generates the appropriate Document Checklist, you must select the
+                        relation to the Main Applicant.</p>
+                    <div class="form-group">
+                        <div class="select_main_app">
+                            <div class="select_input"><div class="select_text">{{selected_tag_name}}</div><span class="select_icon" data-ng-click="changeTag('family')"><i class="fa fa-pencil"></i></span></div>
+                            <div class="select_dropdown" data-ng-if="display_tags">
+                                <table class="table">
+                                    <tbody>
+                                    <tr data-ng-if="tags.iPKTagId != selected_tag_ID" data-ng-repeat="tags in taglists">
+                                        <td>{{tags.vTagName}}</td>
+                                        <td class="text-right" data-ng-if="confirm_tag_ID == tags.iPKTagId">
+                                            <a data-ng-click="confirm_tag(tags.vTagName)" class="btn btn-md green-jungle btn-outline bold">Confirm</a>
+                                        </td>
+                                        <td class="text-right" data-ng-if="confirm_tag_ID != tags.iPKTagId">
+                                            <a data-ng-click="link_tag(tags.iPKTagId)" class="btn bold bg-purple-theme font-white">Select</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-2x font-purple fa-fw"></i></span>
+                            <input type="text" name="email" limit-to="100" data-ng-model="fut_main_family.email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone fa-2x font-purple fa-fw"></i></span>
+                            <input type="text" name="phone" limit-to="100" data-ng-model="fut_main_family.phone" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class=" icon-home fa-2x font-purple fa-fw"></i></span>
+                            <textarea class="form-control" limit-to="100" name="address" data-ng-model="fut_main_family.address" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <button data-ng-click="saveFamily()" class="btn btn-outline green-jungle btn-md bold">Save</button>
+                </div>
+            </div>
+        </script>
+        <!--END ADD FAMILY MEMBER -->
+
+        <!--START VIEW FAMILY MEMBER -->
+        <script type="text/ng-template" id="view_family.html">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="text-center">Migrating Family Member</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-light table_product_list">
+                        <tbody>
+                        <tr data-ng-repeat="family in fut_main_family_details">
+                            <td data-ng-if="family.vProfilePicture == ''"><img src="images/fut_default.png" style="border-radius: 5px !important;" height="50" width="50"> &nbsp; {{family.vName}} {{family.vFamilyName}}</td>
+                            <td data-ng-if="family.vProfilePicture != ''"><img src="{{family.profilepic | replaceA }}" style="border-radius: 5px !important;" height="50" width="50"> &nbsp; {{family.vName}} {{family.vFamilyName}}</td>
+                            <td class="text-right">
+                                <a data-ng-click="editFamily(family)" class="btn btn-sm btn-shadow btn bg-grey-gallery bg-font-grey-gallery"><i class="icon-note"></i> &nbsp;Edit</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </script>
+        <!--START VIEW FAMILY MEMBER -->
+
+        <!--START ADD BUSINESS APPLICANT -->
+        <script type="text/ng-template" id="add_business_app.html">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a type="button" class="close" aria-hidden="true" data-ng-click="closeBusinessApplicant()"> <i class="fa fa-close font-purple "></i></a>
+                    <h4 class="text-center">Business Applicant</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-comments add_main_app_profile">
+                        <span class="profile_caption">Profile Photo</span>
+                        <div class="mt-comment ">
+                            <div class="mt-comment-img" ng-style="business_main_reviewImage != '' && {'border':'none'}">
+                                <label for="add_main_app_pic"><i class="icon-note color_theme bold"></i></label>
+                                <input type="file" name="" id="add_main_app_pic"
+                                       onchange="angular.element(this).scope().uploadProfilePicture(this.files,'business_main')"
+                                       accept="image/*">
+                                <img src="images/fut_business.png" data-ng-if="business_main_reviewImage == ''" class="img-responsive" style="border-radius: 10px!important;">
+                                <img ng-src="{{business_main_reviewImage}}" data-ng-if="business_main_reviewImage != ''" height="85px" width="85px" class="" style="border-radius: 10px!important;">
+                            </div>
+                            <div class="mt-comment-body">
+                                <div class="form-group">
+                                    <input type="text" name="name" limit-to="100" data-ng-model="business_main.name" class="form-control" placeholder="Enter Business Name...">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="family_name" limit-to="100" data-ng-model="business_main.family_name" class="form-control" placeholder="Enter Contact Person Name...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-2x font-purple fa-fw"></i></span>
+                            <input type="text" name="email" limit-to="100" data-ng-model="business_main.email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone fa-2x font-purple fa-fw"></i></span>
+                            <input type="text" name="phone" limit-to="100" data-ng-model="business_main.phone" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class=" icon-home fa-2x font-purple fa-fw"></i></span>
+                            <textarea class="form-control" limit-to="100" name="address" data-ng-model="business_main.address" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <button data-ng-click="saveBusinessApplicant()" class="btn btn-outline green-jungle btn-md bold">Save</button>
+                </div>
+            </div>
+        </script>
+        <!--END ADD BUSINESS APPLICANT -->
+
+        <!--START ADD BUSINECancelSS SPONSE -->
+        <script type="text/nCancelg-template" id="add_business_sponse.html">
+            <div class="modaCancell-content">
+                <div class="Cancelmodal-header">
+                    <a type="button" class="close" aria-hidden="true" data-ng-click="closeBusinessSponse()"> <i class="fa fa-close font-purple "></i></a>
+                    <h4 class="text-center">Sponsored Worker</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-comments add_main_app_profile">
+                        <span class="profile_caption">Profile Photo</span>
+                        <div class="mt-comment ">
+                            <div class="mt-comment-img" ng-style="business_sponse_reviewImage != '' && {'border':'none'}">
+                                <label for="add_main_app_pic"><i class="icon-note color_theme bold"></i></label>
+                                <input type="file" name="" id="add_main_app_pic"
+                                       onchange="angular.element(this).scope().uploadProfilePicture(this.files,'business_sponse')"
+                                       accept="image/*">
+                                <img src="images/fut_default.png" data-ng-if="business_sponse_reviewImage == ''" class="img-responsive" style="border-radius: 10px!important;">
+                                <img ng-src="{{business_sponse_reviewImage}}" data-ng-if="business_sponse_reviewImage != ''" height="85px" width="85px" class="" style="border-radius: 10px!important;">
+                            </div>
+                            <div class="mt-comment-body">
+                                <div class="form-group">
+                                    <input type="text" name="name" limit-to="100" data-ng-model="business_sponse.name" class="form-control" placeholder="Enter given name...">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="family_name" limit-to="100" data-ng-model="business_sponse.family_name" class="form-control" placeholder="Enter family names...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5>Type of Employee *</h5>
+                    <p>* To ensure that the system generates the appropriate Document Checklist, you must select the Type of Employee classification.</p>
+                    <div class="select_main_app">
+                        <div class="select_input"><div class="select_text">{{selected_tag_name}}</div><span class="select_icon" data-ng-click="changeTag('worker')"><i class="fa fa-pencil"></i></span></div>
+                        <div class="select_dropdown" data-ng-if="display_tags">
+                            <table class="table">
+                                <tbody>
+                                <tr data-ng-if="tags.iPKTagId != selected_tag_ID" data-ng-repeat="tags in taglists">
+                                    <td>{{tags.vTagName}}</td>
+                                    <td class="text-right" data-ng-if="confirm_tag_ID == tags.iPKTagId">
+                                        <a data-ng-click="confirm_tag(tags.vTagName)" class="btn btn-md green-jungle btn-outline bold">Confirm</a>
+                                    </td>
+                                    <td class="text-right" data-ng-if="confirm_tag_ID != tags.iPKTagId">
+                                        <a data-ng-click="link_tag(tags.iPKTagId)" class="btn bold bg-purple-theme font-white">Select</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-2x font-purple fa-fw"></i></span>
+                            <input type="text" name="email" limit-to="100" data-ng-model="business_sponse.email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone fa-2x font-purple fa-fw"></i></span>
+                            <input type="text" name="phone" limit-to="100" data-ng-model="business_sponse.phone" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class=" icon-home fa-2x font-purple fa-fw"></i></span>
+                            <textarea class="form-control" limit-to="100" name="address" data-ng-model="business_sponse.address" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <button data-ng-click="saveBusinessSponse()" class="btn btn-outline green-jungle btn-md bold">Save</button>
+                </div>
+            </div>
+        </script>
+        <!--END ADD BUSINESS SPONSE -->
+
+        <!--WARNING POPUP -->
+        <script type="text/ng-template" id="warning.html">
+            <div class="modal-content">
+                <div class="modal-header veazy_header text-center">
+                    <j class="fa fa-warning color_theme fa-5x"></j>
+                    <h4 class="modal-title">Important</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="text-left">Please note ! By changing your selection, the Document Checklist for this person will reset. This means that any progress you have saved in the Document Checklist will  be un-done.</p>
+                    <p>Are you sure you want to change your selection?</p>
+                    <button data-dismiss="modal" class="btn b bg-purple-theme font-white btn-md bold" data-ng-click="tagYes()">Yes</button>
+                    <button class="btn btn-outline purple" data-dismiss="modal" aria-hidden="true" data-ng-click="tagNo()">No</button>
+                </div>
+            </div>
+        </script>
+        <!--END WARNING POPUP -->
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+
+
+

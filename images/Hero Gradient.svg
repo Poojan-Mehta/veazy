@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1689.137 1721.882">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #707070;
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2 {
+        stroke: none;
+      }
+
+      .cls-3 {
+        fill: none;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.052" y1="0.972" x2="0.318" y2="0.565" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#2256cc"/>
+      <stop offset="0.517" stop-color="#554cda"/>
+      <stop offset="0.527" stop-color="#4b4ed7"/>
+      <stop offset="1" stop-color="#6f46e1"/>
+    </linearGradient>
+  </defs>
+  <g id="Hero_Gradient" data-name="Hero Gradient" class="cls-1" transform="matrix(0.951, 0.309, -0.309, 0.951, 426.134, 0)">
+    <rect class="cls-2" width="1328" height="1379" rx="150"/>
+    <rect class="cls-3" x="0.5" y="0.5" width="1327" height="1378" rx="149.5"/>
+  </g>
+</svg>

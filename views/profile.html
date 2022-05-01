@@ -1,0 +1,165 @@
+<!-- BEGIN PAGE CONTENT-->
+<div data-ng-controller="UserProfileController">
+    <style>
+        .form-group{  margin-bottom:3px !important;  }
+        .profile-userpic img{  width:120px !important;height:120px !important;display: block;  }
+    </style>
+    <div class="master_dashbaord">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- BEGIN TAB PORTLET-->
+                <div class="portlet light bordered bg-white shadow">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <!--<span class="caption-subject">{{ lang_trans.profile.header }}</span>-->
+                            <span class="caption-subject">My Profile</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="tabbable tabbable-tabdrop">
+                            <ul class="nav nav-tabs veazy_tabs">
+                                <li class="active">
+                                    <a data-target="#tab_1_1" data-toggle="tab" aria-expanded="true">{{ lang_trans.profile.personal_info }}</a>
+                                </li>
+                                <li>
+                                    <a data-target="#tab_1_2" data-toggle="tab" aria-expanded="true">{{ lang_trans.profile.change_avatar }}</a>
+                                </li>
+                                <li>
+                                    <a data-target="#tab_1_3" data-toggle="tab" aria-expanded="true">{{ lang_trans.profile.change_password }}</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <!-- PERSONAL INFO TAB -->
+                                <div class="tab-pane active" id="tab_1_1">
+                                    <form role="form" name="profileform" novalidate>
+                                        <div class="row">
+                                            <p class="col-md-12">&nbsp;</p>
+                                            <div class="col-md-3">
+                                                <div class="form-group form-md-line-input form-md-floating-label">
+                                                    <input type="text" class="form-control input-lg edited" id="firstname" name="firstname" data-ng-model="firstname" required>
+                                                    <label for="firstname">{{ lang_trans.profile.personal_info_first_name }}</label>
+                                                </div>
+                                                <span data-ng-show="submittedprofile && profileform.firstname.$invalid">
+                                                    <span class="text-danger" data-ng-show="profileform.firstname.$error.required">{{ lang_trans.profile.personal_info_first_name_required }}</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group form-md-line-input form-md-floating-label">
+                                                    <input type="text" class="form-control input-lg edited" id="lastname"  name="lastname" data-ng-model="lastname" required>
+                                                    <label for="lastname">{{ lang_trans.profile.personal_info_last_name }}</label>
+                                                </div>
+                                                <span  data-ng-show="submittedprofile && profileform.lastname.$invalid">
+                                                    <span class="text-danger" data-ng-show="profileform.lastname.$error.required">{{ lang_trans.profile.personal_info_last_name_required }}</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group form-md-line-input form-md-floating-label">
+                                                    <input type="text" class="form-control input-lg edited" id="email" name="email" data-ng-model="email" required data-ng-pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/" readonly>
+                                                    <label for="email">{{ lang_trans.profile.personal_info_email }}</label>
+                                                </div>
+                                                <span data-ng-show="submittedprofile && profileform.email.$invalid" >
+                                                    <span class="text-danger" data-ng-show="profileform.email.$error.required">{{ lang_trans.profile.personal_info_email_required }}</span>
+                                                    <span class="text-danger" data-ng-show="profileform.email.$error.pattern">{{ lang_trans.profile.personal_info_email_invalid }}</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="button" class="btn green-jungle pull-right btn-circle btn-lg" data-ng-disabled="disabledprofile" data-ng-click="submitprofile(profileform.$valid)"> {{ lang_trans.profile.personal_info_save_btn}}</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- END PERSONAL INFO TAB -->
+
+                                <!-- CHANGE AVATAR TAB -->
+                                <div class="tab-pane" id="tab_1_2">
+                                    <div class="row">
+                                        <p class="col-md-12">&nbsp;</p>
+                                        <div class="col-md-3">
+                                            <!-- PORTLET MAIN -->
+                                            <div class="portlet profile_portlet">
+                                                <form name="changeavatarform" role="form">
+                                                    <div class="form-group text-center">
+                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                            <div class="fileinput-new profile-userpic" >
+                                                                <img alt="" class="img-responsive" src="{{settings.avatarPath}}/{{vProfileImage}}" />
+                                                            </div>
+                                                            <div class="fileinput-preview fileinput-exists profile-userpic "> </div>
+                                                            <div class="profile-userbuttons">
+                                                                <span class="btn purple btn-circle btn-file btn-sm">
+                                                                    <span class="fileinput-new"> {{ lang_trans.profile.change_avatar_select_image }} </span>
+                                                                    <span class="fileinput-exists"> {{ lang_trans.profile.change_avatar_change_image }} </span>
+                                                                    <input type="file" name="profile_picture" data-ng-files="getTheFiles($files)" onchange="angular.element(this).scope().uploadFile(this.files,'ProfilePic')">
+                                                                </span>
+                                                                <a href="#" class="btn btn-danger btn-circle btn-file btn-sm fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                <a class="btn btn-circle green-jungle btn-sm" data-ng-disabled="disabledavatar" data-ng-click="changeAvatar()"> {{ lang_trans.profile.change_avatar_submit }} </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix margin-top-20">
+                                                        <span class="label label-danger ng-binding">{{ lang_trans.profile.change_avatar_note }}</span>
+                                                        <span class="ng-binding" style="font-size: 12px;">{{ lang_trans.profile.change_avatar_note_message }}</span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- END PORTLET MAIN -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END CHANGE AVATAR TAB -->
+
+                                <!-- CHANGE PASSWORD TAB -->
+                                <div class="tab-pane" id="tab_1_3">
+                                    <form name="changePassword" novalidate>
+                                        <div class="row">
+                                            <p class="col-md-12">&nbsp;</p>
+                                            <div class="col-md-3">
+                                                <div class="form-group form-md-line-input form-md-floating-label">
+                                                    <input type="Password" class="form-control input-lg" id="currentpassword" data-ng-model="currentpassword" name="currentpassword" required>
+                                                    <label for="currentpassword">{{ lang_trans.profile.change_password_current_password }}</label>
+                                                </div>
+                                                <span class="text-danger" data-ng-show="submittedpass && changePassword.currentpassword.$invalid">
+                                                    <span class="text-danger" data-ng-show="changePassword.currentpassword.$error.required">
+                                                        {{ lang_trans.profile.change_password_password_required }}
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group form-md-line-input form-md-floating-label">
+                                                    <input type="Password" autocomplete="off" class="form-control input-lg" id="password"
+                                                           name="password" data-ng-model="password" data-ng-model-options="{allowInvalid: true}" data-pattern-validator="((?=.*\d)(?=.*\W).{6,6})" required>
+                                                    <label for="password">{{ lang_trans.profile.change_password_new_password }}</label>
+                                                </div>
+                                                <span class="text-danger" data-ng-show="password && changePassword.password.$error.passwordPattern">Password must be minimum length of 6 with special character,digit!</span>
+                                                <span class="text-danger" data-ng-show="submittedpass && changePassword.password.$invalid">
+                                                    <span class="text-danger" data-ng-show="changePassword.password.$error.required">
+                                                        {{ lang_trans.profile.change_password_password_required }}
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group form-md-line-input form-md-floating-label">
+                                                    <input type="Password" class="form-control input-lg" id="rpassword" autocomplete="off"
+                                                           name="rpassword" data-ng-model="rpassword" data-valid-password-c="password" required>
+                                                    <label for="rpassword">{{ lang_trans.profile.change_password_re_type_password }}</label>
+                                                </div>
+                                                <span class="text-danger" data-ng-show="submittedpass && password && changePassword.rpassword.$invalid">
+                                                    <span class="text-danger" data-ng-show="changePassword.rpassword.$error.noMatch">{{ lang_trans.profile.change_password_passwords_do_not_match }}</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="button" class="btn green-jungle pull-right btn-circle btn-lg" data-ng-disabled="disabledpass" data-ng-click="changePass(changePassword.$valid)">{{ lang_trans.profile.change_password }} </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- END CHANGE PASSWORD TAB -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->

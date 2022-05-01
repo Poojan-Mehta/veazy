@@ -1,0 +1,82 @@
+<div data-ng-controller="ApplicationController">
+    <!-- BEGIN PAGE BASE CONTENT -->
+    <div class="master_dashbaord">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- BEGIN TAB PORTLET-->
+                <div class="portlet light category_protlet">
+                    <div class="portlet-title bg_trans border-none">
+                        <div class="caption">
+                            <span class="caption-subject">Marketplace</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <p class="text-light marketplace_desc bg-white"><i class="fa fa-exclamation-circle color_theme bg-white"></i>
+                            Select below for the application that you would like to use Veazy to help you prepare. Access video lessons, document checklists, legal criteria explanations, and guidance specific to each application type, prepare by a team of experienced immigration lawyers and agents.
+                        </p>
+                        <div class="tabbable tabbable-tabdrop">
+                            <ul class="nav nav-tabs veazy_tabs">
+                                <li data-ng-class="$index == 0?'active':''" data-ng-repeat="(marketplace, categories) in products"><a data-target="#tab{{$index}}" data-toggle="tab" aria-expanded="true">{{marketplace}}</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane" data-ng-class="$index == 0?'active':''" id="tab{{$index}}" data-ng-repeat="(marketplace, categories) in products">
+                                    <div class="portlet light portlet-fit bordered" data-ng-repeat="(cat, packages) in categories">
+                                        <div class="portlet-title">
+                                            <div class="caption">
+                                                <i class="icon-microphone font-dark hide"></i>
+                                                <span class="caption-subject">{{cat}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="portlet-body">
+                                            <div class="row product_row">
+                                                <div style="margin-bottom: 20px;" class="col-sm-6 col-md-6 col-xs-12 col-lg-4" data-ng-repeat="pack in packages">
+                                                    <div class="mt-widget-3">
+                                                        <div class="mt-head bg-white">
+                                                            <div class="mt-head-icon">
+                                                                <h3 class="text-light bold">{{pack.vVisaProductTitle}}</h3>
+                                                                <img src="{{pack.vVisaProductImage | replaceA }}" class="img-responsive"/>
+                                                            </div>
+                                                            <div style="text-align: left !important;min-height: 130px;max-height: 130px;" class="mt-head-desc text-light bg-white" data-ng-bind-html="pack.vVisaProductDesc"></div>
+                                                            <!--BEGIN FREE PRODUCT BUTTON -->
+                                                            <div class="mt-head-button" data-ng-if="pack.eVisaproductFee == 'free'">
+                                                                <a href="javascript:;" class="btn purple bg-purple-theme font-white" data-ng-click="freePurchase(pack.iPkVisaProductId)">Add Application</a>
+                                                            </div>
+                                                            <!--END FREE PRODUCT BUTTON-->
+                                                            <div class="mt-head-button" data-ng-if="pack.eVisaproductFee == 'recurring'">
+                                                                <span data-ng-if="pack.dVisaProductPrice != ''">
+                                                                    <p class="product_btn_price"><span class="purple border text-light border-grey-silver">${{pack.dVisaProductMonthlyPrice}} pm</span></p>
+                                                                    <a href="javascript:;" class="btn purple bg-purple-theme font-white">Add Application</a>
+                                                                </span>
+                                                                <!--<span data-ng-if="pack.dVisaProductPriceYearly != ''">-->
+                                                                <!--<p class="product_btn_price"><span class="purple border text-light border-grey-silver">${{pack.dVisaProductYearlyPrice}}/year</span></p>-->
+                                                                <!--<a href="javascript:;" class="btn purple bg-purple-theme font-white">Add Application</a>-->
+                                                                <!--</span>-->
+                                                            </div>
+                                                            <div class="mt-head-button" data-ng-if="pack.eVisaproductFee == 'once'">
+                                                                <span data-ng-if="pack.dVisaProductPrice != ''">
+                                                                    <p class="product_btn_price"><span class="purple border text-light border-grey-silver">${{pack.dVisaProductMonthlyPrice}} pm</span></p>
+                                                                    <a href="javascript:;" class="btn purple bg-purple-theme font-white">Add Application</a>
+                                                                </span>
+                                                                <!--<span data-ng-if="pack.dVisaProductPriceYearly != ''">-->
+                                                                <!--<p class="product_btn_price"><span class="purple border text-light border-grey-silver">${{pack.dVisaProductYearlyPrice}}/year</span></p>-->
+                                                                <!--<a href="javascript:;" class="btn purple bg-purple-theme font-white">Add Application</a>-->
+                                                                <!--</span>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END TAB PORTLET-->
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE BASE CONTENT -->
+</div>
+

@@ -1,0 +1,135 @@
+<!-- BEGIN HEADER -->
+<!-- <style>
+    .search-form .unibox-suggest-cluster h4{display: none;}
+    .page-header.navbar .page-actions {width: 50%;}
+    .page-header.navbar .search-form.open {width: 420px !important;}
+    .page-header.navbar .search-form .input-group {width: 85%;}
+    #unibox-suggest-box{border-radius: 8px!important;border: 1px solid #6a4be3;padding: 0 0;}
+    .search-form .unibox-selectable-img-container img{width: 60px;height: 40px; }
+    .search-form .unibox-selectable.active, .unibox-selectable:hover{  background-color: #6a4be3;color: #fff!important; }
+    .search-form #unibox-suggest-box a{line-height: 40px; color: #6a4be3;}
+    .search-form #unibox-suggest-box a:hover, .unibox-selectable:hover a{color: #fff!important;   }
+</style> -->
+<style>
+    .add_app_top {
+        font-weight: bold;
+        padding: 5px 8px;
+    }
+    .add_app_top span {
+        font-size: 15px;
+    }
+    .add_app_top i {
+        margin-top: 0px;
+    }
+</style>
+<div class="page-header navbar navbar-fixed-top shadow master_navbar">
+    <!-- BEGIN HEADER INNER -->
+    <div class="page-header-inner ">
+        <!-- BEGIN LOGO -->
+        <div class="page-logo">
+            <a ui-sref="app.maindashboard">
+                <img src="{{settings.layoutPath}}/img/veazy_logo.png" alt="logo" class="logo-default" width="100%"/>
+            </a>
+            <!--<div class="menu-toggler sidebar-toggler">-->
+                <!--<span class=" icon-arrow-left-circle fa-2x"></span>-->
+                <!--<span class=" icon-arrow-right-circle fa-2x"></span>-->
+            <!--</div>-->
+        </div>
+
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
+
+        <div class="page-actions" style="display:flex;justify-content:center;align-items:center;width:58%" ng-if="maindashboard == 'true'">
+            <div class="btn-group pull-left" ng-if="is_plan_exists == 'yes'">
+                <a data-ui-sref="app.application" type="button" class="btn green-jungle btn-md add_app_top">
+                    <i class=" icon-plus pull-left"></i>
+                    <span class="hidden-sm hidden-xs pull-left">&nbsp; {{lang_trans.menu.add_application}}</span>
+                </a>
+            </div>
+
+            <div class="btn-group pull-left" ng-if="is_plan_exists == 'no'">
+                <a data-ui-sref="" type="button" class="btn green-jungle btn-md add_app_top" style="opacity: 0.5">
+                    <i class=" icon-plus pull-left"></i>
+                    <span class="hidden-sm hidden-xs pull-left">&nbsp; {{lang_trans.menu.add_application}}</span>
+                </a>
+            </div>
+            <div class="btn-group pull-left" ng-if="credit_call > 0" style="padding-left:10px">
+                <a href="https://calendly.com/martinsalvo/veazy-coaching-call" target="_blank" type="button" class="btn green-jungle btn-md add_app_top">
+                    <i class=" icon-phone pull-left" style="margin-top:5px"></i>
+                    <span class="hidden-sm hidden-xs pull-left" style="font-size:12px;">&nbsp; Call Credit: {{credit_call}} <br/> Book a Call</span>
+                </a>
+            </div>
+            <div class="btn-group pull-left"  style="padding-left:10px">
+                <a href="https://veazy.salvomigration.com.au/resources-hub-area" target="_blank" type="button" class="btn green-jungle btn-md add_app_top">
+                    <i class="fa fa-desktop pull-left" style="margin-top:5px"></i>
+                    <span class="hidden-sm hidden-xs pull-left">&nbsp; Resource Hub</span>
+                </a>
+            </div>
+            <div class="search-form pull-right">
+                <span class="input-group-btn pull-left search_btn" style="display: block; width: 45px;">
+                    <a class="btn submit" data-ng-click="search()">
+                        <i class="icon-magnifier" style="font-size: 22px;"></i>
+                    </a>
+                </span>
+                <div class="input-group pull-right">
+                    <input type="text" data-ng-model="searchparam.searchText" class="form-control input-sm" id="searchInput" placeholder="Search Application..." style="height: 33px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- BEGIN PAGE TOP -->
+        <div class="page-top master_page_top">
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right ">
+                    <li class="top_header_nav_li dropdown-extended" id="header_inbox_bar" ng-if="maindashboard == 'true'">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="fa fa-language"></i>
+                        </a>
+                        <div class="dropdown-menu theme-panel pull-right dropdown-custom hold-on-click">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 seperator">
+                                    <ul class="theme-settings">
+                                        <!--<li>Language-->
+                                            <!--<select class="layout-style-option form-control input-small input-sm" data-ng-model="selected_lang" data-ng-change="changeLanguage(selected_lang)">-->
+                                                <!--<option value="en">English</option>-->
+                                                <!--<option value="sp">Spanish</option>-->
+                                            <!--</select>-->
+                                        <!--</li>-->
+                                        <li>
+                                            <div id="google_translate_element" style="overflow: hidden"></div><script type="text/javascript">
+                                            function googleTranslateElementInit() {
+                                                new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT, autoDisplay: false, multilanguagePage: false}, 'google_translate_element');
+                                            }
+                                            </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                                            <style>
+                                                .goog-te-combo {  width: 100%;  height: 34px;  padding: 6px 12px;  background-color: #fff;  border: 1px solid #c2cad8;  border-radius: 4px;  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);  -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;  }
+                                            </style>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="dropdown dropdown-user dropdown-dark">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <span class="username username-hide-on-mobile"></span>
+                            <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
+                            <img alt="" width="50" class="img-circle" src="{{settings.avatarPath}}/{{vProfileImage}}" />
+                            <span class="fa fa-angle-down"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            <li>
+                                <a data-ui-sref="app.profile"><i class="icon-user"></i> <b style="font-family: Nunito; "> {{ lang_trans.menu.myprofile }} </b></a>
+                            </li>
+                            <li ng-if="is_plan_exists">
+                                <a data-ui-sref="app.bill"><i class="fa fa-money"></i> <b style="font-family: Nunito; ">Account </b></a>
+                            </li>
+                            <li>
+                                <a href="#" data-ng-click="logout()"><i class="icon-key"></i> <b style="font-family: Nunito; "> {{ lang_trans.menu.logout }} </b></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
